@@ -122,9 +122,13 @@ this.add.image(400, 15500, 'sky');
 platforms.create(400, 15950, 'ground').setScale(6).refreshBody();
 platforms.create(420, 15750, 'ground').setScale(2).refreshBody();
 platforms.create(420, 15600, 'platform2').setScale(2).refreshBody();
-platforms.create(420, 15400, 'platform2').setScale(2).refreshBody();
+platforms.create(300, 15360, 'platform2').setScale(2).refreshBody();
  this.add.image(50, 15797, 'sodamachine').setScale(2);
 
+const cliff2 = platforms.create(600, 15300, 'cliff1').setScale(2).refreshBody().setFlipX(true); 
+
+cliff2.body.setSize(478, 30);
+cliff2.body.setOffset(0, 0);
 
 player = this.physics.add.sprite(250, 15800, 'girl').setScale(3);
 
