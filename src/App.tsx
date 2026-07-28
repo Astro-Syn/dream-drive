@@ -2,6 +2,7 @@ import './App.css'
 import { useEffect } from 'react';
 import Phaser from 'phaser';
 
+
 function App() {
 
 
@@ -21,7 +22,7 @@ function App() {
                 x: 0,
                 y: 700
               },
-              debug: true
+              debug: false
             }
         },
         scene: {
@@ -40,11 +41,12 @@ function App() {
      }
   }, []);
 
-   
+  
 
     function preload (this: Phaser.Scene)
     {
       this.load.image('sky', '/Images/game-background.png');
+      this.load.image('bg1', '/Images/dream-drive-bg1.png');
       this.load.image('ground', '/Images/game-sprite-platform.png');
        this.load.image('disc', '/Images/game-cd.png');
       this.load.image('virus', '/Images/game-virus.png');
@@ -55,6 +57,8 @@ function App() {
       this.load.image('sodamachine', '/Images/dream-drive-sodamachine-asset.png');
       this.load.image('platform2', '/Images/game-platform2.png');
       this.load.image('vines-grass', '/Images/dream-drive-grass-vines.png');
+      this.load.image('cliff-bottom', '/Images/dream-drive-cliff-bottom.png');
+      this.load.image('palm-tree', '/Images/dream-drive-palm-tree.png');
     }
 
 let platforms: any;
@@ -102,7 +106,7 @@ this.add.image(400, 12900, 'sky');
 this.add.image(400, 13500, 'sky');
 this.add.image(400, 14100, 'sky');
 this.add.image(400, 14700, 'sky');
-this.add.image(400, 15500, 'sky');
+this.add.image(400, 15500, 'bg1');
   this.add.image(600, 380, 'asset1').setScale(4);
   this.add.image(100, 435, 'asset2').setScale(2);
 
@@ -110,7 +114,7 @@ this.add.image(400, 15500, 'sky');
   platforms = this.physics.add.staticGroup();
    
 
-  
+  this.add.image(600, 15544, 'cliff-bottom').setScale(2);
 
   const cliff = platforms.create(20, 15550, 'cliff1').setScale(2).refreshBody();
 
@@ -124,11 +128,26 @@ platforms.create(420, 15750, 'ground').setScale(2).refreshBody();
 platforms.create(420, 15600, 'platform2').setScale(2).refreshBody();
 platforms.create(300, 15360, 'platform2').setScale(2).refreshBody();
  this.add.image(50, 15797, 'sodamachine').setScale(2);
+ this.add.image(680, 15650, 'palm-tree').setScale(2);
 
 const cliff2 = platforms.create(600, 15300, 'cliff1').setScale(2).refreshBody().setFlipX(true); 
 
 cliff2.body.setSize(478, 30);
 cliff2.body.setOffset(0, 0);
+
+const cliff3 = platforms.create(80, 15000, 'cliff1').setScale(2).refreshBody()
+cliff3.body.setSize(478, 30);
+cliff3.body.setOffset(0, 0);
+
+
+this.add.image(330, 14835, 'palm-tree').setFlipX(true);
+
+platforms.create(350, 15050, 'platform2').setScale(2).refreshBody();
+
+
+
+
+
 
 player = this.physics.add.sprite(250, 15800, 'girl').setScale(3);
 
@@ -139,6 +158,13 @@ player = this.physics.add.sprite(250, 15800, 'girl').setScale(3);
 player.setCollideWorldBounds(true);
 
    this.add.image(20, 15562, 'vines-grass').setScale(2);
+   this.add.image(600, 15310, 'vines-grass').setScale(2).setFlipX(true);
+
+   platforms.create(25, 15250, 'ground').setScale(2).refreshBody();
+  platforms.create(650, 15150, 'ground').setScale(2).refreshBody();
+     this.add.image(73, 15017, 'vines-grass').setScale(2);
+this.add.image(50, 14900, 'palm-tree').setScale(2).setFlipX(true);
+
   this.anims.create({
     key: 'left',
     frames: this.anims.generateFrameNumbers('girl', { start: 0, end: 3 }),
@@ -182,6 +208,13 @@ this.cameras.main.startFollow(player, true, 0.08, 0.08);
 
     child.setScale(2);
     child.setBounceY(Phaser.Math.FloatBetween(0.4, 0.8));
+
+    child.postFX.addShine(
+      1,
+      0.5,
+      3,
+      false
+    )
   });
 
   viruses = this.physics.add.group();
