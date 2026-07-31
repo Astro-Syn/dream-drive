@@ -47,6 +47,8 @@ function App() {
     {
       this.load.image('sky', '/Images/game-background.png');
       this.load.image('bg1', '/Images/dream-drive-bg1.png');
+      this.load.image('bg2', '/Images/dream-drive-bg2.png');
+      this.load.image('bg3', '/Images/dream-drive-bg3.png');
       this.load.image('ground', '/Images/game-sprite-platform.png');
        this.load.image('disc', '/Images/game-cd.png');
       this.load.image('virus', '/Images/game-virus.png');
@@ -59,6 +61,13 @@ function App() {
       this.load.image('vines-grass', '/Images/dream-drive-grass-vines.png');
       this.load.image('cliff-bottom', '/Images/dream-drive-cliff-bottom.png');
       this.load.image('palm-tree', '/Images/dream-drive-palm-tree.png');
+      this.load.image('bush', '/Images/dream-drive-bush.png');
+      this.load.image('plant', '/Images/dream-drive-plant1.png');
+      this.load.image('cliff-grass', '/Images/cliff-grass.png');
+      this.load.image('cliff-green-top', '/Images/cliff-green-top.png');
+      this.load.image('cliff2', '/Images/cliff1.png');
+      this.load.spritesheet('waterfall-sprite', '/Images/waterfall-sprite.png', { frameWidth: 55, frameHeight: 190});
+      
     }
 
 let platforms: any;
@@ -104,8 +113,8 @@ this.add.image(400, 11700, 'sky');
 this.add.image(400, 12300, 'sky');
 this.add.image(400, 12900, 'sky');
 this.add.image(400, 13500, 'sky');
-this.add.image(400, 14100, 'sky');
-this.add.image(400, 14700, 'sky');
+this.add.image(400, 13900, 'bg3');
+this.add.image(400, 14700, 'bg2');
 this.add.image(400, 15500, 'bg1');
   this.add.image(600, 380, 'asset1').setScale(4);
   this.add.image(100, 435, 'asset2').setScale(2);
@@ -122,13 +131,13 @@ this.add.image(400, 15500, 'bg1');
   cliff.body.setOffset(0, 0);
  
   
-  
+ this.add.image(680, 15650, 'palm-tree').setScale(2);
 platforms.create(400, 15950, 'ground').setScale(6).refreshBody();
 platforms.create(420, 15750, 'ground').setScale(2).refreshBody();
 platforms.create(420, 15600, 'platform2').setScale(2).refreshBody();
 platforms.create(300, 15360, 'platform2').setScale(2).refreshBody();
  this.add.image(50, 15797, 'sodamachine').setScale(2);
- this.add.image(680, 15650, 'palm-tree').setScale(2);
+
 
 const cliff2 = platforms.create(600, 15300, 'cliff1').setScale(2).refreshBody().setFlipX(true); 
 
@@ -142,13 +151,19 @@ cliff3.body.setOffset(0, 0);
 
 this.add.image(330, 14835, 'palm-tree').setFlipX(true);
 
-platforms.create(350, 15050, 'platform2').setScale(2).refreshBody();
+platforms.create(300, 15080, 'platform2').setScale(2).refreshBody();
+platforms.create(385, 15080, 'platform2').setScale(2)
+platforms.create(625, 14865, 'ground').setScale(2).refreshBody();
+platforms.create(650, 14865, 'ground').setScale(2).refreshBody();
+this.add.image(655, 14755, 'asset1').setScale(2);
+platforms.create(380, 14710, 'platform2').setScale(2).refreshBody();
+platforms.create(60, 14700, 'ground').setScale(2).refreshBody();
 
+this.add.image(80, 14685, 'plant').setScale(2);
+this.add.image(650, 14390, 'cliff2').setScale(2);
+platforms.create(650, 14250, 'cliff-green-top').setScale(2).refreshBody();
 
-
-
-
-
+//player sprite goes here 
 player = this.physics.add.sprite(250, 15800, 'girl').setScale(3);
 
   player.body.setSize(14, 18);
@@ -157,6 +172,8 @@ player = this.physics.add.sprite(250, 15800, 'girl').setScale(3);
   player.setBounce(0.2);
 player.setCollideWorldBounds(true);
 
+this.add.image(650, 14200, 'cliff-grass').setScale(2);
+  this.add.image(30, 14695, 'plant').setScale(2);
    this.add.image(20, 15562, 'vines-grass').setScale(2);
    this.add.image(600, 15310, 'vines-grass').setScale(2).setFlipX(true);
 
@@ -164,6 +181,15 @@ player.setCollideWorldBounds(true);
   platforms.create(650, 15150, 'ground').setScale(2).refreshBody();
      this.add.image(73, 15017, 'vines-grass').setScale(2);
 this.add.image(50, 14900, 'palm-tree').setScale(2).setFlipX(true);
+this.add.image(740, 15820, 'bush').setScale(4);
+this.add.image(685, 15820, 'bush').setScale(2);
+this.add.image(705, 15830, 'bush').setScale(3);
+this.add.image(665, 15820, 'bush').setScale(2);
+this.add.image(720, 15825, 'bush').setScale(3);
+platforms.create(350, 14570, 'platform2').setScale(2).refreshBody();
+platforms.create(650, 14595, 'ground').setScale(2).refreshBody();
+
+
 
   this.anims.create({
     key: 'left',
