@@ -49,6 +49,7 @@ function App() {
       this.load.image('bg1', '/Images/dream-drive-bg1.png');
       this.load.image('bg2', '/Images/dream-drive-bg2.png');
       this.load.image('bg3', '/Images/dream-drive-bg3.png');
+      this.load.image('bg4', '/Images/dream-drive-bg4.png');
       this.load.image('ground', '/Images/game-sprite-platform.png');
        this.load.image('disc', '/Images/game-cd.png');
       this.load.image('virus', '/Images/game-virus.png');
@@ -66,7 +67,10 @@ function App() {
       this.load.image('cliff-grass', '/Images/cliff-grass.png');
       this.load.image('cliff-green-top', '/Images/cliff-green-top.png');
       this.load.image('cliff2', '/Images/cliff1.png');
-      this.load.spritesheet('waterfall-sprite', '/Images/waterfall-sprite.png', { frameWidth: 55, frameHeight: 190});
+      this.load.spritesheet('waterfall-sprite', '/Images/waterfall-sprite.png', { frameWidth: 43, frameHeight: 168});
+      this.load.image('bridge', '/Images/dream-drive-bridge.png');
+      this.load.image('bg-tree1', '/Images/tree-bg-img.png');
+      this.load.image('diving-tree', '/Images/dividing-tree.png');
       
     }
 
@@ -81,16 +85,21 @@ let gameOver = false;
 let gameResetText!: any;
 let restartKey!: Phaser.Input.Keyboard.Key;
 
+// y-position marking where the horizontal-scroll section begins (at the waterfall)
+const WATERFALL_Y = 14387;
+// new world width to accommodate the horizontal section
+const WORLD_WIDTH = 4000;
+
 function create(this: Phaser.Scene)
 {
 
-  this.physics.world.setBounds(0, 0, 800, 16000);
+  this.physics.world.setBounds(0, 0, WORLD_WIDTH, 16000);
 
   score = 0;
   gameOver = false;
 
 
-  this.add.image(400, 300, 'sky');
+this.add.image(400, 300, 'sky');
 this.add.image(400, 900, 'sky');
 this.add.image(400, 1500, 'sky');
 this.add.image(400, 2100, 'sky');
@@ -116,8 +125,14 @@ this.add.image(400, 13500, 'sky');
 this.add.image(400, 13900, 'bg3');
 this.add.image(400, 14700, 'bg2');
 this.add.image(400, 15500, 'bg1');
-  this.add.image(600, 380, 'asset1').setScale(4);
-  this.add.image(100, 435, 'asset2').setScale(2);
+this.add.image(600, 380, 'asset1').setScale(4);
+this.add.image(100, 435, 'asset2').setScale(2);
+  // ---- Horizontal scroll section (begins at the waterfall, y = WATERFALL_Y) ----
+      
+this.add.image(1200, 14100, 'bg3');
+this.add.image(2000, 14000, 'bg4');
+this.add.image(2800, 14300, 'bg3');
+this.add.image(3700, 14200, 'bg3');
 
 
   platforms = this.physics.add.staticGroup();
@@ -131,7 +146,7 @@ this.add.image(400, 15500, 'bg1');
   cliff.body.setOffset(0, 0);
  
   
- this.add.image(680, 15650, 'palm-tree').setScale(2);
+this.add.image(680, 15650, 'palm-tree').setScale(2);
 platforms.create(400, 15950, 'ground').setScale(6).refreshBody();
 platforms.create(420, 15750, 'ground').setScale(2).refreshBody();
 platforms.create(420, 15600, 'platform2').setScale(2).refreshBody();
@@ -156,15 +171,60 @@ platforms.create(385, 15080, 'platform2').setScale(2)
 platforms.create(625, 14865, 'ground').setScale(2).refreshBody();
 platforms.create(650, 14865, 'ground').setScale(2).refreshBody();
 this.add.image(655, 14755, 'asset1').setScale(2);
-platforms.create(380, 14710, 'platform2').setScale(2).refreshBody();
+platforms.create(375, 14805, 'platform2').setScale(2).refreshBody();
+this.add.image(80, 14668, 'plant').setScale(2);
 platforms.create(60, 14700, 'ground').setScale(2).refreshBody();
 
-this.add.image(80, 14685, 'plant').setScale(2);
-this.add.image(650, 14390, 'cliff2').setScale(2);
-platforms.create(650, 14250, 'cliff-green-top').setScale(2).refreshBody();
+
+this.add.image(650, 14387, 'cliff2').setScale(2);
+platforms.create(650, 14210, 'cliff-green-top').setScale(2).refreshBody();
+platforms.create(200, 14450, 'platform2').setScale(2).refreshBody();
+platforms.create(400, 14380, 'platform2').setScale(2).refreshBody();
+platforms.create(190, 14280, 'platform2').setScale(2).refreshBody();
+platforms.create(400, 14210, 'platform2').setScale(2).refreshBody();
+this.add.image(700, 14010, 'cliff2').setScale(2);
+platforms.create(700, 13850, 'cliff-green-top').setScale(2).refreshBody();
+platforms.create(200, 14100, 'platform2').setScale(2).refreshBody();
+
+
+//waterfall animation
+
+  this.anims.create({
+    key: 'waterfall',
+    frames: this.anims.generateFrameNumbers('waterfall-sprite', {
+      start: 0,
+      end: 4
+    }),
+    frameRate: 8,
+    repeat: -1
+  });
+
+
+const waterfall2 = this.add.sprite(600, 14020, 'waterfall-sprite');
+waterfall2.setScale(2);
+waterfall2.play('waterfall');
+this.add.image(1050, 14150, 'diving-tree').setScale(3);
+//this.add.image(800, 14200, 'palm-tree').setScale(3);
+platforms.create(930, 14200, 'bridge').setScale(2).refreshBody();
+platforms.create(1160, 14200, 'bridge').setScale(2).refreshBody();
+platforms.create(1350, 14420, 'platform2').setScale(2).refreshBody();
+platforms.create(1600, 14300, 'ground').setScale(2).refreshBody();
+platforms.create(1850, 14380, 'platform2').setScale(2).refreshBody();
+platforms.create(2100, 14320, 'ground').setScale(2).refreshBody();
+platforms.create(2350, 14400, 'platform2').setScale(2).refreshBody();
+platforms.create(2600, 14340, 'ground').setScale(2).refreshBody();
+
+this.add.image(2600, 14140, 'bg-tree1').setScale(2);
+platforms.create(2850, 14400, 'platform2').setScale(2).refreshBody();
+platforms.create(3100, 14320, 'ground').setScale(2).refreshBody();
+platforms.create(3350, 14400, 'platform2').setScale(2).refreshBody();
+platforms.create(3600, 14350, 'ground').setScale(2).refreshBody();
+
+
+// ---- end horizontal scroll section ----
 
 //player sprite goes here 
-player = this.physics.add.sprite(250, 15800, 'girl').setScale(3);
+player = this.physics.add.sprite(800, 14160, 'girl').setScale(3);
 
   player.body.setSize(14, 18);
   player.body.setOffset(2, 3);
@@ -172,8 +232,8 @@ player = this.physics.add.sprite(250, 15800, 'girl').setScale(3);
   player.setBounce(0.2);
 player.setCollideWorldBounds(true);
 
-this.add.image(650, 14200, 'cliff-grass').setScale(2);
-  this.add.image(30, 14695, 'plant').setScale(2);
+this.add.image(650, 14182, 'cliff-grass').setScale(2);
+  this.add.image(30, 14680, 'plant').setScale(2);
    this.add.image(20, 15562, 'vines-grass').setScale(2);
    this.add.image(600, 15310, 'vines-grass').setScale(2).setFlipX(true);
 
@@ -188,8 +248,24 @@ this.add.image(665, 15820, 'bush').setScale(2);
 this.add.image(720, 15825, 'bush').setScale(3);
 platforms.create(350, 14570, 'platform2').setScale(2).refreshBody();
 platforms.create(650, 14595, 'ground').setScale(2).refreshBody();
+this.add.image(800, 14190, 'plant').setScale(2);
 
 
+  
+const waterfall = this.add.sprite(
+  550,
+  14387,
+  'waterfall-sprite'
+);
+
+waterfall.setScale(2);
+waterfall.play('waterfall');
+
+
+
+ 
+
+this.add.image(560, 14550, 'plant').setScale(2);
 
   this.anims.create({
     key: 'left',
@@ -210,8 +286,9 @@ platforms.create(650, 14595, 'ground').setScale(2).refreshBody();
     frameRate: 10,
     repeat: -1
   });
-this.cameras.main.startFollow(player, true, 0.08, 0.08);
-  this.cameras.main.setBounds(0, 0, 800, 16000);
+
+
+this.cameras.main.setBounds(0, 0, WORLD_WIDTH, 16000);
 
 
   const keyboard = this.input.keyboard;
@@ -243,6 +320,11 @@ this.cameras.main.startFollow(player, true, 0.08, 0.08);
     )
   });
 
+
+ 
+
+  //virus enemies
+
   viruses = this.physics.add.group();
 
   for (let i = 0; i < 1; i++) {
@@ -265,6 +347,7 @@ this.cameras.main.startFollow(player, true, 0.08, 0.08);
     fontSize: '32px',
     color: '#FFF'
   });
+  scoreText.setScrollFactor(0);
 
  gameResetText = this.add.text(
     400,
@@ -286,6 +369,7 @@ this.cameras.main.startFollow(player, true, 0.08, 0.08);
 
   gameResetText.setOrigin(0.5);
   gameResetText.setVisible(false);
+  gameResetText.setScrollFactor(0);
 
   this.physics.add.collider(player, platforms);
   this.physics.add.collider(discs, platforms);
@@ -320,6 +404,21 @@ function update(this: Phaser.Scene)
 
   if (cursors.up.isDown && player.body.touching.down) {
     player.setVelocityY(-475);
+  }
+
+  // ---- manual camera control ----
+  const cam = this.cameras.main;
+
+  // vertical scroll always tracks the player, smoothed
+  cam.scrollY = Phaser.Math.Linear(cam.scrollY, player.y - cam.height / 2, 0.08);
+
+  if (player.y > WATERFALL_Y) {
+    // still below the waterfall - lock horizontal scroll to the center
+    // of the original 800px-wide corridor so it never pans sideways
+    cam.scrollX = Phaser.Math.Linear(cam.scrollX, 400 - cam.width / 2, 0.08);
+  } else {
+    // past the waterfall - follow the player horizontally
+    cam.scrollX = Phaser.Math.Linear(cam.scrollX, player.x - cam.width / 2, 0.08);
   }
 }
 
