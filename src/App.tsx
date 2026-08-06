@@ -71,7 +71,11 @@ function App() {
       this.load.image('bridge', '/Images/dream-drive-bridge.png');
       this.load.image('bg-tree1', '/Images/tree-bg-img.png');
       this.load.image('diving-tree', '/Images/dividing-tree.png');
-      
+      this.load.image('wall-pipes', '/Images/asset-nefi-village-wall-pipes.png');
+      this.load.image('nefi-walls', '/Images/asset-nefi-village-walls.png');
+      this.load.image('pipe', '/Images/asset-pipe.png');
+      this.load.image('nefi-platform1', '/Images/nefi-platform1.png');
+      this.load.spritesheet('nefi-village-large-sign-sprite', '/Images/nefi-village-big-screen-sprite.png', {frameWidth: 242, frameHeight: 82});
     }
 
 let platforms: any;
@@ -88,7 +92,7 @@ let restartKey!: Phaser.Input.Keyboard.Key;
 // y-position marking where the horizontal-scroll section begins (at the waterfall)
 const WATERFALL_Y = 14387;
 // new world width to accommodate the horizontal section
-const WORLD_WIDTH = 4000;
+const WORLD_WIDTH = 5000;
 
 function create(this: Phaser.Scene)
 {
@@ -129,10 +133,16 @@ this.add.image(600, 380, 'asset1').setScale(4);
 this.add.image(100, 435, 'asset2').setScale(2);
   // ---- Horizontal scroll section (begins at the waterfall, y = WATERFALL_Y) ----
       
-this.add.image(1200, 14100, 'bg3');
-this.add.image(2000, 14000, 'bg4');
-this.add.image(2800, 14300, 'bg3');
-this.add.image(3700, 14200, 'bg3');
+this.add.image(1200, 13900, 'bg3');
+this.add.image(1200, 14700, 'bg2');
+
+
+this.add.image(2000, 13900, 'bg4');
+this.add.image(2000, 14700, 'bg2');
+
+
+this.add.image(2800, 14700, 'bg3');
+this.add.image(2800, 13900, 'bg3');
 
 
   platforms = this.physics.add.staticGroup();
@@ -204,27 +214,52 @@ const waterfall2 = this.add.sprite(600, 14020, 'waterfall-sprite');
 waterfall2.setScale(2);
 waterfall2.play('waterfall');
 this.add.image(1050, 14150, 'diving-tree').setScale(3);
+
+//nefi village large sign animation
+
+this.anims.create({
+  key: 'lg-sign',
+  frames: this.anims.generateFrameNumbers('nefi-village-large-sign-sprite', {
+    start: 0,
+    end: 29
+  }),
+  frameRate: 8,
+  repeat: -1
+})
+
+
+
+
+
 //this.add.image(800, 14200, 'palm-tree').setScale(3);
 platforms.create(930, 14200, 'bridge').setScale(2).refreshBody();
 platforms.create(1160, 14200, 'bridge').setScale(2).refreshBody();
-platforms.create(1350, 14420, 'platform2').setScale(2).refreshBody();
-platforms.create(1600, 14300, 'ground').setScale(2).refreshBody();
-platforms.create(1850, 14380, 'platform2').setScale(2).refreshBody();
-platforms.create(2100, 14320, 'ground').setScale(2).refreshBody();
-platforms.create(2350, 14400, 'platform2').setScale(2).refreshBody();
-platforms.create(2600, 14340, 'ground').setScale(2).refreshBody();
+platforms.create(1390, 14200, 'bridge').setScale(2).refreshBody();
+platforms.create(1620, 14200, 'bridge').setScale(2).refreshBody();
+platforms.create(1850, 14200, 'bridge').setScale(2).refreshBody();
+platforms.create(2080, 14200, 'bridge').setScale(2).refreshBody();
+platforms.create(2310, 14200, 'bridge').setScale(2).refreshBody();
+platforms.create(2540, 14200, 'bridge').setScale(2).refreshBody();
+platforms.create(2770, 14200, 'bridge').setScale(2).refreshBody();
 
 this.add.image(2600, 14140, 'bg-tree1').setScale(2);
-platforms.create(2850, 14400, 'platform2').setScale(2).refreshBody();
-platforms.create(3100, 14320, 'ground').setScale(2).refreshBody();
-platforms.create(3350, 14400, 'platform2').setScale(2).refreshBody();
-platforms.create(3600, 14350, 'ground').setScale(2).refreshBody();
+platforms.create(3000, 14200, 'bridge').setScale(2).refreshBody();
+platforms.create(3230, 14200, 'bridge').setScale(2).refreshBody();
+
+
+
+
+this.add.image(3730, 14410, 'nefi-walls').setScale(2);
+
+this.add.image(3780, 14150, 'wall-pipes').setScale(2);
+this.add.image(3730, 13910, 'pipe').setScale(2);
+platforms.create(3700, 14217, 'nefi-platform1').setScale(2).refreshBody();
 
 
 // ---- end horizontal scroll section ----
 
 //player sprite goes here 
-player = this.physics.add.sprite(800, 14160, 'girl').setScale(3);
+player = this.physics.add.sprite(3000, 14160, 'girl').setScale(3);
 
   player.body.setSize(14, 18);
   player.body.setOffset(2, 3);
@@ -262,6 +297,10 @@ waterfall.setScale(2);
 waterfall.play('waterfall');
 
 
+
+const nefiSignLg = this.add.sprite(3730, 14310, 'nefi-village-large-sign-sprite');
+nefiSignLg.setScale(2);
+nefiSignLg.play('lg-sign');
 
  
 
