@@ -76,7 +76,12 @@ function App() {
       this.load.image('pipe', '/Images/asset-pipe.png');
       this.load.image('nefi-platform1', '/Images/nefi-platform1.png');
       this.load.spritesheet('nefi-village-large-sign-sprite', '/Images/nefi-village-big-screen-sprite.png', {frameWidth: 242, frameHeight: 82});
+      this.load.spritesheet('nefi-village-screen2', '/Images/nefi-village-screen2.png', {
+        frameWidth: 82, frameHeight: 64
+      });
+      this.load.image('house1', '/Images/nefi-village-house1.png');
     }
+
 
 let platforms: any;
 let viruses: any;
@@ -227,6 +232,16 @@ this.anims.create({
   repeat: -1
 })
 
+this.anims.create({
+  key: 'flash-sign2',
+  frames: this.anims.generateFrameNumbers('nefi-village-screen2', {
+    start: 0,
+    end: 14
+  }),
+  frameRate: 8,
+  repeat: -1
+})
+
 
 
 
@@ -252,9 +267,45 @@ platforms.create(3230, 14200, 'bridge').setScale(2).refreshBody();
 this.add.image(3730, 14410, 'nefi-walls').setScale(2);
 
 this.add.image(3780, 14150, 'wall-pipes').setScale(2);
-this.add.image(3730, 13910, 'pipe').setScale(2);
+this.add.image(3730, 13900, 'pipe').setScale(2);
 platforms.create(3700, 14217, 'nefi-platform1').setScale(2).refreshBody();
+this.add.image(3450, 14080, 'house1').setScale(2);
 
+
+const topGlow = this.add.rectangle(
+    3450,
+      14200,
+    800,
+    300,
+    0x00eaff,
+    0.18
+).setOrigin(0.5, 0);
+
+
+this.tweens.add({
+    targets: topGlow,
+    alpha: 0.25,
+    duration: 2500,
+    yoyo: true,
+    repeat: -1
+});
+
+const bottomGlow = this.add.rectangle(
+    3450,
+    14080,
+    800,
+    250,
+    0xff33cc,
+    0.15
+).setOrigin(0.5, 1);
+
+this.tweens.add({
+    targets: bottomGlow,
+    alpha: 0.25,
+    duration: 2500,
+    yoyo: true,
+    repeat: -1
+});
 
 // ---- end horizontal scroll section ----
 
@@ -298,11 +349,13 @@ waterfall.play('waterfall');
 
 
 
-const nefiSignLg = this.add.sprite(3730, 14310, 'nefi-village-large-sign-sprite');
+const nefiSignLg = this.add.sprite(3730, 13820, 'nefi-village-large-sign-sprite');
 nefiSignLg.setScale(2);
 nefiSignLg.play('lg-sign');
 
- 
+ const nefiSign2 = this.add.sprite(3690, 14130, 'nefi-village-screen2');
+ nefiSign2.setScale(2);
+ nefiSign2.play('flash-sign2')
 
 this.add.image(560, 14550, 'plant').setScale(2);
 
