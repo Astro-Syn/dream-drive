@@ -249,6 +249,18 @@ export default class GameScene extends Phaser.Scene {
         this.load.image(
             'bg5',
             '/Images/dream-drive-bg5.png'
+        );
+        this.load.image(
+            'bg6',
+            '/Images/dream-drive-bg6.png'
+        );
+        this.load.image(
+            'bg7',
+            '/Images/dream-drive-bg7.png'
+        );
+        this.load.image(
+            'nefi-bg-tree',
+            '/Images/nefi-bg-tree.png'
         )
     }
 
@@ -322,8 +334,16 @@ export default class GameScene extends Phaser.Scene {
 
         this.add.image(2800, 14700, "bg3");
         this.add.image(2800, 13900, "bg4");
+
+        this.add.image(2800, 13100, "bg6");
+
+        this.add.image(3600, 13100, "bg7");
         this.add.image(3600, 13900, "bg5");
-        this.add.image(3600, 14700, "bg5");
+        this.add.image(3600, 14700, "bg7");
+       
+
+       
+       
 
 
         
