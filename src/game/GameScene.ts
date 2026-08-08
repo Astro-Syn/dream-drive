@@ -261,6 +261,10 @@ export default class GameScene extends Phaser.Scene {
         this.load.image(
             'nefi-bg-tree',
             '/Images/nefi-bg-tree.png'
+        );
+        this.load.image(
+            "bg8",
+            "/Images/dream-drive-bg8.png"
         )
     }
 
@@ -332,7 +336,7 @@ export default class GameScene extends Phaser.Scene {
         this.add.image(2000, 13900, "bg3");
         this.add.image(2000, 14700, "bg2");
 
-        this.add.image(2800, 14700, "bg3");
+        this.add.image(2800, 14700, "bg8");
         this.add.image(2800, 13900, "bg4");
 
         this.add.image(2800, 13100, "bg6");
@@ -628,6 +632,8 @@ export default class GameScene extends Phaser.Scene {
         // =========================
         // NEFI VILLAGE
         // =========================
+
+        this.add.image(3300, 14400, "nefi-bg-tree").setScale(2);
 
         this.add
             .image(3730, 14410, "nefi-walls")
