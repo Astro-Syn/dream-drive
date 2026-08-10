@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { preloadAssets } from "./preloadAssets";
 
 const WATERFALL_Y = 14387;
 const WORLD_WIDTH = 5000;
@@ -18,6 +19,8 @@ export default class GameScene extends Phaser.Scene {
 
     cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
     restartKey!: Phaser.Input.Keyboard.Key;
+
+    npc1!: Phaser.Physics.Arcade.Sprite;
 
     score = 0;
     scoreText!: Phaser.GameObjects.Text;
@@ -42,236 +45,12 @@ export default class GameScene extends Phaser.Scene {
     // =========================
 
     preload() {
-
-        this.load.image(
-            "sky",
-            "/Images/game-background.png"
-        );
-
-        this.load.image(
-            "bg1",
-            "/Images/dream-drive-bg1.png"
-        );
-
-        this.load.image(
-            "bg2",
-            "/Images/dream-drive-bg2.png"
-        );
-
-        this.load.image(
-            "bg3",
-            "/Images/dream-drive-bg3.png"
-        );
-
-        this.load.image(
-            "bg4",
-            "/Images/dream-drive-bg4.png"
-        );
-
-        this.load.image(
-            "ground",
-            "/Images/game-sprite-platform.png"
-        );
-
-        this.load.image(
-            "disc",
-            "/Images/game-cd.png"
-        );
-
-        this.load.image(
-            "virus",
-            "/Images/game-virus.png"
-        );
-
-        this.load.spritesheet(
-            "girl",
-            "/Images/game-sprite-f.png",
-            {
-                frameWidth: 20,
-                frameHeight: 27
-            }
-        );
-
-        this.load.image(
-            "asset1",
-            "/Images/game-bg-asset1.png"
-        );
-
-        this.load.image(
-            "asset2",
-            "/Images/game-bg-asset2.png"
-        );
-
-        this.load.image(
-            "cliff1",
-            "/Images/dream-drive-platform1.png"
-        );
-
-        this.load.image(
-            "sodamachine",
-            "/Images/dream-drive-sodamachine-asset.png"
-        );
-
-        this.load.image(
-            "platform2",
-            "/Images/game-platform2.png"
-        );
-
-        this.load.image(
-            "vines-grass",
-            "/Images/dream-drive-grass-vines.png"
-        );
-
-        this.load.image(
-            "cliff-bottom",
-            "/Images/dream-drive-cliff-bottom.png"
-        );
-
-        this.load.image(
-            "palm-tree",
-            "/Images/dream-drive-palm-tree.png"
-        );
-
-        this.load.image(
-            "bush",
-            "/Images/dream-drive-bush.png"
-        );
-
-        this.load.image(
-            "plant",
-            "/Images/dream-drive-plant1.png"
-        );
-
-        this.load.image(
-            "cliff-grass",
-            "/Images/cliff-grass.png"
-        );
-
-        this.load.image(
-            "cliff-green-top",
-            "/Images/cliff-green-top.png"
-        );
-
-        this.load.image(
-            "cliff2",
-            "/Images/cliff1.png"
-        );
-
-        this.load.spritesheet(
-            "waterfall-sprite",
-            "/Images/waterfall-sprite.png",
-            {
-                frameWidth: 43,
-                frameHeight: 168
-            }
-        );
-
-        this.load.image(
-            "bridge",
-            "/Images/dream-drive-bridge.png"
-        );
-
-      
-
-        this.load.image(
-            "diving-tree",
-            "/Images/dividing-tree.png"
-        );
-
-        this.load.image(
-            "wall-pipes",
-            "/Images/asset-nefi-village-wall-pipes.png"
-        );
-
-        this.load.image(
-            "nefi-walls",
-            "/Images/asset-nefi-village-walls.png"
-        );
-
-        this.load.image(
-            "pipe",
-            "/Images/asset-pipe.png"
-        );
-
-        this.load.image(
-            "nefi-platform1",
-            "/Images/nefi-platform1.png"
-        );
-
-        this.load.spritesheet(
-            "nefi-village-large-sign-sprite",
-            "/Images/nefi-village-big-screen-sprite.png",
-            {
-                frameWidth: 242,
-                frameHeight: 82
-            }
-        );
-
-        this.load.spritesheet(
-            "nefi-village-screen2",
-            "/Images/nefi-village-screen2.png",
-            {
-                frameWidth: 82,
-                frameHeight: 64
-            }
-        );
-
-        this.load.image(
-            "house1",
-            "/Images/nefi-village-house1.png"
-        );
-
-        this.load.image(
-            "nefi-ladder",
-            "/Images/nefi-ladder.png"
-        );
-
-        this.load.image(
-            "house2",
-            "/Images/nefi-village-house2.png"
-        );
-
-        this.load.image(
-            "nefi-mailbox",
-            '/Images/nefi-mailbox.png'
-        );
-
-        this.load.image(
-            "nefi-vine1",
-            "/Images/nefi-vine1.png"
-        );
-
-        this.load.image(
-            "nefi-vine2",
-            "/Images/nefi-vine2.png"
-        );
-
-        this.load.image(
-            'bg5',
-            '/Images/dream-drive-bg5.png'
-        );
-        this.load.image(
-            'bg6',
-            '/Images/dream-drive-bg6.png'
-        );
-        this.load.image(
-            'bg7',
-            '/Images/dream-drive-bg7.png'
-        );
-        this.load.image(
-            'nefi-bg-tree',
-            '/Images/nefi-bg-tree.png'
-        );
-        this.load.image(
-            "bg8",
-            "/Images/dream-drive-bg8.png"
-        )
+        preloadAssets(this);
+       
     }
 
 
-    
     // CREATE area
-    
 
     create() {
 
@@ -289,7 +68,6 @@ export default class GameScene extends Phaser.Scene {
         
         // BACKGROUNDS
         
-
         this.add.image(400, 300, "sky");
         this.add.image(400, 900, "sky");
         this.add.image(400, 1500, "sky");
@@ -346,11 +124,9 @@ export default class GameScene extends Phaser.Scene {
         this.add.image(3600, 14700, "bg7");
        
 
-       
-       
+      
 
 
-        
         // PLATFORMS
         
 
@@ -567,10 +343,32 @@ export default class GameScene extends Phaser.Scene {
         });
 
 
+
+        //Behind the bridge
+
+          this.add.image(2800, 14300, "nefi-bg-tree").setScale(2);
+
+           this.add.image(3200, 14900, "nefi-bg-tree").setScale(2);
+
+           this.add.image(2000, 14700, "nefi-bg-tree").setScale(1.5);
+
+           this.add.image(2500, 14200, "nefi-bg-tree").setScale(2);
         
+           this.add.image(1800, 14100, "nefi-bg-tree").setScale(2);
+
+           this.add.image(1900, 14200, "nefi-bg-tree").setScale(3);
+
+           this.add.image(3100, 14800, "nefi-bg-tree").setScale(1.5);
+
+           this.add.image(3000, 14600, "nefi-bg-tree").setScale(3);
+
+            this.add.image(3050, 14900, "nefi-bg-tree").setScale(1.4);
+
+            this.add.image(1600, 14300, "nefi-bg-tree").setScale(2);
+
+            this.add.image(2300, 14450, "nefi-bg-tree").setScale(1.3);
         // BRIDGE
       
-
         this.platforms
             .create(930, 14200, "bridge")
             .setScale(2)
@@ -633,11 +431,12 @@ export default class GameScene extends Phaser.Scene {
         // NEFI VILLAGE
         // =========================
 
-        this.add.image(3300, 14400, "nefi-bg-tree").setScale(2);
+      
 
         this.add
             .image(3730, 14410, "nefi-walls")
             .setScale(2);
+
 
         this.add
             .image(3780, 14150, "wall-pipes")
@@ -658,6 +457,9 @@ export default class GameScene extends Phaser.Scene {
             .setScale(2)
             .refreshBody();
 
+        this.platforms.create(3700, 13350, "nefi-platform1").setScale(2).refreshBody();
+
+        
 
      
         // NEON LIGHTING
@@ -726,11 +528,11 @@ export default class GameScene extends Phaser.Scene {
             .play("flash-sign2");
 
         this.add
-            .image(3300, 13490, "palm-tree")
-            .setScale(2);
+            .image(3160, 13520, "palm-tree")
+            .setScale(1.5);
 
         this.platforms
-            .create(3640, 13700, "nefi-platform1")
+            .create(3625, 13700, "nefi-platform1")
             .setScale(2)
             .refreshBody();
 
@@ -740,15 +542,15 @@ export default class GameScene extends Phaser.Scene {
         ).setScale(2);
 
         this.add
-        .image(3330, 13735,
+        .image(3300, 13730,
             'nefi-vine2'
         ).setScale(2);
 
-        this.add.image(3300, 13728,
+        this.add.image(3330, 13728,
             'nefi-vine2'
-        ).setScale(2);
+        ).setScale(1.9);
 
-        this.add.image(3250, 13650, 
+        this.add.image(3260, 13650, 
             'nefi-mailbox'
         ).setScale(2);
 
@@ -757,7 +559,7 @@ export default class GameScene extends Phaser.Scene {
         // =========================
 
         this.ladders
-            .create(4070, 13942, "nefi-ladder")
+            .create(4070, 13935, "nefi-ladder")
             .setScale(2)
             .refreshBody();
 
@@ -768,14 +570,17 @@ export default class GameScene extends Phaser.Scene {
 
         this.player = this.physics.add
             .sprite(3500, 13650, "girl")
-            .setScale(3);
+            .setScale(3).refreshBody();
 
-        this.player.body.setSize(14, 18);
-        this.player.body.setOffset(2, 3);
+        this.player.body.setSize(12, 14);
+        this.player.body.setOffset(2, 2);
 
         this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
 
+         
+       
+        
 
         // =========================
         // MORE DECORATIONS
@@ -874,6 +679,8 @@ export default class GameScene extends Phaser.Scene {
         // =========================
         // PLAYER ANIMATIONS
         // =========================
+        //girl Main character
+
 
         this.anims.create({
             key: "left",
@@ -899,18 +706,78 @@ export default class GameScene extends Phaser.Scene {
             frameRate: 20
         });
 
+
+
+        this.anims.create({
+            key: "back",
+            frames: [
+                {
+                    key: "girl",
+                    frame: 5
+                }
+            ],
+            frameRate: 1,
+            repeat: -1
+        })
+
         this.anims.create({
             key: "right",
             frames: this.anims.generateFrameNumbers(
                 "girl",
                 {
-                    start: 5,
-                    end: 8
+                    start: 6,
+                    end: 9
                 }
             ),
             frameRate: 10,
             repeat: -1
         });
+
+        //Old man NPC
+
+
+        //walk left
+
+this.anims.create({
+    key: "old-man-walk-left",
+    frames: this.anims.generateFrameNumbers("old-man-npc", {
+        start: 0,
+        end: 4
+    }),
+    frameRate: 6,
+    repeat: -1
+    
+});
+
+//walk right 
+
+this.anims.create({
+    key: "old-man-walk-right",
+    frames: this.anims.generateFrameNumbers("old-man-npc", {
+        start: 5,
+        end: 7
+    }),
+    frameRate: 6,
+    repeat: -1
+})
+
+
+this.npc1 = this.physics.add.sprite(
+    3625,
+    13560,
+    "old-man-npc"
+);
+
+this.npc1.setScale(3);
+
+this.npc1.body.setSize(12, 16);
+this.npc1.body.setOffset(1, 2);
+
+// Start walking RIGHT
+this.npc1.setVelocityX(40);
+this.npc1.anims.play("old-man-walk-right");
+
+
 
 
         // =========================
@@ -1076,6 +943,11 @@ export default class GameScene extends Phaser.Scene {
             this.viruses
         );
 
+        this.physics.add.collider(
+            this.npc1,
+            this.platforms
+        )
+
 
         // =========================
         // OVERLAPS
@@ -1104,6 +976,34 @@ export default class GameScene extends Phaser.Scene {
     // =========================
 
     update() {
+        
+ if (this.npc1.x >= 3700) {
+
+    // Turn around and walk LEFT
+    this.npc1.setVelocityX(-40);
+
+    this.npc1.setFlipX(true);
+
+    this.npc1.anims.play(
+        "old-man-walk-left",
+        true
+    );
+
+}
+
+else if (this.npc1.x <= 3500) {
+
+    // Turn around and walk RIGHT
+    this.npc1.setVelocityX(40);
+
+    this.npc1.setFlipX(false);
+
+    this.npc1.anims.play(
+        "old-man-walk-right",
+        true
+    );
+
+}
 
         // =========================
         // LADDER DETECTION
@@ -1120,39 +1020,91 @@ export default class GameScene extends Phaser.Scene {
         );
 
 
+           // =========================
+        // CAMERA
         // =========================
-        // LADDER MOVEMENT
-        // =========================
 
-        if (this.onLadder) {
+        const cam = this.cameras.main;
 
-            // Gravity stays OFF for the entire time
-            // the player is touching the ladder.
-            this.player.body.allowGravity = false;
 
-            if (this.cursors.up.isDown) {
+        cam.scrollY = Phaser.Math.Linear(
+            cam.scrollY,
+            this.player.y - cam.height / 2,
+            0.08
+        );
 
-                this.player.setVelocityY(-140);
+// =========================
+// LADDER MOVEMENT
+// =========================
 
-            }
-            else if (this.cursors.down.isDown) {
+if (this.onLadder) {
 
-                this.player.setVelocityY(140);
+    this.player.body.allowGravity = false;
 
-            }
-            else {
+    this.player.setVelocityX(0);
 
-                // Don't move while hanging on ladder.
-                this.player.setVelocityY(0);
-            }
+    this.player.anims.play("back", true);
 
-        }
-        else {
 
-            // Normal gravity when we're NOT on ladder.
-            this.player.body.allowGravity = true;
-        }
+    // =========================
+    // JUMP OFF LADDER
+    // =========================
 
+    if (this.cursors.left.isDown) {
+
+        this.onLadder = false;
+
+        this.player.body.allowGravity = true;
+
+        this.player.setVelocityX(-160);
+        this.player.setVelocityY(-100);
+
+        this.player.anims.play("left", true);
+
+        return;
+    }
+
+    if (this.cursors.right.isDown) {
+
+        this.onLadder = false;
+
+        this.player.body.allowGravity = true;
+
+        this.player.setVelocityX(160);
+        this.player.setVelocityY(-100);
+
+        this.player.anims.play("right", true);
+
+        return;
+    }
+
+
+    // =========================
+    // CLIMB UP / DOWN
+    // =========================
+
+    if (this.cursors.up.isDown) {
+
+        this.player.setVelocityY(-140);
+
+    }
+    else if (this.cursors.down.isDown) {
+
+        this.player.setVelocityY(140);
+
+    }
+    else {
+
+        this.player.setVelocityY(0);
+    }
+
+    return;
+
+}
+else {
+
+    this.player.body.allowGravity = true;
+}
 
         // =========================
         // GAME OVER
@@ -1223,22 +1175,6 @@ export default class GameScene extends Phaser.Scene {
             this.player.setVelocityY(-475);
         }
 
-
-        // =========================
-        // CAMERA
-        // =========================
-
-        const cam = this.cameras.main;
-
-
-        // Vertical scroll always tracks player,
-        // smoothed.
-
-        cam.scrollY = Phaser.Math.Linear(
-            cam.scrollY,
-            this.player.y - cam.height / 2,
-            0.08
-        );
 
 
         if (this.player.y > WATERFALL_Y) {
