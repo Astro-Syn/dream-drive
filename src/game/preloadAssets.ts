@@ -234,7 +234,7 @@ export function preloadAssets(scene: Phaser.Scene){
             "old-man-npc",
             "/Images/old-man-npc-spritesheet.png",
             {
-                frameWidth: 21, 
+                frameWidth: 20, 
                 frameHeight: 20,
                 
             

@@ -742,19 +742,20 @@ this.anims.create({
     key: "old-man-walk-left",
     frames: this.anims.generateFrameNumbers("old-man-npc", {
         start: 0,
-        end: 4
+        end: 3
     }),
     frameRate: 6,
     repeat: -1
     
 });
 
+
 //walk right 
 
 this.anims.create({
     key: "old-man-walk-right",
     frames: this.anims.generateFrameNumbers("old-man-npc", {
-        start: 5,
+        start: 4,
         end: 7
     }),
     frameRate: 6,
@@ -770,7 +771,7 @@ this.npc1 = this.physics.add.sprite(
 
 this.npc1.setScale(3);
 
-this.npc1.body.setSize(12, 16);
+this.npc1.body.setSize(16, 16);
 this.npc1.body.setOffset(1, 2);
 
 // Start walking RIGHT
@@ -976,35 +977,31 @@ this.npc1.anims.play("old-man-walk-right");
     // =========================
 
     update() {
-        
- if (this.npc1.x >= 3700) {
+ // =========================
+// OLD MAN NPC MOVEMENT
+// =========================
 
-    // Turn around and walk LEFT
+
+if (this.npc1.x >= 3700) {
+
     this.npc1.setVelocityX(-40);
+    this.npc1.setFlipX(false);
 
-    this.npc1.setFlipX(true);
-
-    this.npc1.anims.play(
-        "old-man-walk-left",
-        true
-    );
+    if (this.npc1.anims.currentAnim?.key !== "old-man-walk-left") {
+        this.npc1.anims.play("old-man-walk-left");
+    }
 
 }
 
 else if (this.npc1.x <= 3500) {
 
-    // Turn around and walk RIGHT
     this.npc1.setVelocityX(40);
-
     this.npc1.setFlipX(false);
 
-    this.npc1.anims.play(
-        "old-man-walk-right",
-        true
-    );
-
+    if (this.npc1.anims.currentAnim?.key !== "old-man-walk-right") {
+        this.npc1.anims.play("old-man-walk-right");
+    }
 }
-
         // =========================
         // LADDER DETECTION
         // =========================
