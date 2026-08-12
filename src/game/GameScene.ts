@@ -1,5 +1,11 @@
 import Phaser from "phaser";
 import { preloadAssets } from "./preloadAssets";
+import { createNPC1, updateNPC1 } from "./npcs/npc1";
+import { createBackgrounds } from "./backgrounds";
+import { createPlatforms } from "./platforms";
+
+
+
 
 const WATERFALL_Y = 14387;
 const WORLD_WIDTH = 5000;
@@ -14,7 +20,6 @@ export default class GameScene extends Phaser.Scene {
     platforms!: Phaser.Physics.Arcade.StaticGroup;
     viruses!: Phaser.Physics.Arcade.Group;
     discs!: Phaser.Physics.Arcade.Group;
-
     player!: Phaser.Physics.Arcade.Sprite;
 
     cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
@@ -31,18 +36,16 @@ export default class GameScene extends Phaser.Scene {
     onLadder = false;
 
 
-    // =========================
+   
     // CONSTRUCTOR
-    // =========================
+    // 
 
     constructor() {
         super("GameScene");
     }
 
-
-    // =========================
     // PRELOAD
-    // =========================
+    
 
     preload() {
         preloadAssets(this);
@@ -65,254 +68,14 @@ export default class GameScene extends Phaser.Scene {
         this.gameOver = false;
 
 
-        
         // BACKGROUNDS
         
-        this.add.image(400, 300, "sky");
-        this.add.image(400, 900, "sky");
-        this.add.image(400, 1500, "sky");
-        this.add.image(400, 2100, "sky");
-        this.add.image(400, 2700, "sky");
-        this.add.image(400, 3300, "sky");
-        this.add.image(400, 3900, "sky");
-        this.add.image(400, 4500, "sky");
-        this.add.image(400, 5100, "sky");
-        this.add.image(400, 5700, "sky");
-        this.add.image(400, 6300, "sky");
-        this.add.image(400, 6900, "sky");
-        this.add.image(400, 7500, "sky");
-        this.add.image(400, 8100, "sky");
-        this.add.image(400, 8700, "sky");
-        this.add.image(400, 9300, "sky");
-        this.add.image(400, 9900, "sky");
-        this.add.image(400, 10500, "sky");
-        this.add.image(400, 11100, "sky");
-        this.add.image(400, 11700, "sky");
-        this.add.image(400, 12300, "sky");
-        this.add.image(400, 12900, "sky");
-        this.add.image(400, 13500, "sky");
-        this.add.image(400, 13900, "bg3");
-        this.add.image(400, 14700, "bg2");
-        this.add.image(400, 15500, "bg1");
-
-        this.add
-            .image(600, 380, "asset1")
-            .setScale(4);
-
-        this.add
-            .image(100, 435, "asset2")
-            .setScale(2);
-
-
-        
-        // HORIZONTAL SECTION BACKGROUNDS
-        
-
-        this.add.image(1200, 13900, "bg3");
-        this.add.image(1200, 14700, "bg2");
-
-        this.add.image(2000, 13900, "bg3");
-        this.add.image(2000, 14700, "bg2");
-
-        this.add.image(2800, 14700, "bg8");
-        this.add.image(2800, 13900, "bg4");
-
-        this.add.image(2800, 13100, "bg6");
-
-        this.add.image(3600, 13100, "bg7");
-        this.add.image(3600, 13900, "bg5");
-        this.add.image(3600, 14700, "bg7");
+        createBackgrounds(this);
        
-
-      
-
-
-        // PLATFORMS
-        
-
-        this.platforms = this.physics.add.staticGroup();
-
-        this.add
-            .image(600, 15544, "cliff-bottom")
-            .setScale(2);
-
-        const cliff = this.platforms
-            .create(20, 15550, "cliff1")
-            .setScale(2)
-            .refreshBody();
-
-        cliff.body.setSize(478, 30);
-        cliff.body.setOffset(0, 0);
-
-        this.add
-            .image(680, 15650, "palm-tree")
-            .setScale(2);
-
-        this.platforms
-            .create(400, 15950, "ground")
-            .setScale(6)
-            .refreshBody();
-
-        this.platforms
-            .create(420, 15750, "ground")
-            .setScale(2)
-            .refreshBody();
-
-        this.platforms
-            .create(420, 15600, "platform2")
-            .setScale(2)
-            .refreshBody();
-
-        this.platforms
-            .create(300, 15360, "platform2")
-            .setScale(2)
-            .refreshBody();
-
-        this.add
-            .image(50, 15797, "sodamachine")
-            .setScale(2);
-
-        const cliff2 = this.platforms
-            .create(600, 15300, "cliff1")
-            .setScale(2)
-            .refreshBody()
-            .setFlipX(true);
-
-        cliff2.body.setSize(478, 30);
-        cliff2.body.setOffset(0, 0);
-
-        const cliff3 = this.platforms
-            .create(80, 15000, "cliff1")
-            .setScale(2)
-            .refreshBody();
-
-        cliff3.body.setSize(478, 30);
-        cliff3.body.setOffset(0, 0);
-
-        this.add
-            .image(330, 14835, "palm-tree")
-            .setFlipX(true);
-
-        this.platforms
-            .create(300, 15080, "platform2")
-            .setScale(2)
-            .refreshBody();
-
-        this.platforms
-            .create(385, 15080, "platform2")
-            .setScale(2);
-
-        this.platforms
-            .create(625, 14865, "ground")
-            .setScale(2)
-            .refreshBody();
-
-        this.platforms
-            .create(650, 14865, "ground")
-            .setScale(2)
-            .refreshBody();
-
-        this.add
-            .image(655, 14755, "asset1")
-            .setScale(2);
-
-        this.platforms
-            .create(375, 14805, "platform2")
-            .setScale(2)
-            .refreshBody();
-
-        this.add
-            .image(80, 14668, "plant")
-            .setScale(2);
-
-        this.platforms
-            .create(60, 14700, "ground")
-            .setScale(2)
-            .refreshBody();
-
-        this.add
-            .image(650, 14387, "cliff2")
-            .setScale(2);
-
-        this.platforms
-            .create(650, 14210, "cliff-green-top")
-            .setScale(2)
-            .refreshBody();
-
-        this.platforms
-            .create(200, 14450, "platform2")
-            .setScale(2)
-            .refreshBody();
-
-        this.platforms
-            .create(400, 14380, "platform2")
-            .setScale(2)
-            .refreshBody();
-
-        this.platforms
-            .create(190, 14280, "platform2")
-            .setScale(2)
-            .refreshBody();
-
-        this.platforms
-            .create(400, 14210, "platform2")
-            .setScale(2)
-            .refreshBody();
-
-        this.add
-            .image(700, 14010, "cliff2")
-            .setScale(2);
-
-        this.platforms
-            .create(700, 13850, "cliff-green-top")
-            .setScale(2)
-            .refreshBody();
-
-        this.platforms
-            .create(200, 14100, "platform2")
-            .setScale(2)
-            .refreshBody();
-
-
-        
         // LADDERS
 
         this.ladders = this.physics.add.staticGroup();
 
-
-        // =========================
-        // WATERFALL ANIMATION
-        // =========================
-
-        this.anims.create({
-            key: "waterfall",
-            frames: this.anims.generateFrameNumbers(
-                "waterfall-sprite",
-                {
-                    start: 0,
-                    end: 4
-                }
-            ),
-            frameRate: 8,
-            repeat: -1
-        });
-
-        const waterfall2 = this.add.sprite(
-            600,
-            14020,
-            "waterfall-sprite"
-        );
-
-        waterfall2
-            .setScale(2)
-            .play("waterfall");
-
-        this.add
-            .image(1050, 14150, "diving-tree")
-            .setScale(3);
-
-
-        // =========================
         // NEFI VILLAGE ANIMATIONS
         // =========================
 
@@ -343,7 +106,7 @@ export default class GameScene extends Phaser.Scene {
         });
 
 
-
+    
         //Behind the bridge
 
           this.add.image(2800, 14300, "nefi-bg-tree").setScale(2);
@@ -367,71 +130,17 @@ export default class GameScene extends Phaser.Scene {
             this.add.image(1600, 14300, "nefi-bg-tree").setScale(2);
 
             this.add.image(2300, 14450, "nefi-bg-tree").setScale(1.3);
+
+               this.add
+            .image(1050, 14150, "diving-tree")
+            .setScale(3);
         // BRIDGE
       
-        this.platforms
-            .create(930, 14200, "bridge")
-            .setScale(2)
-            .refreshBody();
-
-        this.platforms
-            .create(1160, 14200, "bridge")
-            .setScale(2)
-            .refreshBody();
-
-        this.platforms
-            .create(1390, 14200, "bridge")
-            .setScale(2)
-            .refreshBody();
-
-        this.platforms
-            .create(1620, 14200, "bridge")
-            .setScale(2)
-            .refreshBody();
-
-        this.platforms
-            .create(1850, 14200, "bridge")
-            .setScale(2)
-            .refreshBody();
-
-        this.platforms
-            .create(2080, 14200, "bridge")
-            .setScale(2)
-            .refreshBody();
-
-        this.platforms
-            .create(2310, 14200, "bridge")
-            .setScale(2)
-            .refreshBody();
-
-        this.platforms
-            .create(2540, 14200, "bridge")
-            .setScale(2)
-            .refreshBody();
-
-        this.platforms
-            .create(2770, 14200, "bridge")
-            .setScale(2)
-            .refreshBody();
-
-      
-
-        this.platforms
-            .create(3000, 14200, "bridge")
-            .setScale(2)
-            .refreshBody();
-
-        this.platforms
-            .create(3230, 14200, "bridge")
-            .setScale(2)
-            .refreshBody();
-
+          createPlatforms(this);
 
         // =========================
         // NEFI VILLAGE
         // =========================
-
-      
 
         this.add
             .image(3730, 14410, "nefi-walls")
@@ -452,16 +161,7 @@ export default class GameScene extends Phaser.Scene {
             .setScale(2)
             .play("lg-sign");
 
-        this.platforms
-            .create(3700, 14217, "nefi-platform1")
-            .setScale(2)
-            .refreshBody();
-
-        this.platforms.create(3700, 13350, "nefi-platform1").setScale(2).refreshBody();
-
         
-
-     
         // NEON LIGHTING
        
 
@@ -531,11 +231,6 @@ export default class GameScene extends Phaser.Scene {
             .image(3160, 13520, "palm-tree")
             .setScale(1.5);
 
-        this.platforms
-            .create(3625, 13700, "nefi-platform1")
-            .setScale(2)
-            .refreshBody();
-
         this.add
         .image(3940, 13730, 
             'nefi-vine1'
@@ -554,6 +249,8 @@ export default class GameScene extends Phaser.Scene {
             'nefi-mailbox'
         ).setScale(2);
 
+
+       
         // =========================
         // LADDER
         // =========================
@@ -563,10 +260,12 @@ export default class GameScene extends Phaser.Scene {
             .setScale(2)
             .refreshBody();
 
+            this.ladders.create(3970, 13530, 
+                "nefi-ladder2"
+            ).setScale(2).refreshBody();
 
-        // =========================
+       
         // PLAYER
-        // =========================
 
         this.player = this.physics.add
             .sprite(3500, 13650, "girl")
@@ -579,13 +278,10 @@ export default class GameScene extends Phaser.Scene {
         this.player.setCollideWorldBounds(true);
 
          
-       
+       this.npc1 = createNPC1(this);
         
-
-        // =========================
         // MORE DECORATIONS
-        // =========================
-
+     
         this.add
             .image(650, 14182, "cliff-grass")
             .setScale(2);
@@ -602,16 +298,6 @@ export default class GameScene extends Phaser.Scene {
             .image(600, 15310, "vines-grass")
             .setScale(2)
             .setFlipX(true);
-
-        this.platforms
-            .create(25, 15250, "ground")
-            .setScale(2)
-            .refreshBody();
-
-        this.platforms
-            .create(650, 15150, "ground")
-            .setScale(2)
-            .refreshBody();
 
         this.add
             .image(73, 15017, "vines-grass")
@@ -642,24 +328,36 @@ export default class GameScene extends Phaser.Scene {
             .image(720, 15825, "bush")
             .setScale(3);
 
-        this.platforms
-            .create(350, 14570, "platform2")
-            .setScale(2)
-            .refreshBody();
-
-        this.platforms
-            .create(650, 14595, "ground")
-            .setScale(2)
-            .refreshBody();
-
+      
         this.add
             .image(800, 14190, "plant")
             .setScale(2);
 
 
-        // =========================
-        // WATERFALL
-        // =========================
+        // WATERFALL ANIMATION
+
+        this.anims.create({
+            key: "waterfall",
+            frames: this.anims.generateFrameNumbers(
+                "waterfall-sprite",
+                {
+                    start: 0,
+                    end: 4
+                }
+            ),
+            frameRate: 8,
+            repeat: -1
+        });
+
+        const waterfall2 = this.add.sprite(
+            600,
+            14020,
+            "waterfall-sprite"
+        );
+
+        waterfall2
+            .setScale(2)
+            .play("waterfall");
 
         const waterfall = this.add.sprite(
             550,
@@ -676,7 +374,7 @@ export default class GameScene extends Phaser.Scene {
             .setScale(2);
 
 
-        // =========================
+     
         // PLAYER ANIMATIONS
         // =========================
         //girl Main character
@@ -706,8 +404,7 @@ export default class GameScene extends Phaser.Scene {
             frameRate: 20
         });
 
-
-
+        
         this.anims.create({
             key: "back",
             frames: [
@@ -733,52 +430,8 @@ export default class GameScene extends Phaser.Scene {
             repeat: -1
         });
 
-        //Old man NPC
-
-
-        //walk left
-
-this.anims.create({
-    key: "old-man-walk-left",
-    frames: this.anims.generateFrameNumbers("old-man-npc", {
-        start: 0,
-        end: 3
-    }),
-    frameRate: 6,
-    repeat: -1
-    
-});
-
-
-//walk right 
-
-this.anims.create({
-    key: "old-man-walk-right",
-    frames: this.anims.generateFrameNumbers("old-man-npc", {
-        start: 4,
-        end: 7
-    }),
-    frameRate: 6,
-    repeat: -1
-})
-
-
-this.npc1 = this.physics.add.sprite(
-    3625,
-    13560,
-    "old-man-npc"
-);
-
-this.npc1.setScale(3);
-
-this.npc1.body.setSize(16, 16);
-this.npc1.body.setOffset(1, 2);
-
-// Start walking RIGHT
-this.npc1.setVelocityX(40);
-this.npc1.anims.play("old-man-walk-right");
-
-
+   
+      
 
 
         // =========================
@@ -872,7 +525,6 @@ this.npc1.anims.play("old-man-walk-right");
                 Phaser.Math.Between(-40, 40)
             );
         }
-
 
         // =========================
         // SCORE
@@ -980,28 +632,10 @@ this.npc1.anims.play("old-man-walk-right");
  // =========================
 // OLD MAN NPC MOVEMENT
 // =========================
+ updateNPC1(this.npc1);
 
 
-if (this.npc1.x >= 3700) {
 
-    this.npc1.setVelocityX(-40);
-    this.npc1.setFlipX(false);
-
-    if (this.npc1.anims.currentAnim?.key !== "old-man-walk-left") {
-        this.npc1.anims.play("old-man-walk-left");
-    }
-
-}
-
-else if (this.npc1.x <= 3500) {
-
-    this.npc1.setVelocityX(40);
-    this.npc1.setFlipX(false);
-
-    if (this.npc1.anims.currentAnim?.key !== "old-man-walk-right") {
-        this.npc1.anims.play("old-man-walk-right");
-    }
-}
         // =========================
         // LADDER DETECTION
         // =========================

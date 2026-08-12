@@ -32,6 +32,10 @@ export function preloadAssets(scene: Phaser.Scene){
             "/Images/game-sprite-platform.png"
         );
 
+        scene.load.image("platform3", 
+            "/Images/nefi-platform3.png"
+        )
+
         scene.load.image(
             "disc",
             "/Images/game-cd.png"
@@ -237,9 +241,12 @@ export function preloadAssets(scene: Phaser.Scene){
                 frameWidth: 20, 
                 frameHeight: 20,
                 
-            
-                
-                
             }
+            )
+
+            
+            scene.load.image(
+                'nefi-ladder2',
+                "/Images/nefi-ladder2.png"
         );
 }
