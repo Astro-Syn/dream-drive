@@ -257,5 +257,15 @@ export function preloadAssets(scene: Phaser.Scene){
                 frameWidth: 16,
                 frameHeight: 17
             }
+        );
+
+        scene.load.image(
+            "farm-crop1",
+            "/Images/farm-crop.png"
+        );
+
+        scene.load.image(
+            "farm-crop2",
+            "/Images/farm-crop2.png"
         )
 }

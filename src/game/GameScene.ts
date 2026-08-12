@@ -4,7 +4,8 @@ import { createNPC1, updateNPC1 } from "./npcs/npc1";
 import { createNPC2, updateNPC2 } from "./npcs/npc2";
 import { createBackgrounds } from "./backgrounds";
 import { createPlatforms } from "./platforms";
-
+import { createBehindBridgeTrees } from "./behindBridgeTrees";
+import { createDecorations } from "./decorations";
 
 
 
@@ -37,8 +38,6 @@ export default class GameScene extends Phaser.Scene {
 
     onLadder = false;
 
-
-   
     // CONSTRUCTOR
     // 
 
@@ -47,13 +46,11 @@ export default class GameScene extends Phaser.Scene {
     }
 
     // PRELOAD
-    
 
     preload() {
         preloadAssets(this);
        
     }
-
 
     // CREATE area
 
@@ -109,33 +106,9 @@ export default class GameScene extends Phaser.Scene {
 
 
     
-        //Behind the bridge
-
-          this.add.image(2800, 14300, "nefi-bg-tree").setScale(2);
-
-           this.add.image(3200, 14900, "nefi-bg-tree").setScale(2);
-
-           this.add.image(2000, 14700, "nefi-bg-tree").setScale(1.5);
-
-           this.add.image(2500, 14200, "nefi-bg-tree").setScale(2);
-        
-           this.add.image(1800, 14100, "nefi-bg-tree").setScale(2);
-
-           this.add.image(1900, 14200, "nefi-bg-tree").setScale(3);
-
-           this.add.image(3100, 14800, "nefi-bg-tree").setScale(1.5);
-
-           this.add.image(3000, 14600, "nefi-bg-tree").setScale(3);
-
-            this.add.image(3050, 14900, "nefi-bg-tree").setScale(1.4);
-
-            this.add.image(1600, 14300, "nefi-bg-tree").setScale(2);
-
-            this.add.image(2300, 14450, "nefi-bg-tree").setScale(1.3);
-
-               this.add
-            .image(1050, 14150, "diving-tree")
-            .setScale(3);
+        //Behind the bridge trees go here below
+        createBehindBridgeTrees(this);
+         
         // BRIDGE
       
           createPlatforms(this);
@@ -250,8 +223,6 @@ export default class GameScene extends Phaser.Scene {
         this.add.image(3260, 13650, 
             'nefi-mailbox'
         ).setScale(2);
-
-
        
         // =========================
         // LADDER
@@ -284,59 +255,8 @@ export default class GameScene extends Phaser.Scene {
 
        this.npc2 = createNPC2(this)
         
-        // MORE DECORATIONS
-     
-        this.add
-            .image(650, 14182, "cliff-grass")
-            .setScale(2);
-
-        this.add
-            .image(30, 14680, "plant")
-            .setScale(2);
-
-        this.add
-            .image(20, 15562, "vines-grass")
-            .setScale(2);
-
-        this.add
-            .image(600, 15310, "vines-grass")
-            .setScale(2)
-            .setFlipX(true);
-
-        this.add
-            .image(73, 15017, "vines-grass")
-            .setScale(2);
-
-        this.add
-            .image(50, 14900, "palm-tree")
-            .setScale(2)
-            .setFlipX(true);
-
-        this.add
-            .image(740, 15820, "bush")
-            .setScale(4);
-
-        this.add
-            .image(685, 15820, "bush")
-            .setScale(2);
-
-        this.add
-            .image(705, 15830, "bush")
-            .setScale(3);
-
-        this.add
-            .image(665, 15820, "bush")
-            .setScale(2);
-
-        this.add
-            .image(720, 15825, "bush")
-            .setScale(3);
-
-      
-        this.add
-            .image(800, 14190, "plant")
-            .setScale(2);
-
+        // MORE DECORATIONS go right here
+     createDecorations(this)
 
         // WATERFALL ANIMATION
 
