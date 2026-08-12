@@ -249,4 +249,13 @@ export function preloadAssets(scene: Phaser.Scene){
                 'nefi-ladder2',
                 "/Images/nefi-ladder2.png"
         );
+
+        scene.load.spritesheet(
+            "old-lady-npc",
+            "/Images/old-lady-npc-sprite.png",
+            {
+                frameWidth: 16,
+                frameHeight: 17
+            }
+        )
 }

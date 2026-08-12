@@ -1,6 +1,7 @@
 import Phaser from "phaser";
 import { preloadAssets } from "./preloadAssets";
 import { createNPC1, updateNPC1 } from "./npcs/npc1";
+import { createNPC2, updateNPC2 } from "./npcs/npc2";
 import { createBackgrounds } from "./backgrounds";
 import { createPlatforms } from "./platforms";
 
@@ -26,6 +27,7 @@ export default class GameScene extends Phaser.Scene {
     restartKey!: Phaser.Input.Keyboard.Key;
 
     npc1!: Phaser.Physics.Arcade.Sprite;
+    npc2!: Phaser.Physics.Arcade.Sprite;
 
     score = 0;
     scoreText!: Phaser.GameObjects.Text;
@@ -232,7 +234,7 @@ export default class GameScene extends Phaser.Scene {
             .setScale(1.5);
 
         this.add
-        .image(3940, 13730, 
+        .image(3910, 13730, 
             'nefi-vine1'
         ).setScale(2);
 
@@ -279,6 +281,8 @@ export default class GameScene extends Phaser.Scene {
 
          
        this.npc1 = createNPC1(this);
+
+       this.npc2 = createNPC2(this)
         
         // MORE DECORATIONS
      
@@ -601,6 +605,11 @@ export default class GameScene extends Phaser.Scene {
             this.platforms
         )
 
+        this.physics.add.collider(
+            this.npc2,
+            this.platforms
+        )
+
 
         // =========================
         // OVERLAPS
@@ -630,9 +639,10 @@ export default class GameScene extends Phaser.Scene {
 
     update() {
  // =========================
-// OLD MAN NPC MOVEMENT
+//NPC MOVEMENT
 // =========================
  updateNPC1(this.npc1);
+ updateNPC2(this.npc2);
 
 
 

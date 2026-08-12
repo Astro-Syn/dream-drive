@@ -237,7 +237,7 @@ export function createPlatforms(scene: Phaser.Scene) {
         .refreshBody();
 
     scene.platforms
-        .create(3600, 13420, "platform3")
+        .create(3630, 13420, "platform3")
         .setScale(2)
         .refreshBody();
 
