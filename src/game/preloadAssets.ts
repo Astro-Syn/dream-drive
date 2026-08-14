@@ -285,5 +285,10 @@ export function preloadAssets(scene: Phaser.Scene){
                 frameWidth: 21,
                 frameHeight: 38
             }           
-        )
+        );
+
+        scene.load.image(
+            "cyber-farm-house",
+            "/Images/old-lady-cabin.png"
+        );
 }

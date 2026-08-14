@@ -114,13 +114,16 @@ export default class GameScene extends Phaser.Scene {
             .play("lg-sign");
 
 
-        const storeSign = this.add.sprite(3800, 13250, 
+        this.add.image(3790, 13280, "cyber-farm-house").setScale(2);
+
+
+        const storeSign = this.add.sprite(3790, 13295, 
             "store-sprite"
         );
 
-        storeSign.setScale(3).play("store-sprite");
+        storeSign.setScale(2.2).play("store-sprite");
 
-        const storeSign2 = this.add.sprite(3750, 13300, 
+        const storeSign2 = this.add.sprite(3645, 13300, 
             "store-sprite2"
         );
 
