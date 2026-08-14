@@ -6,6 +6,8 @@ import { createBackgrounds } from "./backgrounds";
 import { createPlatforms } from "./platforms";
 import { createBehindBridgeTrees } from "./behindBridgeTrees";
 import { createDecorations } from "./decorations";
+import { createWaterFallAnimation } from "./animations/waterfallAnimation";
+import { createNefiSignAnimations } from "./animations/nefiSignAnimations";
 
 
 
@@ -77,32 +79,7 @@ export default class GameScene extends Phaser.Scene {
 
         // NEFI VILLAGE ANIMATIONS
         // =========================
-
-        this.anims.create({
-            key: "lg-sign",
-            frames: this.anims.generateFrameNumbers(
-                "nefi-village-large-sign-sprite",
-                {
-                    start: 0,
-                    end: 29
-                }
-            ),
-            frameRate: 8,
-            repeat: -1
-        });
-
-        this.anims.create({
-            key: "flash-sign2",
-            frames: this.anims.generateFrameNumbers(
-                "nefi-village-screen2",
-                {
-                    start: 0,
-                    end: 14
-                }
-            ),
-            frameRate: 8,
-            repeat: -1
-        });
+        createNefiSignAnimations(this);
 
 
     
@@ -136,6 +113,18 @@ export default class GameScene extends Phaser.Scene {
             .setScale(2)
             .play("lg-sign");
 
+
+        const storeSign = this.add.sprite(3800, 13250, 
+            "store-sprite"
+        );
+
+        storeSign.setScale(3).play("store-sprite");
+
+        const storeSign2 = this.add.sprite(3750, 13300, 
+            "store-sprite2"
+        );
+
+        storeSign2.setScale(2).play("store-sprite2");
         
         // NEON LIGHTING
        
@@ -260,44 +249,7 @@ export default class GameScene extends Phaser.Scene {
 
         // WATERFALL ANIMATION
 
-        this.anims.create({
-            key: "waterfall",
-            frames: this.anims.generateFrameNumbers(
-                "waterfall-sprite",
-                {
-                    start: 0,
-                    end: 4
-                }
-            ),
-            frameRate: 8,
-            repeat: -1
-        });
-
-        const waterfall2 = this.add.sprite(
-            600,
-            14020,
-            "waterfall-sprite"
-        );
-
-        waterfall2
-            .setScale(2)
-            .play("waterfall");
-
-        const waterfall = this.add.sprite(
-            550,
-            14387,
-            "waterfall-sprite"
-        );
-
-        waterfall
-            .setScale(2)
-            .play("waterfall");
-
-        this.add
-            .image(560, 14550, "plant")
-            .setScale(2);
-
-
+       createWaterFallAnimation(this);
      
         // PLAYER ANIMATIONS
         // =========================
@@ -457,7 +409,7 @@ export default class GameScene extends Phaser.Scene {
         this.scoreText = this.add.text(
             16,
             16,
-            "Score: 0",
+            "Disc Drive Score: 0",
             {
                 fontSize: "32px",
                 color: "#FFF"

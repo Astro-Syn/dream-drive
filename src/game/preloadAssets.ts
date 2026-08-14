@@ -267,5 +267,23 @@ export function preloadAssets(scene: Phaser.Scene){
         scene.load.image(
             "farm-crop2",
             "/Images/farm-crop2.png"
+        );
+
+         scene.load.spritesheet(
+            "store-sprite",
+            "/Images/nefi-store-sign-sprite.png",
+            {
+                frameWidth: 60,
+                frameHeight: 26
+            }
+        );
+
+        scene.load.spritesheet(
+            "store-sprite2",
+            "/Images/nefi-store-sign-sprite2.png",
+            {
+                frameWidth: 21,
+                frameHeight: 38
+            }           
         )
 }
