@@ -291,4 +291,29 @@ export function preloadAssets(scene: Phaser.Scene){
             "cyber-farm-house",
             "/Images/old-lady-cabin.png"
         );
+
+        scene.load.image(
+            "shop-keeper-stall",
+            "/Images/shop-keeper-stall.png"
+        );
+
+        scene.load.spritesheet(
+            "shop-keeper-head-turn",
+            "/Images/shop-keeper-head-turn-sprite.png",
+            {
+                frameWidth: 16,
+                frameHeight: 18
+            }
+
+        );
+
+        scene.load.spritesheet(
+            "shop-keeper-idle",
+            "/Images/shop-keeper-idle-sprite.png",
+            {
+                frameWidth: 16, 
+                frameHeight: 18
+            }
+        );
 }
+

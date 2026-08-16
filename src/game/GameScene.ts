@@ -8,6 +8,7 @@ import { createBehindBridgeTrees } from "./behindBridgeTrees";
 import { createDecorations } from "./decorations";
 import { createWaterFallAnimation } from "./animations/waterfallAnimation";
 import { createNefiSignAnimations } from "./animations/nefiSignAnimations";
+import { createNefiShopkeeper, updateNefiShopkeeper } from "./npcs/nefi-shopkeeper";
 
 
 
@@ -31,6 +32,7 @@ export default class GameScene extends Phaser.Scene {
 
     npc1!: Phaser.Physics.Arcade.Sprite;
     npc2!: Phaser.Physics.Arcade.Sprite;
+    shopKeeper!: Phaser.GameObjects.Sprite;
 
     score = 0;
     scoreText!: Phaser.GameObjects.Text;
@@ -166,6 +168,8 @@ export default class GameScene extends Phaser.Scene {
             repeat: -1
         });
 
+        
+
 
         // =========================
         // NEFI VILLAGE DECORATIONS
@@ -247,6 +251,7 @@ export default class GameScene extends Phaser.Scene {
 
        this.npc2 = createNPC2(this)
         
+       this.shopKeeper = createNefiShopkeeper(this);
         // MORE DECORATIONS go right here
      createDecorations(this)
 
@@ -518,6 +523,7 @@ export default class GameScene extends Phaser.Scene {
 // =========================
  updateNPC1(this.npc1);
  updateNPC2(this.npc2);
+ updateNefiShopkeeper(this.shopKeeper);
 
 
 
