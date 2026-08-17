@@ -1,4 +1,4 @@
-import Phaser from "phaser";
+
 
 export const npc1Dialogue = [
     [
@@ -10,4 +10,4 @@ export const npc1Dialogue = [
         "Where the fuck is my hat?",
         "The moon was just following me"
     ]
-]
+];

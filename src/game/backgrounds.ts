@@ -49,4 +49,12 @@ export function createBackgrounds(scene: Phaser.Scene) {
     scene.add.image(3600, 13100, "bg7");
     scene.add.image(3600, 13900, "bg5");
     scene.add.image(3600, 14700, "bg7");
+
+    scene.add.image(4400, 13100, "bg9");
+
+    scene.add.image(4400, 13900, "bg10");
+
+    scene.add.image(4400, 
+     14700, "bg11"   
+    );
 }

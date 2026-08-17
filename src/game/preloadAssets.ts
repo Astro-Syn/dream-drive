@@ -315,5 +315,20 @@ export function preloadAssets(scene: Phaser.Scene){
                 frameHeight: 18
             }
         );
+
+        scene.load.image(
+            "bg9",
+            "/Images/dream-drive-bg9.png"
+        );
+
+        scene.load.image(
+            "bg10",
+            "/Images/dream-drive-bg10.png"
+        );
+
+        scene.load.image(
+            "bg11",
+            "/Images/dream-drive-bg11.png"
+        )
 }
 
