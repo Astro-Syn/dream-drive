@@ -3,7 +3,7 @@ import Phaser from "phaser";
 export function createDecorations(scene: Phaser.Scene) {
     
         scene.add
-            .image(650, 14182, "cliff-grass")
+            .image(650, 14192, "cliff-grass")
             .setScale(2);
 
         scene.add

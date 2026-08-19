@@ -9,6 +9,8 @@ import { createDecorations } from "./decorations";
 import { createWaterFallAnimation } from "./animations/waterfallAnimation";
 import { createNefiSignAnimations } from "./animations/nefiSignAnimations";
 import { createNefiShopkeeper, updateNefiShopkeeper } from "./npcs/nefi-shopkeeper";
+import { createViruses } from "../enemies/viruses";
+import { createDiscs } from "../collectibles/discs";
 
 
 
@@ -39,6 +41,7 @@ export default class GameScene extends Phaser.Scene {
 
     gameOver = false;
     gameResetText!: Phaser.GameObjects.Text;
+    positionKey!: Phaser.Input.Keyboard.Key;
 
     onLadder = false;
 
@@ -168,8 +171,6 @@ export default class GameScene extends Phaser.Scene {
             repeat: -1
         });
 
-        
-
 
         // =========================
         // NEFI VILLAGE DECORATIONS
@@ -237,8 +238,12 @@ export default class GameScene extends Phaser.Scene {
         // PLAYER
 
         this.player = this.physics.add
-            .sprite(3500, 13650, "girl")
+            .sprite(100, 15550, "girl")
             .setScale(3).refreshBody();
+
+            console.log(
+    `Player X: ${Math.round(this.player.x)}, Y: ${Math.round(this.player.y)}`
+);
 
         this.player.body.setSize(12, 14);
         this.player.body.setOffset(2, 2);
@@ -348,79 +353,36 @@ export default class GameScene extends Phaser.Scene {
             Phaser.Input.Keyboard.KeyCodes.R
         );
 
+        this.positionKey = keyboard.addKey(
+    Phaser.Input.Keyboard.KeyCodes.P
+);
+
 
         // =========================
         // DISCS
         // =========================
-
-        this.discs = this.physics.add.group({
-            key: "disc",
-            repeat: 11,
-            setXY: {
-                x: 12,
-                y: 0,
-                stepX: 70
-            }
-        });
-
-        this.discs.children.iterate((child) => {
-
-            if (!child) return;
-
-            const disc = child as Phaser.Physics.Arcade.Sprite;
-
-            disc.setScale(2);
-
-            disc.setBounceY(
-                Phaser.Math.FloatBetween(0.4, 0.8)
-            );
-
-            disc.postFX.addShine(
-                1,
-                0.5,
-                3,
-                false
-            );
-        });
-
+        createDiscs(this);
 
         // =========================
         // VIRUS ENEMIES
-        // =========================
+        // ========================
+        
+        createViruses(this)
 
-        this.viruses = this.physics.add.group();
-
-        for (let i = 0; i < 1; i++) {
-
-            const virus = this.viruses.create(
-                Phaser.Math.Between(50, 750),
-                Phaser.Math.Between(0, 200),
-                "virus"
-            );
-
-            virus.setScale(1.5);
-
-            virus.setBounce(0.2);
-
-            virus.setCollideWorldBounds(true);
-
-            virus.setVelocity(
-                Phaser.Math.Between(-150, 150),
-                Phaser.Math.Between(-40, 40)
-            );
-        }
-
-        // =========================
+        
         // SCORE
-        // =========================
+       
 
         this.scoreText = this.add.text(
             16,
             16,
-            "Disc Drive Score: 0",
+            "Drive Score: 0",
             {
-                fontSize: "32px",
-                color: "#FFF"
+                 fontFamily: "monospace",
+        fontSize: "26px",
+        color: "#00FF9F",          
+        stroke: "#BD00FF",         
+        strokeThickness: 3
             }
         );
 
@@ -525,6 +487,16 @@ export default class GameScene extends Phaser.Scene {
  updateNPC2(this.npc2);
  updateNefiShopkeeper(this.shopKeeper);
 
+
+ if (
+    Phaser.Input.Keyboard.JustDown(
+        this.positionKey
+    )
+) {
+    console.log(
+        `Player X: ${Math.round(this.player.x)}, Y: ${Math.round(this.player.y)}`
+    );
+}
 
 
 // =========================
@@ -747,10 +719,9 @@ else {
         this.score += 10;
 
         this.scoreText.setText(
-            "Score: " + this.score
+            "Drive Score: " + this.score
         );
     }
-
 
     // =========================
     // HIT VIRUS
