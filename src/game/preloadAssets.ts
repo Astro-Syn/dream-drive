@@ -356,7 +356,7 @@ export function preloadAssets(scene: Phaser.Scene){
             "/Images/ladder-climb-sprite.png",
             {
                 frameWidth: 16,
-                frameHeight: 16
+                frameHeight: 19
             }
         )
 }
