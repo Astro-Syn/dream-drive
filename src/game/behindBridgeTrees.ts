@@ -28,4 +28,28 @@ export function createBehindBridgeTrees(scene: Phaser.Scene) {
                 .image(1050, 14150, "diving-tree")
                 .setScale(3);
 
+
+                  //star twinkle on bridge
+
+            scene.anims.create({
+                key: "star-twinkle-animation",
+                frames: scene.anims.generateFrameNumbers("star-twinkle-animation",
+                    {
+                        start: 0,
+                        end: 5
+                    }
+                ),
+                frameRate: 6,
+                repeat: -1
+            })
+
+            const starAnimation = scene.add.sprite(
+                2100, 
+                14050,
+                "star-twinkle-animation"
+            )
+
+            starAnimation.setScale(2).play("star-twinkle-animation")
+            
+
 }

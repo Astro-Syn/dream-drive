@@ -329,6 +329,15 @@ export function preloadAssets(scene: Phaser.Scene){
         scene.load.image(
             "bg11",
             "/Images/dream-drive-bg11.png"
+        );
+
+        scene.load.spritesheet(
+            "star-twinkle-animation",
+            "/Images/star-twinkle-sprite.png",
+            {
+                frameWidth: 158,
+                frameHeight: 107
+            }
         )
 }
 

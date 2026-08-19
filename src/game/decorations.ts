@@ -53,6 +53,8 @@ export function createDecorations(scene: Phaser.Scene) {
             .image(800, 14190, "plant")
             .setScale(2);
 
+          
+
 
             //crops in Nefi village
 
@@ -87,10 +89,12 @@ export function createDecorations(scene: Phaser.Scene) {
         .setScale(2);
 
         
-        
-
-
         scene.add.image(3550, 13467, "vines-grass").setScale(2);
 
         scene.add.image(3330, 13445, "nefi-vine1").setScale(2).setFlipX(true);
+
+        
+
+       
+
 }
