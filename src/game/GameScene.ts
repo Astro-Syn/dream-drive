@@ -199,7 +199,7 @@ export default class GameScene extends Phaser.Scene {
             .play("flash-sign2");
 
         this.add
-            .image(3160, 13520, "palm-tree")
+            .image(3160, 13510, "palm-tree")
             .setScale(1.5);
 
         this.add
@@ -208,15 +208,15 @@ export default class GameScene extends Phaser.Scene {
         ).setScale(2);
 
         this.add
-        .image(3300, 13730,
+        .image(3270, 13735,
             'nefi-vine2'
         ).setScale(2);
 
-        this.add.image(3330, 13728,
+        this.add.image(3230, 13728,
             'nefi-vine2'
         ).setScale(1.9);
 
-        this.add.image(3260, 13650, 
+        this.add.image(3360, 13650, 
             'nefi-mailbox'
         ).setScale(2);
        
@@ -527,20 +527,27 @@ export default class GameScene extends Phaser.Scene {
 
 
 
-        // =========================
-        // LADDER DETECTION
-        // =========================
+// =========================
+// LADDER DETECTION
+// =========================
 
-        this.onLadder = false;
+let touchingLadder = false;
 
-        this.physics.overlap(
-            this.player,
-            this.ladders,
-            () => {
-                this.onLadder = true;
-            }
-        );
+this.physics.overlap(
+    this.player,
+    this.ladders,
+    () => {
+        touchingLadder = true;
+    }
+);
 
+if (
+    touchingLadder &&
+    (this.cursors.up.isDown || this.cursors.down.isDown) &&
+    !this.onLadder
+) {
+    this.onLadder = true;
+}
 
            // =========================
         // CAMERA
