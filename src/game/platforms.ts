@@ -246,6 +246,11 @@ export function createPlatforms(scene: Phaser.Scene) {
         .setScale(2)
         .refreshBody();
 
+         scene.platforms
+        .create(4400, 13420, "nefi-platform1")
+        .setScale(2)
+        .refreshBody();
+
 
     // =========================
     // MORE PLATFORMS
@@ -270,4 +275,9 @@ export function createPlatforms(scene: Phaser.Scene) {
         .create(650, 14595, "ground")
         .setScale(2)
         .refreshBody();
-}
+
+   
+
+    }
+
+
