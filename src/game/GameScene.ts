@@ -116,7 +116,6 @@ export default class GameScene extends Phaser.Scene {
 
        
         // PLAYER
-
         this.player = this.physics.add
             .sprite(4000, 13420, "girl")
             .setScale(3).refreshBody();
@@ -398,12 +397,22 @@ this.physics.overlap(
     }
 );
 
+// Start climbing when touching a ladder
 if (
     touchingLadder &&
     (this.cursors.up.isDown || this.cursors.down.isDown) &&
     !this.onLadder
 ) {
     this.onLadder = true;
+}
+
+// Stop climbing when no longer touching the ladder
+if (
+    this.onLadder &&
+    !touchingLadder
+) {
+    this.onLadder = false;
+    this.player.body.allowGravity = true;
 }
 
            // =========================
@@ -455,36 +464,38 @@ if (this.onLadder) {
     // =========================
     // JUMP OFF LADDER
     // =========================
+if (this.cursors.left.isDown) {
 
-    if (this.cursors.left.isDown) {
+    this.onLadder = false;
 
-        this.onLadder = false;
+    this.player.body.allowGravity = true;
 
-        this.player.body.allowGravity = true;
+    this.player.setTexture("girl");
 
-        this.player.setVelocityX(-160);
-        this.player.setVelocityY(-100);
+    this.player.setVelocityX(-160);
+    this.player.setVelocityY(-100);
 
-        this.player.anims.play("left", true);
+    this.player.anims.play("left", true);
 
-        return;
-    }
+    return;
+}
 
 
     if (this.cursors.right.isDown) {
 
-        this.onLadder = false;
+    this.onLadder = false;
 
-        this.player.body.allowGravity = true;
+    this.player.body.allowGravity = true;
 
-        this.player.setVelocityX(160);
-        this.player.setVelocityY(-100);
+    this.player.setTexture("girl");
 
-        this.player.anims.play("right", true);
+    this.player.setVelocityX(160);
+    this.player.setVelocityY(-100);
 
-        return;
-    }
+    this.player.anims.play("right", true);
 
+    return;
+}
 
     // =========================
     // CLIMB UP / DOWN
