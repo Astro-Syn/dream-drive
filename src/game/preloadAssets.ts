@@ -348,6 +348,16 @@ export function preloadAssets(scene: Phaser.Scene){
         scene.load.image(
             "nefi-village-arrow",
             "/Images/nefi-village-sign.png"
+        );
+
+
+        scene.load.spritesheet(
+            "ladder-climb-animation",
+            "/Images/ladder-climb-sprite.png",
+            {
+                frameWidth: 16,
+                frameHeight: 16
+            }
         )
 }
 
