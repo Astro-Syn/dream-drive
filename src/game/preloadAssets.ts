@@ -41,10 +41,15 @@ export function preloadAssets(scene: Phaser.Scene){
             "/Images/game-cd.png"
         );
 
-        scene.load.image(
+        scene.load.spritesheet(
             "virus",
-            "/Images/game-virus.png"
-        );
+            "Images/game-virus.png",
+            {
+                frameWidth: 25,
+                frameHeight: 28
+            }
+        )
+
 
         scene.load.spritesheet(
             "girl",
@@ -338,6 +343,11 @@ export function preloadAssets(scene: Phaser.Scene){
                 frameWidth: 158,
                 frameHeight: 107
             }
+        );
+
+        scene.load.image(
+            "nefi-village-arrow",
+            "/Images/nefi-village-sign.png"
         )
 }
 

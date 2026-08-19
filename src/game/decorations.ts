@@ -53,7 +53,7 @@ export function createDecorations(scene: Phaser.Scene) {
             .image(800, 14190, "plant")
             .setScale(2);
 
-          
+      
 
 
             //crops in Nefi village

@@ -87,17 +87,21 @@ export default class GameScene extends Phaser.Scene {
         createNefiSignAnimations(this);
 
 
-    
         //Behind the bridge trees go here below
         createBehindBridgeTrees(this);
+            this.add
+        .image(480, 14168,
+            "nefi-village-arrow"
+        ).setScale(2);
+          
          
         // BRIDGE
       
           createPlatforms(this);
 
-        // =========================
+       
         // NEFI VILLAGE
-        // =========================
+     
 
         this.add
             .image(3730, 14410, "nefi-walls")
@@ -136,7 +140,6 @@ export default class GameScene extends Phaser.Scene {
         
         // NEON LIGHTING
        
-
         const topGlow = this.add.rectangle(
             3700,
             13960,
@@ -171,10 +174,10 @@ export default class GameScene extends Phaser.Scene {
             repeat: -1
         });
 
+      
 
-        // =========================
+
         // NEFI VILLAGE DECORATIONS
-        // =========================
 
         this.add
             .image(3730, 13900, "pipe")
@@ -220,11 +223,9 @@ export default class GameScene extends Phaser.Scene {
         this.add.image(3360, 13650, 
             'nefi-mailbox'
         ).setScale(2);
-       
-        // =========================
+    
         // LADDER
-        // =========================
-
+        
         this.ladders
             .create(4070, 13935, "nefi-ladder")
             .setScale(2)
@@ -238,7 +239,7 @@ export default class GameScene extends Phaser.Scene {
         // PLAYER
 
         this.player = this.physics.add
-            .sprite(100, 15550, "girl")
+            .sprite(2000, 13420, "girl")
             .setScale(3).refreshBody();
 
             console.log(
@@ -250,7 +251,6 @@ export default class GameScene extends Phaser.Scene {
 
         this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
-
          
        this.npc1 = createNPC1(this);
 
@@ -319,13 +319,9 @@ export default class GameScene extends Phaser.Scene {
             repeat: -1
         });
 
-   
-      
 
-
-        // =========================
         // CAMERA
-        // =========================
+        
 
         this.cameras.main.setBounds(
             0,
@@ -335,9 +331,7 @@ export default class GameScene extends Phaser.Scene {
         );
 
 
-        // =========================
         // KEYBOARD
-        // =========================
 
         const keyboard = this.input.keyboard;
 
@@ -357,10 +351,8 @@ export default class GameScene extends Phaser.Scene {
     Phaser.Input.Keyboard.KeyCodes.P
 );
 
-
-        // =========================
         // DISCS
-        // =========================
+        
         createDiscs(this);
 
         // =========================
@@ -677,7 +669,6 @@ else {
         }
 
 
-
         if (this.player.y > WATERFALL_Y) {
 
             // Below waterfall:
@@ -702,7 +693,42 @@ else {
                 0.08
             );
         }
-    }
+
+
+        // =========================
+        // VIRUS ANIMATION
+        // =========================
+
+        this.viruses.children.iterate((child) => {
+
+            const virus = child as Phaser.Physics.Arcade.Sprite;
+
+            if (virus.body.velocity.x < 0) {
+
+                virus.anims.play(
+                    "virus-walk-left",
+                    true
+                );
+
+            }
+            else if (virus.body.velocity.x > 0) {
+
+                virus.anims.play(
+                    "virus-walk-right",
+                    true
+                );
+
+            }
+            else {
+
+                virus.anims.stop();
+
+            }
+
+            return true;
+        });
+
+    } // <-- THIS closes update()
 
 
     // =========================
@@ -722,6 +748,7 @@ else {
             "Drive Score: " + this.score
         );
     }
+
 
     // =========================
     // HIT VIRUS
