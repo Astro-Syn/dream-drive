@@ -7,7 +7,9 @@ export function createNefiDecos(scene: Phaser.Scene) {
                 .image(3730, 14410, "nefi-walls")
                 .setScale(2);
     
-    
+
+      
+
             scene.add
                 .image(3780, 14150, "wall-pipes")
                 .setScale(2);
