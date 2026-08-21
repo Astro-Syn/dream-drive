@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import Phaser from 'phaser';
 import GameScene from './game/GameScene';
+import TitleScreen from './titleScreen/TitleScreen';
 
 function App() {
 
@@ -27,7 +28,10 @@ function App() {
                 }
             },
 
-            scene: [GameScene]
+            scene: [
+                TitleScreen,
+                GameScene
+            ]
         };
 
         const game = new Phaser.Game(config);
