@@ -39,6 +39,15 @@ export function createNefiDecos(scene: Phaser.Scene) {
             );
     
             storeSign2.setScale(2).play("store-sprite2");
+
+            scene.add.image(4400, 14050,
+                "nefi-windows"
+            ).setScale(1.7);
+
+            scene.add.image(
+                4300, 13550, 
+                "nefi-windows" 
+            ).setScale(1.3);
             
             // NEON LIGHTING
            

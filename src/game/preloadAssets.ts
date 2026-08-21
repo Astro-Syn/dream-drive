@@ -358,6 +358,11 @@ export function preloadAssets(scene: Phaser.Scene){
                 frameWidth: 16,
                 frameHeight: 19
             }
+        );
+
+        scene.load.image(
+            "nefi-windows",
+            "/Images/dream-drive-window.png"
         )
 }
 

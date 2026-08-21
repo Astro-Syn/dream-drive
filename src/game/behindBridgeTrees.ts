@@ -30,7 +30,15 @@ export function createBehindBridgeTrees(scene: Phaser.Scene) {
 
                 scene.add.image(3300, 14100, "nefi-bg-tree").setScale(3);
 
-                  scene.add.image(3670, 13900, "nefi-walls").setScale(2);
+                
+
+                   scene.add.image(3800, 14200, "nefi-bg-tree").setScale(3);
+
+                    scene.add.image(4300, 14200, "nefi-bg-tree").setScale(3);
+
+                     scene.add.image(4700, 14100, "nefi-bg-tree").setScale(3);
+
+                       scene.add.image(3670, 13900, "nefi-walls").setScale(2);
 
 
                   //star twinkle on bridge
