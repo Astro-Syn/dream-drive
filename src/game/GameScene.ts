@@ -106,7 +106,7 @@ export default class GameScene extends Phaser.Scene {
         // LADDER
         
         this.ladders
-            .create(4070, 13935, "nefi-ladder")
+            .create(4065, 13935, "nefi-ladder")
             .setScale(2)
             .refreshBody();
 

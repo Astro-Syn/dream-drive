@@ -45,9 +45,9 @@ export function createNefiDecos(scene: Phaser.Scene) {
             ).setScale(1.7);
 
             scene.add.image(
-                4300, 13550, 
+                4300, 13560, 
                 "nefi-windows" 
-            ).setScale(1.3);
+            ).setScale(1.5);
             
             // NEON LIGHTING
            
@@ -120,12 +120,12 @@ export function createNefiDecos(scene: Phaser.Scene) {
             scene.add
             .image(3910, 13730, 
                 'nefi-vine1'
-            ).setScale(2);
+            ).setScale(2).setDepth(11);
     
             scene.add
             .image(3270, 13735,
                 'nefi-vine2'
-            ).setScale(2);
+            ).setScale(2).setDepth(10);
     
             scene.add.image(3230, 13728,
                 'nefi-vine2'
@@ -133,5 +133,9 @@ export function createNefiDecos(scene: Phaser.Scene) {
     
             scene.add.image(3360, 13650, 
                 'nefi-mailbox'
+            ).setScale(2);
+
+            scene.add.image(4050, 13550, 
+                "nefi-walls-sm"
             ).setScale(2);
 }

@@ -363,6 +363,16 @@ export function preloadAssets(scene: Phaser.Scene){
         scene.load.image(
             "nefi-windows",
             "/Images/dream-drive-window.png"
+        );
+
+        scene.load.image(
+            "nefi-walls-sm",
+            "/Images/nefi-walls-sm.png"
+        );
+
+        scene.load.image(
+            "nefi-walls-lg",
+            "/Images/nefi-walls-lg.png"
         )
 }
 
