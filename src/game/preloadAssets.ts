@@ -386,10 +386,10 @@ export function preloadAssets(scene: Phaser.Scene){
         );
 
         scene.load.spritesheet(
-            "alien-npc-2",
+            "alien-npc2",
             "/Images/alien-npc2-spritesheet.png",
             {
-                frameWidth: 23,
+                frameWidth: 22,
                 frameHeight: 18
             }
         )

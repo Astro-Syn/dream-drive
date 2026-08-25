@@ -13,6 +13,7 @@ import { createViruses } from "../enemies/viruses";
 import { createDiscs } from "../collectibles/discs";
 import { createNefiDecos } from "./decorations/nefiDecos";
 import { createAlienNpc, updateAlienNpc } from "./npcs/alienNpc";
+import { createAlienNpc2, updateAlienNpc2 } from "./npcs/alienNpc2";
 
 
 const WATERFALL_Y = 14387;
@@ -37,6 +38,7 @@ export default class GameScene extends Phaser.Scene {
     npc2!: Phaser.Physics.Arcade.Sprite;
     shopKeeper!: Phaser.GameObjects.Sprite;
     alienNpc!: Phaser.Physics.Arcade.Sprite;
+    alienNpc2!: Phaser.Physics.Arcade.Sprite;
 
     score = 0;
     scoreText!: Phaser.GameObjects.Text;
@@ -139,6 +141,8 @@ export default class GameScene extends Phaser.Scene {
 
 
        this.alienNpc = createAlienNpc(this);
+
+       this.alienNpc2 = createAlienNpc2(this);
 
 
         // MORE DECORATIONS go right here
@@ -347,6 +351,11 @@ export default class GameScene extends Phaser.Scene {
             this.platforms
         )
 
+        this.physics.add.collider(
+            this.alienNpc2,
+            this.platforms
+        )
+
 
         // =========================
         // OVERLAPS
@@ -382,6 +391,7 @@ export default class GameScene extends Phaser.Scene {
  updateNPC2(this.npc2);
  updateNefiShopkeeper(this.shopKeeper);
  updateAlienNpc(this.alienNpc);
+ updateAlienNpc2(this.alienNpc2);
 
 
  if (
