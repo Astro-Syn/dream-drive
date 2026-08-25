@@ -373,6 +373,25 @@ export function preloadAssets(scene: Phaser.Scene){
         scene.load.image(
             "nefi-walls-lg",
             "/Images/nefi-walls-lg.png"
+        );
+
+
+        scene.load.spritesheet(
+            "alien-npc",
+            "/Images/alien-npc1-spritesheet.png",
+            {
+                frameWidth: 16,
+                frameHeight: 20
+            }
+        );
+
+        scene.load.spritesheet(
+            "alien-npc-2",
+            "/Images/alien-npc2-spritesheet.png",
+            {
+                frameWidth: 23,
+                frameHeight: 18
+            }
         )
 }
 

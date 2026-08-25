@@ -4,14 +4,14 @@ export function createNefiDecos(scene: Phaser.Scene) {
 
     
             scene.add
-                .image(3730, 14410, "nefi-walls")
+                .image(3770, 14410, "nefi-walls")
                 .setScale(2);
     
 
       
 
             scene.add
-                .image(3780, 14150, "wall-pipes")
+                .image(3775, 14150, "wall-pipes")
                 .setScale(2);
     
             const nefiSignLg = scene.add.sprite(
@@ -40,7 +40,7 @@ export function createNefiDecos(scene: Phaser.Scene) {
     
             storeSign2.setScale(2).play("store-sprite2");
 
-            scene.add.image(4400, 14050,
+            scene.add.image(4390, 14070,
                 "nefi-windows"
             ).setScale(1.7);
 
@@ -91,8 +91,8 @@ export function createNefiDecos(scene: Phaser.Scene) {
             // NEFI VILLAGE DECORATIONS
     
             scene.add
-                .image(3730, 13900, "pipe")
-                .setScale(2);
+                .image(3720, 13895, "pipe")
+                .setScale(2).setDepth(10);
     
             scene.add
                 .image(3450, 14080, "house1")
@@ -138,4 +138,18 @@ export function createNefiDecos(scene: Phaser.Scene) {
             scene.add.image(4050, 13550, 
                 "nefi-walls-sm"
             ).setScale(2);
+
+            scene.add.image(4700, 13550, 
+                "nefi-walls-lg"
+            ).setScale(2)
+
+            scene.add.image(4281, 13810, 
+                "nefi-walls-lg"
+            ).setScale(2)
+
+            scene.add.image(4620, 13810, 
+                "nefi-walls-lg"
+            ).setScale(2);
+
+            scene.add.image(4745, 14075, "nefi-walls-sm").setScale(2);
 }
