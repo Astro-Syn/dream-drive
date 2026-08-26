@@ -392,6 +392,20 @@ export function preloadAssets(scene: Phaser.Scene){
                 frameWidth: 22,
                 frameHeight: 18
             }
+        );
+
+        scene.load.spritesheet(
+            "cabin-sign",
+            "/Images/cabin-sign-sprite.png",
+            {
+                frameWidth: 70,
+                frameHeight: 21
+            }
+        );
+
+        scene.load.image (
+            "bio-cabin",
+            "/Images/nefi-cabin2.png"
         )
 }
 

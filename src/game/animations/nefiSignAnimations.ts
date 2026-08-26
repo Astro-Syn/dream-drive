@@ -3,6 +3,20 @@ import Phaser from "phaser";
 export function createNefiSignAnimations(scene: Phaser.Scene){
     
         scene.anims.create({
+            key: "cabin-sign",
+            frames: scene.anims.generateFrameNumbers(
+                "cabin-sign",
+                {
+                    start: 0,
+                    end: 4
+                }
+            ),
+            frameRate: 8,
+            repeat: -1
+        })
+
+
+        scene.anims.create({
                 key: "lg-sign",
                 frames:scene.anims.generateFrameNumbers(
                     "nefi-village-large-sign-sprite",

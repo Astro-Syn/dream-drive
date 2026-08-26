@@ -8,8 +8,6 @@ export function createNefiDecos(scene: Phaser.Scene) {
                 .setScale(2);
     
 
-      
-
             scene.add
                 .image(3775, 14150, "wall-pipes")
                 .setScale(2);
@@ -23,6 +21,8 @@ export function createNefiDecos(scene: Phaser.Scene) {
             nefiSignLg
                 .setScale(2)
                 .play("lg-sign");
+
+                
     
     
             scene.add.image(3790, 13280, "cyber-farm-house").setScale(2);
@@ -152,4 +152,15 @@ export function createNefiDecos(scene: Phaser.Scene) {
             ).setScale(2);
 
             scene.add.image(4745, 14075, "nefi-walls-sm").setScale(2);
+
+            scene.add.image(4400, 14075, "bio-cabin").setScale(3);
+
+            const bioSign = scene.add.sprite(
+                    4400, 14075,
+                    "cabin-sign"
+                )
+
+                bioSign.setScale(2).play("cabin-sign")
+
+            
 }
