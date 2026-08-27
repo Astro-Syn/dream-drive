@@ -18,14 +18,19 @@ export function createDiscs(scene: Phaser.Scene) {
         { x: 279, y: 15319, static: true },
         { x: 87, y: 15192, static: true },
         
-         { x: 380, y: 15039, static: true },
-          { x: 604, y: 15092, static: true },
-           { x: 172, y: 14916, static: true },
-            { x: 364, y: 14764, static: true },
+        { x: 380, y: 15039, static: true },
+        { x: 604, y: 15092, static: true },
+        { x: 172, y: 14916, static: true },
+        { x: 364, y: 14764, static: true },
 
 
          { x: 588, y: 14807, static: true }, 
-         { x: 412, y: 14647, static: true }, { x: 341, y: 14529, static: true },
+         { x: 412, y: 14647, static: true }, 
+         { x: 341, y: 14529, static: true },
+        {x: 950, y: 13800, static: true},
+        {x: 1150, y: 13690, static: true},
+        {x: 1380, y: 13800, static: true},
+        {x: 1530, y: 13890, static: true},
 
 
         // Gravity CDs

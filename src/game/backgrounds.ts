@@ -24,7 +24,7 @@ export function createBackgrounds(scene: Phaser.Scene) {
     scene.add.image(400, 11700, "sky");
     scene.add.image(400, 12300, "sky");
     scene.add.image(400, 12900, "sky");
-    scene.add.image(400, 13500, "sky");
+    scene.add.image(400, 13500, "bg12");
 
     scene.add.image(400, 13900, "bg3");
     scene.add.image(400, 14700, "bg2");
@@ -36,10 +36,13 @@ export function createBackgrounds(scene: Phaser.Scene) {
     // =========================
 
     scene.add.image(1200, 13900, "bg3");
+    scene.add.image(1200, 13100, "bg12");
+
     scene.add.image(1200, 14700, "bg2");
 
     scene.add.image(2000, 13900, "bg3");
     scene.add.image(2000, 14700, "bg2");
+    scene.add.image(2000, 13100, "bg12");
 
     scene.add.image(2800, 14700, "bg8");
     scene.add.image(2800, 13900, "bg4");
@@ -57,4 +60,9 @@ export function createBackgrounds(scene: Phaser.Scene) {
     scene.add.image(4400, 
      14700, "bg11"   
     );
+
+    
+    
+
+   
 }

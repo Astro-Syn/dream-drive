@@ -165,6 +165,45 @@ export function createPlatforms(scene: Phaser.Scene) {
         .setScale(2)
         .refreshBody();
 
+        scene.platforms
+        .create(100, 14000, "platform2")
+        .setScale(2)
+        .refreshBody();
+
+          scene.platforms
+        .create(230, 13880, "platform2")
+        .setScale(2)
+        .refreshBody();
+
+          scene.platforms
+        .create(300, 13730, "platform2")
+        .setScale(2)
+        .refreshBody();
+
+       
+
+         scene.platforms
+        .create(950, 13830, "platform2")
+        .setScale(2)
+        .refreshBody();
+
+         scene.platforms
+        .create(1150, 13730, "platform2")
+        .setScale(2)
+        .refreshBody();
+
+         scene.platforms
+        .create(1380, 13830, "platform2")
+        .setScale(2)
+        .refreshBody();
+
+         scene.platforms
+        .create(1530, 13930, "platform2")
+        .setScale(2)
+        .refreshBody();
+
+
+
 
     // =========================
     // BRIDGE

@@ -14,7 +14,7 @@ import { createDiscs } from "../collectibles/discs";
 import { createNefiDecos } from "./decorations/nefiDecos";
 import { createAlienNpc, updateAlienNpc } from "./npcs/alienNpc";
 import { createAlienNpc2, updateAlienNpc2 } from "./npcs/alienNpc2";
-
+import { showAreaName } from "./area_names/showAreaName";
 
 const WATERFALL_Y = 14387;
 const WORLD_WIDTH = 5000;
@@ -48,6 +48,7 @@ export default class GameScene extends Phaser.Scene {
     positionKey!: Phaser.Input.Keyboard.Key;
 
     onLadder = false;
+    private nefiVillageShown = false;
 
     // CONSTRUCTOR
     // 
@@ -120,8 +121,9 @@ export default class GameScene extends Phaser.Scene {
        
         // PLAYER
         this.player = this.physics.add
-            .sprite(350, 15650, "girl")
+            .sprite(1164, 13689, "girl")
             .setScale(3).refreshBody();
+            
 
             console.log(
     `Player X: ${Math.round(this.player.x)}, Y: ${Math.round(this.player.y)}`
@@ -379,11 +381,12 @@ export default class GameScene extends Phaser.Scene {
     }
 
 
-    // =========================
+    
     // UPDATE
-    // =========================
+  
 
     update() {
+
  // =========================
 //NPC MOVEMENT
 // =========================
@@ -403,6 +406,38 @@ export default class GameScene extends Phaser.Scene {
         `Player X: ${Math.round(this.player.x)}, Y: ${Math.round(this.player.y)}`
     );
 }
+
+
+const insideNefiVillage =
+    this.player.x >= 3000 &&
+    this.player.y >= 13800 &&
+    this.player.y <= 14500;
+
+// Player ENTERS Nefi Village
+if (insideNefiVillage && !this.nefiVillageShown) {
+
+    console.log("NEFI VILLAGE TRIGGERED!");
+
+    this.nefiVillageShown = true;
+
+    showAreaName(
+        this,
+        "Nefi Village"
+    );
+}
+
+
+if (!insideNefiVillage && this.nefiVillageShown) {
+
+    console.log("LEFT NEFI VILLAGE");
+
+    this.nefiVillageShown = false;
+}
+
+
+
+
+
 
 
 // =========================

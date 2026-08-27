@@ -407,5 +407,10 @@ export function preloadAssets(scene: Phaser.Scene){
             "bio-cabin",
             "/Images/nefi-cabin2.png"
         )
+
+        scene.load.image(
+            "bg12",
+            "/Images/dream-drive-bg12.png"
+        )
 }
 
