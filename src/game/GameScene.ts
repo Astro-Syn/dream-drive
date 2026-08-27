@@ -120,7 +120,7 @@ export default class GameScene extends Phaser.Scene {
        
         // PLAYER
         this.player = this.physics.add
-            .sprite(4000, 13420, "girl")
+            .sprite(350, 15650, "girl")
             .setScale(3).refreshBody();
 
             console.log(

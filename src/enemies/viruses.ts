@@ -29,17 +29,25 @@ export function createViruses(scene: Phaser.Scene) {
     });
 
 
-    // =========================
-    // BRIDGE VIRUS LOCATIONS
-    // =========================
+    //Start Virus Locations
+
+  
+
+
+
+  
+   
 
     const virusLocations = [
+        {x: 443, y: 15550},
+        {x: 169, y: 15466},
+        {x: 52, y: 15192},
+        {x: 761, y: 15216},
+        {x: 189, y: 14239},
         { x: 900, y: 13600 },
         { x: 1450, y: 13400 },
-        { x: 2000, y: 13200 },
-        { x: 2550, y: 13100 },
-        { x: 3100, y: 13400 }
     ];
+
 
 
     virusLocations.forEach(({ x, y }) => {
