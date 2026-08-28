@@ -8,23 +8,28 @@ import { createBehindBridgeTrees } from "./behindBridgeTrees";
 import { createDecorations } from "./decorations";
 import { createWaterFallAnimation } from "./animations/waterfallAnimation";
 import { createNefiSignAnimations } from "./animations/nefiSignAnimations";
-import { createNefiShopkeeper, updateNefiShopkeeper } from "./npcs/nefi-shopkeeper";
 import { createViruses } from "../enemies/viruses";
 import { createDiscs } from "../collectibles/discs";
 import { createNefiDecos } from "./decorations/nefiDecos";
 import { createAlienNpc, updateAlienNpc } from "./npcs/alienNpc";
 import { createAlienNpc2, updateAlienNpc2 } from "./npcs/alienNpc2";
 import { showAreaName } from "./area_names/showAreaName";
+import {
+    createNefiShopkeeper,
+    updateNefiShopkeeper
+} from "./npcs/nefi-shopkeeper";
+
+import {
+    createShopkeeperDialogue
+} from "./npcs/dialogue/shopkeeperDialogue";
 
 const WATERFALL_Y = 14387;
 const WORLD_WIDTH = 5000;
 
 export default class GameScene extends Phaser.Scene {
 
-    // =========================
     // GAME OBJECTS / VARIABLES
-    // =========================
-
+   
     ladders!: Phaser.Physics.Arcade.StaticGroup;
     platforms!: Phaser.Physics.Arcade.StaticGroup;
     viruses!: Phaser.Physics.Arcade.Group;
@@ -37,18 +42,18 @@ export default class GameScene extends Phaser.Scene {
     npc1!: Phaser.Physics.Arcade.Sprite;
     npc2!: Phaser.Physics.Arcade.Sprite;
     shopKeeper!: Phaser.GameObjects.Sprite;
+    shopkeeperDialogue!: ReturnType<typeof createShopkeeperDialogue>;
     alienNpc!: Phaser.Physics.Arcade.Sprite;
     alienNpc2!: Phaser.Physics.Arcade.Sprite;
-
     score = 0;
     scoreText!: Phaser.GameObjects.Text;
-
     gameOver = false;
     gameResetText!: Phaser.GameObjects.Text;
     positionKey!: Phaser.Input.Keyboard.Key;
-
     onLadder = false;
     private nefiVillageShown = false;
+    interactionKey!: Phaser.Input.Keyboard.Key;
+   
 
     // CONSTRUCTOR
     // 
@@ -121,7 +126,7 @@ export default class GameScene extends Phaser.Scene {
        
         // PLAYER
         this.player = this.physics.add
-            .sprite(1164, 13689, "girl")
+            .sprite(3817, 14167, "girl")
             .setScale(3).refreshBody();
             
 
@@ -140,6 +145,12 @@ export default class GameScene extends Phaser.Scene {
        this.npc2 = createNPC2(this)
         
        this.shopKeeper = createNefiShopkeeper(this);
+
+       
+this.shopkeeperDialogue = createShopkeeperDialogue(
+    this,
+    this.shopKeeper
+);
 
 
        this.alienNpc = createAlienNpc(this);
@@ -254,6 +265,8 @@ export default class GameScene extends Phaser.Scene {
         this.positionKey = keyboard.addKey(
     Phaser.Input.Keyboard.KeyCodes.P
 );
+
+    this.interactionKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
 
         // DISCS
         
@@ -436,6 +449,67 @@ if (!insideNefiVillage && this.nefiVillageShown) {
 
 
 
+// =========================
+// SHOPKEEPER DIALOGUE
+// =========================
+
+// Keep speech bubble attached to shopkeeper
+this.shopkeeperDialogue.updateBubble();
+
+const shopkeeperDistance =
+    Phaser.Math.Distance.Between(
+        this.player.x,
+        this.player.y,
+        this.shopKeeper.x,
+        this.shopKeeper.y
+    );
+
+if (
+    shopkeeperDistance < 100 &&
+    Phaser.Input.Keyboard.JustDown(this.interactionKey) &&
+    !this.registry.get("shopkeeperTalking")
+) {
+
+    this.shopkeeperDialogue.startDialogue(
+        this.player,
+
+        () => this.score,
+
+        (amount: number) => {
+
+            this.score -= amount;
+
+            this.scoreText.setText(
+                "Drive Score: " + this.score
+            );
+        }
+    );
+}
+
+
+if (this.registry.get("shopkeeperTalking")) {
+
+    this.player.setVelocity(0, 0);
+
+    return;
+}
+
+
+
+// =========================
+// SHOPKEEPER INTERACTION
+// =========================
+
+
+
+if (
+    shopkeeperDistance < 100 &&
+    Phaser.Input.Keyboard.JustDown(this.interactionKey) &&
+    !this.registry.get("shopkeeperTalking")
+) {
+
+    startShopkeeperDialogue(this);
+}
 
 
 

@@ -31,7 +31,11 @@ export function createDiscs(scene: Phaser.Scene) {
         {x: 1150, y: 13690, static: true},
         {x: 1380, y: 13800, static: true},
         {x: 1530, y: 13890, static: true},
+        {x: 103, y: 13959, static: true},
+        {x: 217, y: 13839, static: true},
+        {x: 305, y: 13689, static: true},
 
+        
 
         // Gravity CDs
         { x: 750, y: 14950 },

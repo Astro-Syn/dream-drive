@@ -2,9 +2,9 @@ import Phaser from "phaser";
 
 export function createNefiShopkeeper(scene: Phaser.Scene) {
 
-    // =========================
+  
     // SHOPKEEPER HEAD TURN
-    // =========================
+
 
     scene.anims.create({
         key: "shop-keeper-head-turn",
@@ -19,9 +19,9 @@ export function createNefiShopkeeper(scene: Phaser.Scene) {
         repeat: -1
     });
 
-    // =========================
+    
     // SHOPKEEPER IDLE
-    // =========================
+
 
     scene.anims.create({
         key: "shop-keeper-idle",
