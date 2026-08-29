@@ -73,7 +73,10 @@ export default class GameScene extends Phaser.Scene {
 
     // CREATE area
 
-    create() {
+    create(data: {
+    spawnX?: number;
+    spawnY?: number;
+}) {
 
         this.physics.world.setBounds(
             0,
@@ -122,9 +125,23 @@ this.ladders = createLadders(this);
 
        
         // PLAYER
-        this.player = this.physics.add
-            .sprite(313, 13532, "girl")
-            .setScale(3).refreshBody();
+
+        //girl location
+       const spawnX =
+    data.spawnX ?? 1164;
+
+const spawnY =
+    data.spawnY ?? 13689;
+
+
+this.player = this.physics.add
+    .sprite(
+        spawnX,
+        spawnY,
+        "girl"
+    )
+    .setScale(3)
+    .refreshBody();
             
 
             console.log(
@@ -136,6 +153,41 @@ this.ladders = createLadders(this);
 
         this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
+
+
+    // =========================
+// JUNGLE HEIGHTS DOOR
+// =========================
+
+const jungleHeightsDoor =
+    this.add.zone(
+        300,
+        12100,
+        50,
+        60
+    );
+
+
+this.physics.add.existing(
+    jungleHeightsDoor,
+    true
+);
+
+
+this.physics.add.overlap(
+
+    this.player,
+
+    jungleHeightsDoor,
+
+    () => {
+
+        this.enterJungleHeights();
+
+    }
+
+);
+
          
        this.npc1 = createNPC1(this);
 
@@ -599,7 +651,6 @@ if (!this.onLadder) {
 
     }
 
-
     // =========================
     // JUMP
     // =========================
@@ -614,7 +665,6 @@ if (!this.onLadder) {
     }
 
 }
-
 
         if (this.player.y > WATERFALL_Y) {
 
@@ -640,6 +690,9 @@ if (!this.onLadder) {
                 0.08
             );
         }
+
+
+        
 
 
         // =========================
@@ -677,6 +730,51 @@ if (!this.onLadder) {
 
     } // <-- THIS closes update()
 
+    // =========================
+// ENTER JUNGLE HEIGHTS
+// =========================
+
+enterJungleHeights() {
+
+    this.player.setVelocity(
+        0,
+        0
+    );
+
+    this.cameras.main.fadeOut(
+        400,
+        0,
+        0,
+        0
+    );
+
+    this.cameras.main.once(
+
+        Phaser.Cameras.Scene2D.Events
+            .FADE_OUT_COMPLETE,
+
+        () => {
+
+            this.scene.start(
+                "JungleHouseScene",
+                {
+
+                    // Where the player will
+                    // return outside later
+
+                    outsideSpawnX: 300,
+
+                    outsideSpawnY: 12180
+
+                }
+            );
+
+        }
+
+    );
+
+}
+    
 
     // =========================
     // COLLECT DISC
@@ -717,4 +815,7 @@ if (!this.onLadder) {
 
         this.gameOver = true;
     }
+
+    
 }
+

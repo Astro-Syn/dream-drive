@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import Phaser from 'phaser';
 import GameScene from './game/GameScene';
 import TitleScreen from './titleScreen/TitleScreen';
+import JungleHouseScene from './game/scenes/JungleHouseScene';
 
 function App() {
 
@@ -30,7 +31,8 @@ function App() {
 
             scene: [
                 TitleScreen,
-                GameScene
+                GameScene,
+                JungleHouseScene
             ]
         };
 
