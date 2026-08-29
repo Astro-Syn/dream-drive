@@ -22,6 +22,8 @@ import {
 import {
     createShopkeeperDialogue
 } from "./npcs/dialogue/shopkeeperDialogue";
+import { createLadders, updateLadders } from "./ladders/ladders";
+
 
 const WATERFALL_Y = 14387;
 const WORLD_WIDTH = 5000;
@@ -88,9 +90,7 @@ export default class GameScene extends Phaser.Scene {
         
         createBackgrounds(this);
        
-        // LADDERS
-
-        this.ladders = this.physics.add.staticGroup();
+        
 
         // NEFI VILLAGE ANIMATIONS
         // =========================
@@ -112,16 +112,13 @@ export default class GameScene extends Phaser.Scene {
        
         // NEFI VILLAGE
     createNefiDecos(this);
-        // LADDER
-        
-        this.ladders
-            .create(4065, 13935, "nefi-ladder")
-            .setScale(2)
-            .refreshBody();
 
-            this.ladders.create(3970, 13530, 
-                "nefi-ladder2"
-            ).setScale(2).refreshBody();
+    // =========================
+// LADDERS
+// =========================
+
+this.ladders = createLadders(this);
+       
 
        
         // PLAYER
@@ -515,36 +512,16 @@ if (
 
 
 // =========================
-// LADDER DETECTION
+// LADDER UPDATE
 // =========================
 
-let touchingLadder = false;
-
-this.physics.overlap(
+this.onLadder = updateLadders(
+    this,
     this.player,
     this.ladders,
-    () => {
-        touchingLadder = true;
-    }
+    this.cursors,
+    this.onLadder
 );
-
-// Start climbing when touching a ladder
-if (
-    touchingLadder &&
-    (this.cursors.up.isDown || this.cursors.down.isDown) &&
-    !this.onLadder
-) {
-    this.onLadder = true;
-}
-
-// Stop climbing when no longer touching the ladder
-if (
-    this.onLadder &&
-    !touchingLadder
-) {
-    this.onLadder = false;
-    this.player.body.allowGravity = true;
-}
 
            // =========================
         // CAMERA
@@ -559,101 +536,8 @@ if (
             0.08
         );
 
-// =========================
-// LADDER MOVEMENT
-// =========================
-
-if (this.onLadder) {
-
-    this.player.body.allowGravity = false;
-
-    this.player.setVelocityX(0);
 
 
-    // =========================
-    // CLIMBING ANIMATION
-    // =========================
-
-    if (
-        this.cursors.up.isDown ||
-        this.cursors.down.isDown
-    ) {
-
-        this.player.anims.play("ladder-climb-animation", true);
-
-    }
-    else {
-
-        // No climbing input
-        this.player.anims.stop();
-
-        // Show the first climbing frame
-        this.player.setTexture("ladder-climb-animation", 0);
-    }
-
-
-    // =========================
-    // JUMP OFF LADDER
-    // =========================
-if (this.cursors.left.isDown) {
-
-    this.onLadder = false;
-
-    this.player.body.allowGravity = true;
-
-    this.player.setTexture("girl");
-
-    this.player.setVelocityX(-160);
-    this.player.setVelocityY(-100);
-
-    this.player.anims.play("left", true);
-
-    return;
-}
-
-
-    if (this.cursors.right.isDown) {
-
-    this.onLadder = false;
-
-    this.player.body.allowGravity = true;
-
-    this.player.setTexture("girl");
-
-    this.player.setVelocityX(160);
-    this.player.setVelocityY(-100);
-
-    this.player.anims.play("right", true);
-
-    return;
-}
-
-    // =========================
-    // CLIMB UP / DOWN
-    // =========================
-
-    if (this.cursors.up.isDown) {
-
-        this.player.setVelocityY(-140);
-
-    }
-    else if (this.cursors.down.isDown) {
-
-        this.player.setVelocityY(140);
-
-    }
-    else {
-
-        this.player.setVelocityY(0);
-    }
-
-    return;
-
-}
-else {
-
-    this.player.body.allowGravity = true;
-}
         // =========================
         // GAME OVER
         // =========================
@@ -674,54 +558,62 @@ else {
 
 
         // =========================
-        // LEFT / RIGHT MOVEMENT
-        // =========================
+// NORMAL PLAYER MOVEMENT
+// =========================
 
-        if (this.cursors.left.isDown) {
+if (!this.onLadder) {
 
-            this.player.setVelocityX(-160);
+    // =========================
+    // LEFT / RIGHT MOVEMENT
+    // =========================
 
-            this.player.anims.play(
-                "left",
-                true
-            );
-        }
+    if (this.cursors.left.isDown) {
 
-        else if (this.cursors.right.isDown) {
+        this.player.setVelocityX(-160);
 
-            this.player.setVelocityX(160);
+        this.player.anims.play(
+            "left",
+            true
+        );
 
-            this.player.anims.play(
-                "right",
-                true
-            );
-        }
+    }
 
-        else {
+    else if (this.cursors.right.isDown) {
 
-            this.player.setVelocityX(0);
+        this.player.setVelocityX(160);
 
-            this.player.anims.play(
-                "turn"
-            );
-        }
+        this.player.anims.play(
+            "right",
+            true
+        );
+
+    }
+
+    else {
+
+        this.player.setVelocityX(0);
+
+        this.player.anims.play(
+            "turn"
+        );
+
+    }
 
 
-        // =========================
-        // JUMP
-        // =========================
+    // =========================
+    // JUMP
+    // =========================
 
-        // !this.onLadder prevents the normal
-        // jump from triggering while climbing.
+    if (
+        this.cursors.up.isDown &&
+        this.player.body.touching.down
+    ) {
 
-        if (
-            this.cursors.up.isDown &&
-            this.player.body.touching.down &&
-            !this.onLadder
-        ) {
+        this.player.setVelocityY(-475);
 
-            this.player.setVelocityY(-475);
-        }
+    }
+
+}
 
 
         if (this.player.y > WATERFALL_Y) {
