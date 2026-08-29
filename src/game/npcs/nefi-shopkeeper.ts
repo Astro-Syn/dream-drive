@@ -22,7 +22,6 @@ export function createNefiShopkeeper(scene: Phaser.Scene) {
     
     // SHOPKEEPER IDLE
 
-
     scene.anims.create({
         key: "shop-keeper-idle",
         frames: scene.anims.generateFrameNumbers(

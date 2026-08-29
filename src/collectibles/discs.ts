@@ -35,6 +35,18 @@ export function createDiscs(scene: Phaser.Scene) {
         {x: 217, y: 13839, static: true},
         {x: 305, y: 13689, static: true},
 
+
+        //discs placed on Jungle Heights platforms
+
+        {x: 160, y: 13570, static: true},
+        {x: 300, y: 13470, static: true},
+        {x: 190, y: 13370, static: true},
+        {x: 310, y: 13260, static: true},
+        {x: 180, y: 13659, static: true},
+        {x: 300, y: 13040, static: true},
+        {x: 190, y: 12490, static: true},
+        {x: 310, y: 12340, static: true},
+        
         
 
         // Gravity CDs

@@ -126,7 +126,7 @@ export default class GameScene extends Phaser.Scene {
        
         // PLAYER
         this.player = this.physics.add
-            .sprite(3817, 14167, "girl")
+            .sprite(313, 13532, "girl")
             .setScale(3).refreshBody();
             
 
@@ -166,7 +166,7 @@ this.shopkeeperDialogue = createShopkeeperDialogue(
        createWaterFallAnimation(this);
      
         // PLAYER ANIMATIONS
-        // =========================
+    
         //girl Main character
 
 

@@ -203,6 +203,78 @@ export function createPlatforms(scene: Phaser.Scene) {
         .refreshBody();
 
 
+        //Platforms leading up to Jungle Heights
+
+        scene.platforms
+        .create(160, 13600, "platform2")
+        .setScale(2)
+        .refreshBody();
+
+        scene.platforms
+        .create(300, 13500, "platform2")
+        .setScale(2)
+        .refreshBody();
+
+
+        scene.platforms
+        .create(190, 13400, "platform2")
+        .setScale(2)
+        .refreshBody();
+
+        scene.platforms
+        .create(310, 13290, "platform2")
+        .setScale(2)
+        .refreshBody();
+
+        scene.platforms
+    .create(180, 13180, "platform2")
+    .setScale(2)
+    .refreshBody();
+
+scene.platforms
+    .create(300, 13070, "platform2")
+    .setScale(2)
+    .refreshBody();
+
+scene.platforms
+    .create(190, 12960, "platform2")
+    .setScale(2)
+    .refreshBody();
+
+scene.platforms
+    .create(310, 12850, "platform2")
+    .setScale(2)
+    .refreshBody();
+
+scene.platforms
+    .create(180, 12740, "platform2")
+    .setScale(2)
+    .refreshBody();
+
+scene.platforms
+    .create(300, 12630, "platform2")
+    .setScale(2)
+    .refreshBody();
+
+scene.platforms
+    .create(190, 12520, "platform2")
+    .setScale(2)
+    .refreshBody();
+
+scene.platforms
+    .create(310, 12410, "platform2")
+    .setScale(2)
+    .refreshBody();
+
+scene.platforms
+    .create(180, 12300, "platform2")
+    .setScale(2)
+    .refreshBody();
+
+scene.platforms
+    .create(300, 12190, "platform2")
+    .setScale(2)
+    .refreshBody();
 
 
     // =========================

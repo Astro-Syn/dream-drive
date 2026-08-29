@@ -140,7 +140,6 @@ export function preloadAssets(scene: Phaser.Scene){
         );
 
       
-
         scene.load.image(
             "diving-tree",
             "/Images/dividing-tree.png"
