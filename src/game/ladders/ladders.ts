@@ -11,6 +11,15 @@ export function createLadders(
     const ladders =
         scene.physics.add.staticGroup();
 
+    //ladder to Jungle Heights
+    ladders.create(
+        350,
+        12100,
+        "jungle-heights-ladder"
+    ).setScale(2)
+    .refreshBody();
+
+
     // Nefi Village ladder
     ladders
         .create(

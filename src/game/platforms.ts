@@ -262,17 +262,17 @@ scene.platforms
     .refreshBody();
 
 scene.platforms
-    .create(310, 12410, "platform2")
+    .create(310, 12400, "platform2")
     .setScale(2)
     .refreshBody();
 
 scene.platforms
-    .create(180, 12300, "platform2")
+    .create(200, 12300, "platform2")
     .setScale(2)
     .refreshBody();
 
 scene.platforms
-    .create(300, 12190, "platform2")
+    .create(400, 12300, "platform2")
     .setScale(2)
     .refreshBody();
 

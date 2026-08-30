@@ -121,17 +121,15 @@ export default class GameScene extends Phaser.Scene {
 // =========================
 
 this.ladders = createLadders(this);
-       
-
-       
+              
         // PLAYER
 
         //girl location
        const spawnX =
-    data.spawnX ?? 1164;
+    data.spawnX ?? 179;
 
 const spawnY =
-    data.spawnY ?? 13689;
+    data.spawnY ?? 12479;
 
 
 this.player = this.physics.add

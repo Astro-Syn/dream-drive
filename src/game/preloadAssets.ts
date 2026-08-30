@@ -411,5 +411,51 @@ export function preloadAssets(scene: Phaser.Scene){
             "bg12",
             "/Images/dream-drive-bg12.png"
         )
+
+        scene.load.image(
+            "bg13",
+            "/Images/dream-drive-bg13.png"
+        );
+
+        scene.load.image(
+            "bg14",
+            "/Images/dream-drive-bg14.png"
+        )
+
+        //Jungle Heights assets
+
+        scene.load.image(
+            "bush-border",
+            "/Images/jungleHeights/jungle-heights-bush-border.png"
+        )
+
+        scene.load.image(
+            "jungle-heights-ladder",
+            "/Images/jungleHeights/jungle-heights-ladder.png"
+        )
+
+        scene.load.image(
+            "jungle-heights-wood-bg",
+            "/Images/jungleHeights/jungle-heights-wood-bg.png"
+        )
+
+        scene.load.image(
+            "jungle-heights-platform",
+            "/Images/jungleHeights/jungle-heights-platform.png"
+        )
+
+        scene.load.image(
+            "jungle-heights-platform2",
+            "/Images/jungleHeights/jungle-heights-platform2.png"
+        )
+
+        scene.load.spritesheet(
+            "jungle-heights-chest",
+            "/Images/jungleHeights/jungle-heights-chest-spritesheet.png",
+            {
+                frameWidth: 24,
+                frameHeight: 19
+            }
+        );
 }
 
