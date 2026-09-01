@@ -2,7 +2,13 @@ import Phaser from "phaser";
 
 export default class JungleHouseScene extends Phaser.Scene {
 
+    // =========================
+    // GAME OBJECTS
+    // =========================
+
     player!: Phaser.Physics.Arcade.Sprite;
+
+    discs!: Phaser.Physics.Arcade.Group;
 
     platforms!: Phaser.Physics.Arcade.StaticGroup;
 
@@ -10,50 +16,61 @@ export default class JungleHouseScene extends Phaser.Scene {
 
     exitDoor!: Phaser.GameObjects.Zone;
 
-    // Prevent multiple scene transitions
+    scoreText!: Phaser.GameObjects.Text;
+
+
+    // =========================
+    // SCENE VARIABLES
+    // =========================
+
     private isTransitioning = false;
 
-    // Prevent immediate exit when entering the treehouse
     private canExit = false;
 
 
+    // =========================
+    // CONSTRUCTOR
+    // =========================
+
     constructor() {
-
         super("JungleHouseScene");
-
     }
 
 
+    // =========================
+    // CREATE
+    // =========================
+
     create(data: {
-
         outsideSpawnX?: number;
-
         outsideSpawnY?: number;
-
     }) {
 
-       
+        // =========================
+        // RESET SCENE VARIABLES
+        // =========================
 
         this.isTransitioning = false;
-
         this.canExit = false;
 
+
+        // =========================
+        // WORLD BOUNDS
+        // =========================
+
         this.physics.world.setBounds(
-    0,
-    0,
-    800,
-    600
-);
+            0,
+            0,
+            800,
+            600
+        );
 
-
-this.physics.world.setBoundsCollision(
-
-    true,  // left
-    true,  // right
-    false, // top
-    false  // bottom
-
-);
+        this.physics.world.setBoundsCollision(
+            true,   // left
+            true,   // right
+            false,  // top
+            false   // bottom
+        );
 
 
         // =========================
@@ -68,29 +85,30 @@ this.physics.world.setBoundsCollision(
 
 
         // =========================
-        // TREEHOUSE ROOM
+        // TREEHOUSE BACKGROUND
         // =========================
 
-        // Background
+        this.add
+            .image(
+                400,
+                300,
+                "jungle-heights-wood-bg"
+            )
+            .setScale(2);
 
-        this.add.image(
-            400,
-            300,
-            "jungle-heights-wood-bg"
-        )
-        .setScale(2);
 
+        // =========================
+        // FOLIAGE
+        // =========================
 
-        // Foliage
-
-        const foliage = this.add.image(
-            400,
-            300,
-            "bush-border"
-        );
+        const foliage =
+            this.add.image(
+                400,
+                300,
+                "bush-border"
+            );
 
         foliage.setScale(1);
-
         foliage.setDepth(100);
 
 
@@ -102,6 +120,7 @@ this.physics.world.setBoundsCollision(
             this.physics.add.staticGroup();
 
 
+        
         this.platforms
             .create(
                 200,
@@ -112,7 +131,8 @@ this.physics.world.setBoundsCollision(
             .refreshBody();
 
 
-            this.platforms
+        
+        this.platforms
             .create(
                 400,
                 520,
@@ -122,7 +142,7 @@ this.physics.world.setBoundsCollision(
             .refreshBody();
 
 
-
+        
         this.platforms
             .create(
                 600,
@@ -132,36 +152,164 @@ this.physics.world.setBoundsCollision(
             .setScale(2)
             .refreshBody();
 
-            this.platforms.create(
+
+        
+        this.platforms
+            .create(
                 400,
                 610,
-                "nefi-platform1").setScale(2).refreshBody()
+                "nefi-platform1"
+            )
+            .setScale(2)
+            .refreshBody();
 
-        this.platforms.create(
+
+        
+        this.platforms
+            .create(
                 10,
                 370,
-                "jungle-heights-platform2").setScale(2).refreshBody()
+                "jungle-heights-platform2"
+            )
+            .setScale(2)
+            .refreshBody();
 
-         this.platforms.create(
+
+        
+        this.platforms
+            .create(
                 500,
                 300,
-                "jungle-heights-platform2").setScale(2).refreshBody()
+                "jungle-heights-platform2"
+            )
+            .setScale(2)
+            .refreshBody();
 
-        this.platforms.create(
+
+        
+        this.platforms
+            .create(
                 120,
                 150,
-                "jungle-heights-platform").setScale(2).refreshBody()
+                "jungle-heights-platform"
+            )
+            .setScale(2)
+            .refreshBody();
+
+
+        // =========================
+        // DISCS
+        // =========================
+
+        this.discs =
+            this.physics.add.group();
+
+
+        
+        this.discs
+            .create(
+                200,
+                465,
+                "disc"
+            )
+            .setScale(2);
+
+
+        
+        this.discs
+            .create(
+                250,
+                465,
+                "disc"
+            )
+            .setScale(2);
+
+
+        
+        this.discs
+            .create(
+                380,
+                485,
+                "disc"
+            )
+            .setScale(2);
+
+
+    
+        this.discs
+            .create(
+                430,
+                485,
+                "disc"
+            )
+            .setScale(2);
+
+
+        
+        this.discs
+            .create(
+                580,
+                495,
+                "disc"
+            )
+            .setScale(2);
+
+
+        
+        this.discs
+            .create(
+                10,
+                335,
+                "disc"
+            )
+            .setScale(2);
+
+
+        
+        this.discs
+            .create(
+                500,
+                265,
+                "disc"
+            )
+            .setScale(2);
+
+
+    
+        this.discs
+            .create(
+                120,
+                115,
+                "disc"
+            )
+            .setScale(2);
+
+
+        
+        this.discs.children.iterate(
+            (child) => {
+
+                const disc =
+                    child as Phaser.Physics.Arcade.Sprite;
+
+                disc.body.setAllowGravity(false);
+
+                return true;
+            }
+        );
+
 
         // =========================
         // EXIT LADDER
         // =========================
 
-        this.add.image(
-            400,
-            540,
-            "jungle-heights-ladder"
-        )
-        .setScale(2);
+        this.add
+            .image(
+                400,
+                540,
+                "jungle-heights-ladder"
+            )
+            .setScale(2);
 
 
         // =========================
@@ -172,17 +320,14 @@ this.physics.world.setBoundsCollision(
             this.physics.add
                 .sprite(
                     400,
-
-                    // Spawn safely above the ladder
-                    // and exit trigger.
                     480,
-
                     "girl"
                 )
                 .setScale(3)
                 .refreshBody();
 
 
+        // Player hitbox
         this.player.body.setSize(
             12,
             14
@@ -203,89 +348,83 @@ this.physics.world.setBoundsCollision(
             this.platforms
         );
 
-        this.player.setCollideWorldBounds(true);
+
+        // Discs collide with platforms
+        this.physics.add.collider(
+            this.discs,
+            this.platforms
+        );
+
+
+        // Player respects left/right bounds
+        this.player.setCollideWorldBounds(
+            true
+        );
 
 
         // =========================
         // PLAYER ANIMATIONS
         // =========================
 
+        // LEFT
         if (!this.anims.exists("left")) {
 
             this.anims.create({
-
                 key: "left",
 
                 frames:
                     this.anims.generateFrameNumbers(
                         "girl",
                         {
-
                             start: 0,
-
                             end: 3
-
                         }
                     ),
 
                 frameRate: 10,
 
                 repeat: -1
-
             });
-
         }
 
 
+        // IDLE / TURN
         if (!this.anims.exists("turn")) {
 
             this.anims.create({
-
                 key: "turn",
 
                 frames: [
-
                     {
-
                         key: "girl",
-
                         frame: 4
-
                     }
-
                 ],
 
                 frameRate: 20
-
             });
-
         }
 
 
+        // RIGHT
         if (!this.anims.exists("right")) {
 
             this.anims.create({
-
                 key: "right",
 
                 frames:
                     this.anims.generateFrameNumbers(
                         "girl",
                         {
-
                             start: 6,
-
                             end: 9
-
                         }
                     ),
 
                 frameRate: 10,
 
                 repeat: -1
-
             });
-
         }
 
 
@@ -296,18 +435,53 @@ this.physics.world.setBoundsCollision(
         const keyboard =
             this.input.keyboard;
 
-
         if (!keyboard) {
 
             throw new Error(
                 "Keyboard plugin is not available."
             );
-
         }
-
 
         this.cursors =
             keyboard.createCursorKeys();
+
+
+        // =========================
+        // SCORE
+        // =========================
+
+        // Get the shared score
+        const currentScore =
+            this.registry.get("score") ?? 0;
+
+
+        // Make sure the registry has it
+        this.registry.set(
+            "score",
+            currentScore
+        );
+
+
+        // Display the shared score
+        this.scoreText =
+            this.add.text(
+                16,
+                16,
+                `Drive Score: ${currentScore}`,
+                {
+                    fontFamily: "monospace",
+                    fontSize: "26px",
+                    color: "#00FF9F",
+                    stroke: "#BD00FF",
+                    strokeThickness: 3
+                }
+            );
+
+
+        // Keep score fixed to screen
+        this.scoreText.setScrollFactor(0);
+
+        this.scoreText.setDepth(200);
 
 
         // =========================
@@ -316,18 +490,14 @@ this.physics.world.setBoundsCollision(
 
         this.exitDoor =
             this.add.zone(
-
                 400,
-
                 550,
-
                 60,
-
                 40
-
             );
 
 
+        // Give the zone a static physics body
         this.physics.add.existing(
             this.exitDoor,
             true
@@ -339,42 +509,41 @@ this.physics.world.setBoundsCollision(
         // =========================
 
         this.physics.add.overlap(
-
             this.player,
-
             this.exitDoor,
-
             () => {
 
-                // Do nothing if the player has just
-                // entered the treehouse.
-
+                // Don't exit immediately
+                // after entering the treehouse
                 if (!this.canExit) {
-
                     return;
-
                 }
 
 
-                // Prevent transition from firing twice.
-
+                // Prevent duplicate transitions
                 if (this.isTransitioning) {
-
                     return;
-
                 }
 
 
                 this.exitTreehouse(
-
                     outsideSpawnX,
-
                     outsideSpawnY
-
                 );
-
             }
+        );
 
+
+        // =========================
+        // DISC COLLECTION
+        // =========================
+
+        this.physics.add.overlap(
+            this.player,
+            this.discs,
+            this.collectDisc,
+            undefined,
+            this
         );
 
 
@@ -382,20 +551,11 @@ this.physics.world.setBoundsCollision(
         // ENABLE EXIT AFTER DELAY
         // =========================
 
-        // This prevents the player from spawning,
-        // immediately overlapping the exit zone,
-        // and getting stuck in a transition loop.
-
         this.time.delayedCall(
-
             800,
-
             () => {
-
                 this.canExit = true;
-
             }
-
         );
 
 
@@ -404,77 +564,79 @@ this.physics.world.setBoundsCollision(
         // =========================
 
         this.cameras.main.fadeIn(
-
             400,
-
             0,
-
             0,
-
             0
-
         );
-
     }
 
 
+    // =========================
+    // UPDATE
+    // =========================
+
     update() {
 
-        // Don't allow movement during a transition.
+        // =========================
+        // TRANSITION CHECK
+        // =========================
 
         if (this.isTransitioning) {
 
             this.player.setVelocityX(0);
 
             return;
-
         }
 
 
         // =========================
-        // LEFT / RIGHT
+        // LEFT
         // =========================
 
         if (this.cursors.left.isDown) {
 
-            this.player.setVelocityX(-160);
+            this.player.setVelocityX(
+                -160
+            );
 
             this.player.anims.play(
-
                 "left",
-
                 true
-
             );
-
         }
 
 
-        else if (this.cursors.right.isDown) {
+        // =========================
+        // RIGHT
+        // =========================
 
-            this.player.setVelocityX(160);
+        else if (
+            this.cursors.right.isDown
+        ) {
+
+            this.player.setVelocityX(
+                160
+            );
 
             this.player.anims.play(
-
                 "right",
-
                 true
-
             );
-
         }
 
+
+        // =========================
+        // IDLE
+        // =========================
 
         else {
 
             this.player.setVelocityX(0);
 
             this.player.anims.play(
-
                 "turn"
-
             );
-
         }
 
 
@@ -483,17 +645,66 @@ this.physics.world.setBoundsCollision(
         // =========================
 
         if (
-
             this.cursors.up.isDown &&
-
             this.player.body.touching.down
-
         ) {
 
-            this.player.setVelocityY(-475);
-
+            this.player.setVelocityY(
+                -475
+            );
         }
 
+
+        // =========================
+        // UPDATE SCORE DISPLAY
+        // =========================
+
+        const currentScore =
+            this.registry.get("score") ?? 0;
+
+        this.scoreText.setText(
+            `Drive Score: ${currentScore}`
+        );
+    }
+
+
+    // =========================
+    // COLLECT DISC
+    // =========================
+
+    collectDisc(
+        player: Phaser.Physics.Arcade.Sprite,
+        disc: Phaser.Physics.Arcade.Sprite
+    ) {
+
+        // Remove disc
+        disc.disableBody(
+            true,
+            true
+        );
+
+
+        // Get current shared score
+        const currentScore =
+            this.registry.get("score") ?? 0;
+
+
+        // Add 10 points
+        const newScore =
+            currentScore + 10;
+
+
+        // Save new score
+        this.registry.set(
+            "score",
+            newScore
+        );
+
+
+        // Update score display
+        this.scoreText.setText(
+            `Drive Score: ${newScore}`
+        );
     }
 
 
@@ -502,80 +713,78 @@ this.physics.world.setBoundsCollision(
     // =========================
 
     exitTreehouse(
-
         outsideSpawnX: number,
-
         outsideSpawnY: number
-
     ) {
 
-        // Prevent this function from running twice.
+        // =========================
+        // PREVENT DUPLICATE EXIT
+        // =========================
 
         if (this.isTransitioning) {
-
             return;
-
         }
-
 
         this.isTransitioning = true;
 
 
-        // Stop the player immediately.
+        // =========================
+        // STOP PLAYER
+        // =========================
 
         this.player.setVelocity(
-
             0,
-
             0
-
         );
 
 
-        // Fade out.
+        // =========================
+        // SAVE SCORE
+        // =========================
+
+        const currentScore =
+            this.registry.get("score") ?? 0;
+
+        this.registry.set(
+            "score",
+            currentScore
+        );
+
+
+        // =========================
+        // FADE OUT
+        // =========================
 
         this.cameras.main.fadeOut(
-
             400,
-
             0,
-
             0,
-
             0
-
         );
 
 
-        // Wait for fade to finish.
+        // =========================
+        // RETURN TO GAME SCENE
+        // =========================
 
         this.cameras.main.once(
-
             Phaser.Cameras.Scene2D.Events
                 .FADE_OUT_COMPLETE,
 
             () => {
 
                 this.scene.start(
-
                     "GameScene",
-
                     {
-
                         spawnX:
                             outsideSpawnX,
 
                         spawnY:
                             outsideSpawnY
-
                     }
-
                 );
-
             }
-
         );
-
     }
-
 }
+

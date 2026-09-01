@@ -85,8 +85,8 @@ export default class GameScene extends Phaser.Scene {
             16000
         );
 
-        this.score = 0;
-        this.gameOver = false;
+        this.score = this.registry.get("score") ?? 0;
+this.gameOver = false;
 
 
         // BACKGROUNDS
@@ -332,7 +332,7 @@ this.shopkeeperDialogue = createShopkeeperDialogue(
         this.scoreText = this.add.text(
             16,
             16,
-            "Drive Score: 0",
+            "Drive Score: " + this.score,
             {
                  fontFamily: "monospace",
         fontSize: "26px",
@@ -786,6 +786,11 @@ enterJungleHeights() {
         disc.disableBody(true, true);
 
         this.score += 10;
+
+this.registry.set(
+    "score",
+    this.score
+);
 
         this.scoreText.setText(
             "Drive Score: " + this.score
