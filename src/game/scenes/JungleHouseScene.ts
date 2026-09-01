@@ -2,26 +2,19 @@ import Phaser from "phaser";
 
 export default class JungleHouseScene extends Phaser.Scene {
 
-    // =========================
-    // GAME OBJECTS
-    // =========================
-
     player!: Phaser.Physics.Arcade.Sprite;
 
     platforms!: Phaser.Physics.Arcade.StaticGroup;
 
-    ladders!: Phaser.Physics.Arcade.StaticGroup;
-
     cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
 
+    exitDoor!: Phaser.GameObjects.Zone;
 
-    // =========================
-    // LADDER VARIABLES
-    // =========================
+    // Prevent multiple scene transitions
+    private isTransitioning = false;
 
-    onLadder = false;
-
-    private exitingTreehouse = false;
+    // Prevent immediate exit when entering the treehouse
+    private canExit = false;
 
 
     constructor() {
@@ -39,6 +32,30 @@ export default class JungleHouseScene extends Phaser.Scene {
 
     }) {
 
+       
+
+        this.isTransitioning = false;
+
+        this.canExit = false;
+
+        this.physics.world.setBounds(
+    0,
+    0,
+    800,
+    600
+);
+
+
+this.physics.world.setBoundsCollision(
+
+    true,  // left
+    true,  // right
+    false, // top
+    false  // bottom
+
+);
+
+
         // =========================
         // STORE OUTSIDE SPAWN POINT
         // =========================
@@ -51,8 +68,10 @@ export default class JungleHouseScene extends Phaser.Scene {
 
 
         // =========================
-        // TREEHOUSE BACKGROUND
+        // TREEHOUSE ROOM
         // =========================
+
+        // Background
 
         this.add.image(
             400,
@@ -62,9 +81,7 @@ export default class JungleHouseScene extends Phaser.Scene {
         .setScale(2);
 
 
-        // =========================
-        // FOLIAGE
-        // =========================
+        // Foliage
 
         const foliage = this.add.image(
             400,
@@ -85,44 +102,66 @@ export default class JungleHouseScene extends Phaser.Scene {
             this.physics.add.staticGroup();
 
 
-        // LEFT FLOOR
         this.platforms
             .create(
+                200,
+                500,
+                "platform2"
+            )
+            .setScale(2)
+            .refreshBody();
+
+
+            this.platforms
+            .create(
+                400,
+                520,
+                "platform2"
+            )
+            .setScale(2)
+            .refreshBody();
+
+
+
+        this.platforms
+            .create(
+                600,
+                530,
+                "platform2"
+            )
+            .setScale(2)
+            .refreshBody();
+
+            this.platforms.create(
+                400,
+                610,
+                "nefi-platform1").setScale(2).refreshBody()
+
+        this.platforms.create(
+                10,
+                370,
+                "jungle-heights-platform2").setScale(2).refreshBody()
+
+         this.platforms.create(
+                500,
                 300,
-                600,
-                "platform2"
-            )
-            .setScale(2)
-            .refreshBody();
+                "jungle-heights-platform2").setScale(2).refreshBody()
 
-
-        // RIGHT FLOOR
-        this.platforms
-            .create(
-                620,
-                600,
-                "platform2"
-            )
-            .setScale(2)
-            .refreshBody();
-
+        this.platforms.create(
+                120,
+                150,
+                "jungle-heights-platform").setScale(2).refreshBody()
 
         // =========================
         // EXIT LADDER
         // =========================
 
-        this.ladders =
-            this.physics.add.staticGroup();
-
-
-        this.ladders
-            .create(
-                400,
-                540,
-                "jungle-heights-ladder"
-            )
-            .setScale(2)
-            .refreshBody();
+        this.add.image(
+            400,
+            540,
+            "jungle-heights-ladder"
+        )
+        .setScale(2);
 
 
         // =========================
@@ -132,8 +171,12 @@ export default class JungleHouseScene extends Phaser.Scene {
         this.player =
             this.physics.add
                 .sprite(
-                    300,
+                    400,
+
+                    // Spawn safely above the ladder
+                    // and exit trigger.
                     480,
+
                     "girl"
                 )
                 .setScale(3)
@@ -152,13 +195,15 @@ export default class JungleHouseScene extends Phaser.Scene {
 
 
         // =========================
-        // PLAYER COLLIDES WITH FLOOR
+        // PLAYER COLLIDER
         // =========================
 
         this.physics.add.collider(
             this.player,
             this.platforms
         );
+
+        this.player.setCollideWorldBounds(true);
 
 
         // =========================
@@ -175,8 +220,11 @@ export default class JungleHouseScene extends Phaser.Scene {
                     this.anims.generateFrameNumbers(
                         "girl",
                         {
+
                             start: 0,
+
                             end: 3
+
                         }
                     ),
 
@@ -198,8 +246,11 @@ export default class JungleHouseScene extends Phaser.Scene {
                 frames: [
 
                     {
+
                         key: "girl",
+
                         frame: 4
+
                     }
 
                 ],
@@ -221,45 +272,15 @@ export default class JungleHouseScene extends Phaser.Scene {
                     this.anims.generateFrameNumbers(
                         "girl",
                         {
+
                             start: 6,
+
                             end: 9
+
                         }
                     ),
 
                 frameRate: 10,
-
-                repeat: -1
-
-            });
-
-        }
-
-
-        // =========================
-        // LADDER CLIMB ANIMATION
-        // =========================
-
-        if (
-            !this.anims.exists(
-                "ladder-climb-animation"
-            )
-        ) {
-
-            this.anims.create({
-
-                key:
-                    "ladder-climb-animation",
-
-                frames:
-                    this.anims.generateFrameNumbers(
-                        "ladder-climb-animation",
-                        {
-                            start: 0,
-                            end: 2
-                        }
-                    ),
-
-                frameRate: 8,
 
                 repeat: -1
 
@@ -290,206 +311,58 @@ export default class JungleHouseScene extends Phaser.Scene {
 
 
         // =========================
-        // FADE IN
+        // EXIT TRIGGER
         // =========================
 
-        this.cameras.main.fadeIn(
-            400,
-            0,
-            0,
-            0
+        this.exitDoor =
+            this.add.zone(
+
+                400,
+
+                550,
+
+                60,
+
+                40
+
+            );
+
+
+        this.physics.add.existing(
+            this.exitDoor,
+            true
         );
 
 
         // =========================
-        // STORE EXIT DATA
+        // AUTOMATIC EXIT
         // =========================
 
-        this.registry.set(
-            "outsideSpawnX",
-            outsideSpawnX
-        );
-
-        this.registry.set(
-            "outsideSpawnY",
-            outsideSpawnY
-        );
-
-    }
-
-
-    update() {
-
-        // Prevent anything from happening
-        // while the scene is transitioning.
-
-        if (this.exitingTreehouse) {
-
-            return;
-
-        }
-
-
-        // =========================
-        // LADDER DETECTION
-        // =========================
-
-        let touchingLadder = false;
-
-
-        this.physics.overlap(
+        this.physics.add.overlap(
 
             this.player,
 
-            this.ladders,
+            this.exitDoor,
 
             () => {
 
-                touchingLadder = true;
+                // Do nothing if the player has just
+                // entered the treehouse.
 
-            }
+                if (!this.canExit) {
 
-        );
+                    return;
 
-
-        // =========================
-        // START CLIMBING
-        // =========================
-
-        if (
-
-            touchingLadder &&
-
-            (
-                this.cursors.up.isDown ||
-
-                this.cursors.down.isDown
-            )
-
-        ) {
-
-            this.onLadder = true;
-
-        }
+                }
 
 
-        // =========================
-        // STOP CLIMBING
-        // =========================
+                // Prevent transition from firing twice.
 
-        if (
+                if (this.isTransitioning) {
 
-            this.onLadder &&
+                    return;
 
-            !touchingLadder
-
-        ) {
-
-            this.onLadder = false;
-
-            this.player.body.allowGravity =
-                true;
-
-        }
-
-
-        // =========================
-        // LADDER MOVEMENT
-        // =========================
-
-        if (this.onLadder) {
-
-            // Disable gravity ONLY
-            // while climbing.
-
-            this.player.body.allowGravity =
-                false;
-
-
-            // Stop horizontal movement.
-
-            this.player.setVelocityX(0);
-
-
-            // =========================
-            // CLIMB UP
-            // =========================
-
-            if (
-                this.cursors.up.isDown
-            ) {
-
-                this.player.setVelocityY(
-                    -140
-                );
-
-                this.player.anims.play(
-                    "ladder-climb-animation",
-                    true
-                );
-
-            }
-
-
-            // =========================
-            // CLIMB DOWN
-            // =========================
-
-            else if (
-                this.cursors.down.isDown
-            ) {
-
-                this.player.setVelocityY(
-                    140
-                );
-
-                this.player.anims.play(
-                    "ladder-climb-animation",
-                    true
-                );
-
-            }
-
-
-            // =========================
-            // STOP ON LADDER
-            // =========================
-
-            else {
-
-                this.player.setVelocityY(0);
-
-                this.player.anims.stop();
-
-                this.player.setTexture(
-                    "ladder-climb-animation",
-                    0
-                );
-
-            }
-
-
-            // =========================
-            // EXIT TREEHOUSE
-            // =========================
-
-            // Once the player climbs below
-            // the bottom of the treehouse,
-            // automatically exit.
-
-            if (
-                this.player.y > 620
-            ) {
-
-                const outsideSpawnX =
-                    this.registry.get(
-                        "outsideSpawnX"
-                    );
-
-                const outsideSpawnY =
-                    this.registry.get(
-                        "outsideSpawnY"
-                    );
+                }
 
 
                 this.exitTreehouse(
@@ -502,6 +375,56 @@ export default class JungleHouseScene extends Phaser.Scene {
 
             }
 
+        );
+
+
+        // =========================
+        // ENABLE EXIT AFTER DELAY
+        // =========================
+
+        // This prevents the player from spawning,
+        // immediately overlapping the exit zone,
+        // and getting stuck in a transition loop.
+
+        this.time.delayedCall(
+
+            800,
+
+            () => {
+
+                this.canExit = true;
+
+            }
+
+        );
+
+
+        // =========================
+        // FADE IN
+        // =========================
+
+        this.cameras.main.fadeIn(
+
+            400,
+
+            0,
+
+            0,
+
+            0
+
+        );
+
+    }
+
+
+    update() {
+
+        // Don't allow movement during a transition.
+
+        if (this.isTransitioning) {
+
+            this.player.setVelocityX(0);
 
             return;
 
@@ -509,63 +432,47 @@ export default class JungleHouseScene extends Phaser.Scene {
 
 
         // =========================
-        // NORMAL GRAVITY
+        // LEFT / RIGHT
         // =========================
 
-        this.player.body.allowGravity =
-            true;
+        if (this.cursors.left.isDown) {
 
-
-        // =========================
-        // LEFT MOVEMENT
-        // =========================
-
-        if (
-            this.cursors.left.isDown
-        ) {
-
-            this.player.setVelocityX(
-                -160
-            );
+            this.player.setVelocityX(-160);
 
             this.player.anims.play(
+
                 "left",
+
                 true
+
             );
 
         }
 
 
-        // =========================
-        // RIGHT MOVEMENT
-        // =========================
+        else if (this.cursors.right.isDown) {
 
-        else if (
-            this.cursors.right.isDown
-        ) {
-
-            this.player.setVelocityX(
-                160
-            );
+            this.player.setVelocityX(160);
 
             this.player.anims.play(
+
                 "right",
+
                 true
+
             );
 
         }
 
-
-        // =========================
-        // IDLE
-        // =========================
 
         else {
 
             this.player.setVelocityX(0);
 
             this.player.anims.play(
+
                 "turn"
+
             );
 
         }
@@ -583,9 +490,7 @@ export default class JungleHouseScene extends Phaser.Scene {
 
         ) {
 
-            this.player.setVelocityY(
-                -475
-            );
+            this.player.setVelocityY(-475);
 
         }
 
@@ -604,24 +509,30 @@ export default class JungleHouseScene extends Phaser.Scene {
 
     ) {
 
-        // Prevent this from firing
-        // multiple times.
+        // Prevent this function from running twice.
 
-        if (this.exitingTreehouse) {
+        if (this.isTransitioning) {
 
             return;
 
         }
 
 
-        this.exitingTreehouse = true;
+        this.isTransitioning = true;
 
+
+        // Stop the player immediately.
 
         this.player.setVelocity(
+
             0,
+
             0
+
         );
 
+
+        // Fade out.
 
         this.cameras.main.fadeOut(
 
@@ -635,6 +546,8 @@ export default class JungleHouseScene extends Phaser.Scene {
 
         );
 
+
+        // Wait for fade to finish.
 
         this.cameras.main.once(
 
