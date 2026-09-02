@@ -50,8 +50,8 @@ export function createJhNpc(scene: Phaser.Scene) {
     // CREATE NPC
 
     const jhNpc = scene.physics.add.sprite(
-        4225,
-        13560,
+        400,
+        265,
         "jungle-heights-npc"
     );
 

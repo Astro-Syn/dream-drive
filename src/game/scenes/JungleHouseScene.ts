@@ -1,4 +1,5 @@
 import Phaser from "phaser";
+import { createJhNpc, updateJhNpc } from "../npcs/jhNpc";
 
 export default class JungleHouseScene extends Phaser.Scene {
 
@@ -7,16 +8,12 @@ export default class JungleHouseScene extends Phaser.Scene {
     // =========================
 
     player!: Phaser.Physics.Arcade.Sprite;
-
     discs!: Phaser.Physics.Arcade.Group;
-
     platforms!: Phaser.Physics.Arcade.StaticGroup;
-
     cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
-
     exitDoor!: Phaser.GameObjects.Zone;
-
     scoreText!: Phaser.GameObjects.Text;
+    jhNpc!: Phaser.Physics.Arcade.Sprite;
 
 
     // =========================
@@ -299,6 +296,11 @@ export default class JungleHouseScene extends Phaser.Scene {
         );
 
 
+        //npc walking around
+
+        this.jhNpc = createJhNpc(this);
+
+
         // =========================
         // EXIT LADDER
         // =========================
@@ -355,6 +357,12 @@ export default class JungleHouseScene extends Phaser.Scene {
             this.platforms
         );
 
+        //npc collider
+
+        this.physics.add.collider(
+            this.jhNpc,
+            this.platforms
+        )
 
         // Player respects left/right bounds
         this.player.setCollideWorldBounds(
@@ -577,6 +585,9 @@ export default class JungleHouseScene extends Phaser.Scene {
     // =========================
 
     update() {
+
+        //npc movement
+        updateJhNpc(this.jhNpc);
 
         // =========================
         // TRANSITION CHECK
