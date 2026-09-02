@@ -57,6 +57,14 @@ export function createDecorations(scene: Phaser.Scene) {
         .image(400, 11900, "jungle-heights-enterance")
         .setScale(2);
 
+          scene.add
+        .image(150, 11800, "jungle-heights-enterance")
+        .setScale(2);
+
+          scene.add
+        .image(600, 11800, "jungle-heights-enterance")
+        .setScale(2);
+
       
 
 

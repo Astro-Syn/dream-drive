@@ -467,5 +467,14 @@ export function preloadAssets(scene: Phaser.Scene){
             "jungle-heights-enterance",
             "/Images/jungleHeights/jungle-heights-enterance.png"
         )
+
+        scene.load.spritesheet(
+            "jungle-heights-npc",
+            "/Images/jungleHeights/jungle-heights-npc-spritesheet.png",
+            {
+                frameWidth: 16,
+                frameHeight: 16
+            }
+        )
 }
 
