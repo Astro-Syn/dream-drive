@@ -420,6 +420,11 @@ export function preloadAssets(scene: Phaser.Scene){
         scene.load.image(
             "bg14",
             "/Images/dream-drive-bg14.png"
+        );
+
+        scene.load.image(
+            "bg15",
+            "/Images/dream-drive-bg15.png"
         )
 
         //Jungle Heights assets
@@ -457,5 +462,10 @@ export function preloadAssets(scene: Phaser.Scene){
                 frameHeight: 19
             }
         );
+
+        scene.load.image(
+            "jungle-heights-enterance",
+            "/Images/jungleHeights/jungle-heights-enterance.png"
+        )
 }
 

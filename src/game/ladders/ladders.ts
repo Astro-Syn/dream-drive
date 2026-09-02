@@ -13,7 +13,7 @@ export function createLadders(
 
     //ladder to Jungle Heights
     ladders.create(
-        350,
+        335,
         12100,
         "jungle-heights-ladder"
     ).setScale(2)
