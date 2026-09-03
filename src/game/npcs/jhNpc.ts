@@ -1,6 +1,6 @@
 import Phaser from "phaser";
 
-import { alienNpcDialogue } from "./dialogue/alienNpcDialogue";
+import { jhNpcDialogue } from "./dialogue/jhNpcDialogue";
 
 import { createSpeechBubble } from "./speechBubble";
 
@@ -37,8 +37,8 @@ export function createJhNpc(scene: Phaser.Scene) {
         frames: scene.anims.generateFrameNumbers(
             "jungle-heights-npc",
             {
-                start: 4,
-                end: 7
+                start: 6,
+                end: 8
             }
         ),
 
@@ -50,8 +50,8 @@ export function createJhNpc(scene: Phaser.Scene) {
     // CREATE NPC
 
     const jhNpc = scene.physics.add.sprite(
-        400,
-        265,
+        500,
+        205,
         "jungle-heights-npc"
     );
 
@@ -73,7 +73,7 @@ export function createJhNpc(scene: Phaser.Scene) {
 
 
     speechBubble.text.setText(
-        alienNpcDialogue[dialogueGroup][dialogueLine]
+        jhNpcDialogue[dialogueGroup][dialogueLine]
     );
 
     speechBubble.container.setVisible(true);
@@ -85,7 +85,7 @@ export function createJhNpc(scene: Phaser.Scene) {
 
         if (
             dialogueLine >=
-            alienNpcDialogue[dialogueGroup].length
+            jhNpcDialogue[dialogueGroup].length
         ) {
 
             dialogueLine = 0;
@@ -94,7 +94,7 @@ export function createJhNpc(scene: Phaser.Scene) {
 
             if (
                 dialogueGroup >=
-                alienNpcDialogue.length
+                jhNpcDialogue.length
             ) {
 
                 dialogueGroup = 0;
@@ -102,7 +102,7 @@ export function createJhNpc(scene: Phaser.Scene) {
         }
 
         speechBubble.text.setText(
-            alienNpcDialogue[dialogueGroup][dialogueLine]
+            jhNpcDialogue[dialogueGroup][dialogueLine]
         );
 
 
@@ -156,7 +156,7 @@ export function updateJhNpc(
 
     // REACHED THE RIGHT SIDE
 
-    if (jhNpc.x >= 4600) {
+    if (jhNpc.x >= 600) {
 
         jhNpc.setVelocityX(-40);
         jhNpc.setFlipX(false);
@@ -176,7 +176,7 @@ export function updateJhNpc(
 
     // REACHED THE LEFT SIDE
 
-    else if (jhNpc.x <= 4350) {
+    else if (jhNpc.x <= 350) {
 
         jhNpc.setVelocityX(40);
 

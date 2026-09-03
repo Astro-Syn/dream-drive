@@ -473,7 +473,7 @@ export function preloadAssets(scene: Phaser.Scene){
             "/Images/jungleHeights/jungle-heights-npc-spritesheet.png",
             {
                 frameWidth: 16,
-                frameHeight: 16
+                frameHeight: 19
             }
         )
 }
