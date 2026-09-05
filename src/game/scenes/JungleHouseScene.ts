@@ -11,9 +11,14 @@ export default class JungleHouseScene extends Phaser.Scene {
     discs!: Phaser.Physics.Arcade.Group;
     platforms!: Phaser.Physics.Arcade.StaticGroup;
     cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
+    chest!: Phaser.Physics.Arcade.Sprite;
+    interactionKey!: Phaser.Input.Keyboard.Key;
     exitDoor!: Phaser.GameObjects.Zone;
     scoreText!: Phaser.GameObjects.Text;
     jhNpc!: Phaser.Physics.Arcade.Sprite;
+    private isTransitioning = false;
+    private chestOpened = false;
+    private canExit = false;
 
 
     // =========================
@@ -81,6 +86,69 @@ export default class JungleHouseScene extends Phaser.Scene {
             data.outsideSpawnY ?? 13000;
 
 
+            // =========================
+// CHEST ANIMATION
+// =========================
+
+if (!this.anims.exists("jungle-heights-chest-open")) {
+
+    this.anims.create({
+
+        key: "jungle-heights-chest-open",
+
+        frames:
+
+            this.anims.generateFrameNumbers(
+
+                "jungle-heights-chest",
+
+                {
+
+                    start: 0,
+
+                    end: 1
+
+                }
+
+            ),
+
+        frameRate: 4,
+
+        repeat: 0
+
+    });
+
+}
+
+
+// =========================
+// CHEST
+// =========================
+
+this.chest = this.physics.add.sprite(
+
+    650,
+
+    470,
+
+    "jungle-heights-chest",
+
+    0
+
+);
+
+this.chest.setScale(3);
+
+this.chest.setDepth(50);
+
+this.chest.body.setAllowGravity(false);
+
+this.chest.setImmovable(true);
+
+
+
+
+
         // =========================
         // TREEHOUSE BACKGROUND
         // =========================
@@ -107,6 +175,7 @@ export default class JungleHouseScene extends Phaser.Scene {
 
         foliage.setScale(1);
         foliage.setDepth(100);
+
 
 
         // =========================
@@ -225,7 +294,7 @@ export default class JungleHouseScene extends Phaser.Scene {
         
         this.discs
             .create(
-                380,
+                370,
                 485,
                 "disc"
             )
@@ -245,7 +314,7 @@ export default class JungleHouseScene extends Phaser.Scene {
         
         this.discs
             .create(
-                580,
+                570,
                 495,
                 "disc"
             )
@@ -266,7 +335,7 @@ export default class JungleHouseScene extends Phaser.Scene {
         this.discs
             .create(
                 500,
-                265,
+                245,
                 "disc"
             )
             .setScale(2);
@@ -453,6 +522,9 @@ export default class JungleHouseScene extends Phaser.Scene {
         this.cursors =
             keyboard.createCursorKeys();
 
+        this.interactionKey = keyboard.addKey(
+            Phaser.Input.Keyboard.KeyCodes.E
+        )
 
         // =========================
         // SCORE
@@ -585,6 +657,43 @@ export default class JungleHouseScene extends Phaser.Scene {
     // =========================
 
     update() {
+
+        // =========================
+// CHEST INTERACTION
+// =========================
+
+const chestDistance =
+
+    Phaser.Math.Distance.Between(
+
+        this.player.x,
+
+        this.player.y,
+
+        this.chest.x,
+
+        this.chest.y
+
+    );
+
+
+if (
+
+    chestDistance < 70 &&
+
+    Phaser.Input.Keyboard.JustDown(
+
+        this.interactionKey
+
+    ) &&
+
+    !this.chestOpened
+
+) {
+
+    this.openChest();
+
+}
 
         //npc movement
         updateJhNpc(this.jhNpc);
@@ -719,83 +828,107 @@ export default class JungleHouseScene extends Phaser.Scene {
     }
 
 
-    // =========================
-    // EXIT TREEHOUSE
-    // =========================
+// =========================
+// EXIT TREEHOUSE
+// =========================
 
-    exitTreehouse(
-        outsideSpawnX: number,
-        outsideSpawnY: number
-    ) {
+exitTreehouse(
+    outsideSpawnX: number,
+    outsideSpawnY: number
+) {
 
-        // =========================
-        // PREVENT DUPLICATE EXIT
-        // =========================
-
-        if (this.isTransitioning) {
-            return;
-        }
-
-        this.isTransitioning = true;
-
-
-        // =========================
-        // STOP PLAYER
-        // =========================
-
-        this.player.setVelocity(
-            0,
-            0
-        );
-
-
-        // =========================
-        // SAVE SCORE
-        // =========================
-
-        const currentScore =
-            this.registry.get("score") ?? 0;
-
-        this.registry.set(
-            "score",
-            currentScore
-        );
-
-
-        // =========================
-        // FADE OUT
-        // =========================
-
-        this.cameras.main.fadeOut(
-            400,
-            0,
-            0,
-            0
-        );
-
-
-        // =========================
-        // RETURN TO GAME SCENE
-        // =========================
-
-        this.cameras.main.once(
-            Phaser.Cameras.Scene2D.Events
-                .FADE_OUT_COMPLETE,
-
-            () => {
-
-                this.scene.start(
-                    "GameScene",
-                    {
-                        spawnX:
-                            outsideSpawnX,
-
-                        spawnY:
-                            outsideSpawnY
-                    }
-                );
-            }
-        );
+    // Prevent duplicate transitions
+    if (this.isTransitioning) {
+        return;
     }
+
+    this.isTransitioning = true;
+
+    // Stop player movement
+    this.player.setVelocity(
+        0,
+        0
+    );
+
+    // Save current score
+    const currentScore =
+        this.registry.get("score") ?? 0;
+
+    this.registry.set(
+        "score",
+        currentScore
+    );
+
+    // Fade out
+    this.cameras.main.fadeOut(
+        400,
+        0,
+        0,
+        0
+    );
+
+    // Wait for fade before returning outside
+    this.cameras.main.once(
+        Phaser.Cameras.Scene2D.Events
+            .FADE_OUT_COMPLETE,
+
+        () => {
+
+            this.scene.start(
+                "GameScene",
+                {
+                    spawnX: outsideSpawnX,
+                    spawnY: outsideSpawnY
+                }
+            );
+
+        }
+    );
+
 }
 
+
+// =========================
+// OPEN CHEST
+// =========================
+
+openChest() {
+
+    // Prevent opening twice
+    if (this.chestOpened) {
+        return;
+    }
+
+    this.chestOpened = true;
+
+    // Play opening animation
+    this.chest.play(
+        "jungle-heights-chest-open"
+    );
+
+    // Get current shared score
+    const currentScore =
+        this.registry.get("score") ?? 0;
+
+    // Add 100 discs
+    const newScore =
+        currentScore + 100;
+
+    // Save shared score
+    this.registry.set(
+        "score",
+        newScore
+    );
+
+    // Update score display
+    this.scoreText.setText(
+        "Drive Score: " + newScore
+    );
+
+    console.log(
+        "CHEST OPENED! +100 DRIVE SCORE"
+    );
+
+}
+
+}
