@@ -37,10 +37,8 @@ export default class GameScene extends Phaser.Scene {
     viruses!: Phaser.Physics.Arcade.Group;
     discs!: Phaser.Physics.Arcade.Group;
     player!: Phaser.Physics.Arcade.Sprite;
-
     cursors!: Phaser.Types.Input.Keyboard.CursorKeys;
     restartKey!: Phaser.Input.Keyboard.Key;
-
     npc1!: Phaser.Physics.Arcade.Sprite;
     npc2!: Phaser.Physics.Arcade.Sprite;
     shopKeeper!: Phaser.GameObjects.Sprite;
@@ -55,6 +53,7 @@ export default class GameScene extends Phaser.Scene {
     onLadder = false;
     private nefiVillageShown = false;
     interactionKey!: Phaser.Input.Keyboard.Key;
+    music!: Phaser.Sound.BaseSound;
    
 
     // CONSTRUCTOR
@@ -78,6 +77,9 @@ export default class GameScene extends Phaser.Scene {
     spawnY?: number;
 }) {
 
+
+
+
         this.physics.world.setBounds(
             0,
             0,
@@ -87,6 +89,7 @@ export default class GameScene extends Phaser.Scene {
 
         this.score = this.registry.get("score") ?? 0;
 this.gameOver = false;
+
 
 
         // BACKGROUNDS

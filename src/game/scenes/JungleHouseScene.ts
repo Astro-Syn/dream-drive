@@ -127,9 +127,9 @@ if (!this.anims.exists("jungle-heights-chest-open")) {
 
 this.chest = this.physics.add.sprite(
 
-    650,
+    80,
 
-    470,
+    310,
 
     "jungle-heights-chest",
 

@@ -476,5 +476,15 @@ export function preloadAssets(scene: Phaser.Scene){
                 frameHeight: 19
             }
         )
+
+        scene.load.audio(
+            "dream-drive-explore-music",
+            "/Audio/music/dd-explore-music.mp3"
+        )
+
+        scene.load.audio(
+            "dream-drive-start-theme",
+            "/Audio/music/sunset-city-battle.mp3"
+        )
 }
 

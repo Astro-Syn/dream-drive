@@ -1,11 +1,21 @@
 import Phaser from "phaser";
+import { playMusic } from "../music.ts";
+
 
 export default class TitleScreen extends Phaser.Scene {
+
+    titleMusic!: Phaser.Sound.BaseSound;
+
     constructor() {
         super("TitleScene")
     }
 
     preload() {
+
+         this.load.audio(
+        "dream-drive-start-theme",
+        "/Audio/music/sunset-city-battle.mp3"
+    );
 
         this.load.image(
             "title-background",
@@ -39,6 +49,10 @@ export default class TitleScreen extends Phaser.Scene {
 
     create() {
 
+       this.titleMusic = playMusic(
+    this,
+    "dream-drive-start-theme"
+);
 
         //general background 
 
@@ -111,7 +125,15 @@ export default class TitleScreen extends Phaser.Scene {
         //start game
 
         startButton.on("pointerdown", () => {
-            this.scene.start("GameScene");
-        })
+
+    this.titleMusic.stop();
+
+    this.scene.start("GameScene");
+
+});
     }
+
+    shutdown() {
+    this.sound.stopByKey("dream-drive-start-theme");
+}
 }
