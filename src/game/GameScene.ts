@@ -143,7 +143,7 @@ this.ladders = createLadders(this);
     data.spawnX ?? 179;
 
 const spawnY =
-    data.spawnY ?? 12479;
+    data.spawnY ?? 15824;
 
 
 this.player = this.physics.add
