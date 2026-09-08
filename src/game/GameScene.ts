@@ -23,6 +23,7 @@ import {
     createShopkeeperDialogue
 } from "./npcs/dialogue/shopkeeperDialogue";
 import { createLadders, updateLadders } from "./ladders/ladders";
+import { playMusic } from "../music";
 
 
 const WATERFALL_Y = 14387;
@@ -67,6 +68,11 @@ export default class GameScene extends Phaser.Scene {
 
     preload() {
         preloadAssets(this);
+
+         this.load.audio(
+            "dream-drive-explore-music",
+            "/Audio/music/dd-explore-music.mp3"
+        )
        
     }
 
@@ -90,6 +96,11 @@ export default class GameScene extends Phaser.Scene {
         this.score = this.registry.get("score") ?? 0;
 this.gameOver = false;
 
+
+    this.music = playMusic(
+    this,
+    "dream-drive-explore-music"
+);
 
 
         // BACKGROUNDS
@@ -440,9 +451,9 @@ this.shopkeeperDialogue = createShopkeeperDialogue(
             this.hitVirus,
             undefined,
             this
-        );
+        ); 
     }
-
+ 
 
     
     // UPDATE
