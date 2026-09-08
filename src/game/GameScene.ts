@@ -55,6 +55,7 @@ export default class GameScene extends Phaser.Scene {
     private nefiVillageShown = false;
     interactionKey!: Phaser.Input.Keyboard.Key;
     music!: Phaser.Sound.BaseSound;
+    interactionText!: Phaser.GameObjects.Text;
    
 
     // CONSTRUCTOR
@@ -213,6 +214,29 @@ this.shopkeeperDialogue = createShopkeeperDialogue(
     this.shopKeeper
 );
 
+
+this.interactionText = this.add.text(
+    0,
+    0,
+    "Press E to interact",
+    {
+        fontSize: "16px",
+        fontFamily: "monospace",
+        color: "#ffffff",
+        backgroundColor: "#000000",
+        padding: {
+            left: 8,
+            right: 8,
+            top: 5,
+            bottom: 5
+        }
+    }
+);
+
+this.interactionText
+    .setOrigin(0.5)
+    .setVisible(false)
+    .setDepth(2000);
 
        this.alienNpc = createAlienNpc(this);
 
@@ -524,6 +548,24 @@ const shopkeeperDistance =
         this.shopKeeper.x,
         this.shopKeeper.y
     );
+if (
+    shopkeeperDistance < 100 &&
+    !this.registry.get("shopkeeperTalking")
+) {
+
+    this.interactionText.setPosition(
+        this.shopKeeper.x,
+        this.shopKeeper.y - 70
+    );
+
+    this.interactionText.setVisible(true);
+
+} else {
+
+    this.interactionText.setVisible(false);
+
+}
+
 
 if (
     shopkeeperDistance < 100 &&
