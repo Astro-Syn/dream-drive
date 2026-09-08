@@ -122,6 +122,25 @@ export default class TitleScreen extends Phaser.Scene {
             startButton.setScale(1);
         });
 
+        const gitHubBtn = this.add.text(400, 500, "Github",
+
+        )
+        .setOrigin(0.5)
+        .setInteractive({ useHandCursor: true})
+
+        //hover
+
+        gitHubBtn.on("pointerout", () => {
+            startButton.setScale(1);
+        })
+
+        gitHubBtn.on("pointerdown", () => {
+    window.open(
+        "https://github.com/Astro-Syn",
+        "_blank"
+    );
+});
+
         //start game
 
         startButton.on("pointerdown", () => {
