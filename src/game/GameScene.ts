@@ -354,14 +354,14 @@ this.interactionText
     this.interactionKey = keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.E);
 
         // DISCS
-        
-        createDiscs(this);
+        this.discs = this.physics.add.group();
+        createDiscs(this, this.discs);
 
         // =========================
         // VIRUS ENEMIES
         // ========================
-        
-        createViruses(this)
+        this.viruses = this.physics.add.group();
+        createViruses(this, this.viruses)
 
         
         // SCORE

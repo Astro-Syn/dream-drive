@@ -1,8 +1,9 @@
 import Phaser from "phaser";
 
-export function createViruses(scene: Phaser.Scene) {
-
-    scene.viruses = scene.physics.add.group();
+export function createViruses(
+    scene: Phaser.Scene,
+    viruses: Phaser.Physics.Arcade.Group
+) {
 
     // =========================
     // VIRUS ANIMATIONS
@@ -29,39 +30,35 @@ export function createViruses(scene: Phaser.Scene) {
     });
 
 
-    //Start Virus Locations
-
-  
-
-
-
-  
-   
+    // =========================
+    // VIRUS LOCATIONS
+    // =========================
 
     const virusLocations = [
-        {x: 443, y: 15550},
-        {x: 169, y: 15466},
-        {x: 52, y: 15192},
-        {x: 761, y: 15216},
-        {x: 189, y: 14239},
+        { x: 443, y: 15550 },
+        { x: 169, y: 15466 },
+        { x: 52, y: 15192 },
+        { x: 761, y: 15216 },
+        { x: 189, y: 14239 },
         { x: 900, y: 13600 },
         { x: 1450, y: 13400 },
     ];
 
 
+    // =========================
+    // CREATE VIRUSES
+    // =========================
 
     virusLocations.forEach(({ x, y }) => {
 
-        const virus = scene.viruses.create(
+        const virus = viruses.create(
             x,
             y,
             "virus"
         ) as Phaser.Physics.Arcade.Sprite;
 
         virus.setScale(1.5);
-
         virus.setBounce(0.2);
-
         virus.setCollideWorldBounds(true);
 
         virus.setVelocity(
@@ -69,12 +66,16 @@ export function createViruses(scene: Phaser.Scene) {
             Phaser.Math.Between(-40, 40)
         );
 
+
         // Start the appropriate animation
         if (virus.body.velocity.x < 0) {
-            virus.anims.play("virus-walk-left", true);
-        } else {
-            virus.anims.play("virus-walk-right", true);
-        }
 
+            virus.anims.play("virus-walk-left", true);
+
+        } else {
+
+            virus.anims.play("virus-walk-right", true);
+
+        }
     });
 }
