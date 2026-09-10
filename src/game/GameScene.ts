@@ -124,8 +124,8 @@ this.gameOver = false;
           
          
         // BRIDGE
-      
-          createPlatforms(this);
+        this.platforms = this.physics.add.staticGroup();
+          createPlatforms(this, this.platforms);
 
        
         // NEFI VILLAGE
@@ -161,8 +161,11 @@ this.player = this.physics.add
     `Player X: ${Math.round(this.player.x)}, Y: ${Math.round(this.player.y)}`
 );
 
-        this.player.body.setSize(12, 14);
-        this.player.body.setOffset(2, 2);
+        
+if (this.player.body) {
+    this.player.body.setSize(12, 14);
+    this.player.body.setOffset(2, 2);
+}
 
         this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);

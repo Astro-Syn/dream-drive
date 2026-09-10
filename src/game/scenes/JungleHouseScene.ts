@@ -16,9 +16,7 @@ export default class JungleHouseScene extends Phaser.Scene {
     exitDoor!: Phaser.GameObjects.Zone;
     scoreText!: Phaser.GameObjects.Text;
     jhNpc!: Phaser.Physics.Arcade.Sprite;
-    private isTransitioning = false;
-    private chestOpened = false;
-    private canExit = false;
+   
 
 
     // =========================
@@ -26,7 +24,7 @@ export default class JungleHouseScene extends Phaser.Scene {
     // =========================
 
     private isTransitioning = false;
-
+    private chestOpened = false;
     private canExit = false;
 
 
@@ -141,12 +139,10 @@ this.chest.setScale(3);
 
 this.chest.setDepth(50);
 
-this.chest.body.setAllowGravity(false);
+const chestBody = this.chest.body as Phaser.Physics.Arcade.Body;
+chestBody.setAllowGravity(false);
 
 this.chest.setImmovable(true);
-
-
-
 
 
         // =========================
@@ -358,7 +354,10 @@ this.chest.setImmovable(true);
                 const disc =
                     child as Phaser.Physics.Arcade.Sprite;
 
-                disc.body.setAllowGravity(false);
+               if (disc.body) {
+    const discBody = disc.body as Phaser.Physics.Arcade.Body;
+    discBody.setAllowGravity(false);
+}
 
                 return true;
             }
@@ -398,16 +397,11 @@ this.chest.setImmovable(true);
                 .refreshBody();
 
 
-        // Player hitbox
-        this.player.body.setSize(
-            12,
-            14
-        );
-
-        this.player.body.setOffset(
-            2,
-            2
-        );
+       // Player hitbox
+if (this.player.body) {
+    this.player.body.setSize(12, 14);
+    this.player.body.setOffset(2, 2);
+}
 
 
         // =========================
