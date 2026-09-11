@@ -1,21 +1,21 @@
 import Phaser from "phaser";
 
+
 type DiscLocation = {
     x: number;
     y: number;
     static?: boolean;
-};
+}
 
 export function createDiscs(
+    
     discs: Phaser.Physics.Arcade.Group
 ) {
-
     // =========================
     // BEGINNING PLATFORM CDs
     // =========================
 
     const beginningDiscLocations: DiscLocation[] = [
-
         // Manually placed CDs
         { x: 150, y: 15830, static: true },
         { x: 300, y: 15650, static: true },
@@ -28,6 +28,7 @@ export function createDiscs(
         { x: 604, y: 15092, static: true },
         { x: 172, y: 14916, static: true },
         { x: 364, y: 14764, static: true },
+
         { x: 588, y: 14807, static: true },
         { x: 412, y: 14647, static: true },
         { x: 341, y: 14529, static: true },
@@ -51,12 +52,12 @@ export function createDiscs(
         { x: 310, y: 12340, static: true },
 
         // Gravity CDs
-        { x: 750, y: 14950 },
-        { x: 900, y: 14850 },
-        { x: 1050, y: 14750 },
-        { x: 1250, y: 14600 },
-        { x: 1400, y: 14500 },
-        { x: 1550, y: 14400 }
+        { x: 750, y: 14950, static: true },
+        { x: 900, y: 14850, static: true },
+        { x: 1050, y: 14750, static: true},
+        { x: 1250, y: 14600, static: true },
+        { x: 1400, y: 14500, static: true },
+        { x: 1550, y: 14400, static: true }
     ];
 
     // =========================
@@ -85,7 +86,7 @@ export function createDiscs(
     // CREATE CDs
     // =========================
 
-    const allDiscLocations: DiscLocation[] = [
+    const allDiscLocations = [
         ...beginningDiscLocations,
         ...bridgeDiscLocations
     ];
@@ -103,13 +104,15 @@ export function createDiscs(
         // =========================
         // MANUALLY PLACED CD
         // =========================
+        
 
         if (isStatic) {
 
-            disc.setGravityY(0);
+            const body = disc.body as Phaser.Physics.Arcade.Body;
+
+            body.setAllowGravity(false);
             disc.setImmovable(true);
             disc.setVelocity(0, 0);
-
         }
 
         // =========================
@@ -117,11 +120,9 @@ export function createDiscs(
         // =========================
 
         else {
-
             disc.setBounceY(
                 Phaser.Math.FloatBetween(0.4, 0.8)
             );
-
         }
 
         // =========================
