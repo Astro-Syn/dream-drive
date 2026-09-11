@@ -637,13 +637,17 @@ if (this.player.body) {
         // DISC COLLECTION
         // =========================
 
-        this.physics.add.overlap(
-            this.player,
-            this.discs,
-            this.collectDisc,
-            undefined,
-            this
-        );
+       this.physics.add.overlap(
+    this.player,
+    this.discs,
+    (_object1, object2) => {
+        this.collectDisc(
+            
+            object2 as Phaser.Physics.Arcade.Sprite);
+    },
+    undefined,
+    this
+);
 
 
         // =========================
@@ -814,7 +818,6 @@ if (
     // =========================
 
     collectDisc(
-        player: Phaser.Physics.Arcade.Sprite,
         disc: Phaser.Physics.Arcade.Sprite
     ) {
 

@@ -1,59 +1,59 @@
 import Phaser from "phaser";
 
-export function createDiscs(scene: Phaser.Scene) {
+type DiscLocation = {
+    x: number;
+    y: number;
+    static?: boolean;
+};
 
-    scene.discs = scene.physics.add.group();
+export function createDiscs(
+    discs: Phaser.Physics.Arcade.Group
+) {
 
     // =========================
     // BEGINNING PLATFORM CDs
     // =========================
 
-    const beginningDiscLocations = [
+    const beginningDiscLocations: DiscLocation[] = [
+
         // Manually placed CDs
         { x: 150, y: 15830, static: true },
         { x: 300, y: 15650, static: true },
-        { x: 400, y: 15559},
-        { x: 500, y: 15680},
+        { x: 400, y: 15559 },
+        { x: 500, y: 15680 },
         { x: 161, y: 15466, static: true },
         { x: 279, y: 15319, static: true },
         { x: 87, y: 15192, static: true },
-        
         { x: 380, y: 15039, static: true },
         { x: 604, y: 15092, static: true },
         { x: 172, y: 14916, static: true },
         { x: 364, y: 14764, static: true },
+        { x: 588, y: 14807, static: true },
+        { x: 412, y: 14647, static: true },
+        { x: 341, y: 14529, static: true },
 
+        { x: 950, y: 13800, static: true },
+        { x: 1150, y: 13690, static: true },
+        { x: 1380, y: 13800, static: true },
+        { x: 1530, y: 13890, static: true },
+        { x: 103, y: 13959, static: true },
+        { x: 217, y: 13839, static: true },
+        { x: 305, y: 13689, static: true },
 
-         { x: 588, y: 14807, static: true }, 
-         { x: 412, y: 14647, static: true }, 
-         { x: 341, y: 14529, static: true },
-        {x: 950, y: 13800, static: true},
-        {x: 1150, y: 13690, static: true},
-        {x: 1380, y: 13800, static: true},
-        {x: 1530, y: 13890, static: true},
-        {x: 103, y: 13959, static: true},
-        {x: 217, y: 13839, static: true},
-        {x: 305, y: 13689, static: true},
-
-
-        //discs placed on Jungle Heights platforms
-
-        {x: 160, y: 13570, static: true},
-        {x: 300, y: 13470, static: true},
-        {x: 190, y: 13370, static: true},
-        {x: 310, y: 13260, static: true},
-        {x: 180, y: 13659, static: true},
-        {x: 300, y: 13040, static: true},
-        {x: 190, y: 12490, static: true},
-        {x: 310, y: 12340, static: true},
-        
-        
+        // Discs placed on Jungle Heights platforms
+        { x: 160, y: 13570, static: true },
+        { x: 300, y: 13470, static: true },
+        { x: 190, y: 13370, static: true },
+        { x: 310, y: 13260, static: true },
+        { x: 180, y: 13659, static: true },
+        { x: 300, y: 13040, static: true },
+        { x: 190, y: 12490, static: true },
+        { x: 310, y: 12340, static: true },
 
         // Gravity CDs
         { x: 750, y: 14950 },
         { x: 900, y: 14850 },
         { x: 1050, y: 14750 },
-
         { x: 1250, y: 14600 },
         { x: 1400, y: 14500 },
         { x: 1550, y: 14400 }
@@ -63,23 +63,19 @@ export function createDiscs(scene: Phaser.Scene) {
     // BRIDGE CDs
     // =========================
 
-    const bridgeDiscLocations = [
+    const bridgeDiscLocations: DiscLocation[] = [
         { x: 500, y: 13750 },
         { x: 650, y: 13650 },
         { x: 800, y: 13750 },
-
         { x: 1050, y: 13550 },
         { x: 1200, y: 13450 },
         { x: 1350, y: 13550 },
-
         { x: 1600, y: 13350 },
         { x: 1750, y: 13250 },
         { x: 1900, y: 13350 },
-
         { x: 2150, y: 13150 },
         { x: 2300, y: 13050 },
         { x: 2450, y: 13150 },
-
         { x: 2700, y: 13300 },
         { x: 2850, y: 13400 },
         { x: 3000, y: 13300 }
@@ -89,14 +85,14 @@ export function createDiscs(scene: Phaser.Scene) {
     // CREATE CDs
     // =========================
 
-    const allDiscLocations = [
+    const allDiscLocations: DiscLocation[] = [
         ...beginningDiscLocations,
         ...bridgeDiscLocations
     ];
 
     allDiscLocations.forEach(({ x, y, static: isStatic }) => {
 
-        const disc = scene.discs.create(
+        const disc = discs.create(
             x,
             y,
             "disc"
@@ -110,10 +106,8 @@ export function createDiscs(scene: Phaser.Scene) {
 
         if (isStatic) {
 
-            disc.body.allowGravity = false;
-
+            disc.setGravityY(0);
             disc.setImmovable(true);
-
             disc.setVelocity(0, 0);
 
         }

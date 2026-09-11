@@ -85,8 +85,6 @@ export default class GameScene extends Phaser.Scene {
 }) {
 
 
-
-
         this.physics.world.setBounds(
             0,
             0,
@@ -360,7 +358,7 @@ this.interactionText
 
         // DISCS
         this.discs = this.physics.add.group();
-        createDiscs(this, this.discs);
+        createDiscs(this.discs);
 
         // =========================
         // VIRUS ENEMIES
@@ -469,8 +467,8 @@ this.interactionText
 this.physics.add.overlap(
     this.player,
     this.discs,
-    (object1, object2) => {
-        this.collectDisc(object1, object2);
+    (_object1, object2) => {
+        this.collectDisc(object2);
     },
     undefined,
     this
@@ -479,8 +477,8 @@ this.physics.add.overlap(
 this.physics.add.overlap(
     this.player,
     this.viruses,
-    (object1, object2) => {
-        this.hitVirus(object1, object2);
+    (_object1, object2) => {
+        this.hitVirus(object2);
     },
     undefined,
     this
@@ -605,16 +603,6 @@ if (this.registry.get("shopkeeperTalking")) {
 
     return;
 }
-
-
-
-// =========================
-// SHOPKEEPER INTERACTION
-// =========================
-
-
-
-
 
 // =========================
 // LADDER UPDATE
@@ -746,9 +734,6 @@ if (!this.onLadder) {
         }
 
 
-        
-
-
         // =========================
         // VIRUS ANIMATION
         // =========================
@@ -838,7 +823,6 @@ enterJungleHeights() {
     // COLLECT DISC
     // =========================
 collectDisc(
-    playerObject: unknown,
     discObject: unknown
 ) {
     const disc =
@@ -863,8 +847,8 @@ collectDisc(
     // HIT VIRUS
     // =========================
 hitVirus(
-    playerObject: unknown,
-    virusObject: unknown
+    playerObject: unknown
+    
 ) {
     const player =
         playerObject as Phaser.Physics.Arcade.Sprite;
