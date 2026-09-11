@@ -23,7 +23,7 @@ import {
     createShopkeeperDialogue
 } from "./npcs/dialogue/shopkeeperDialogue";
 import { createLadders, updateLadders } from "./ladders/ladders";
-import { playMusic } from "../music";
+import { playMusic, stopMusic } from "../music";
 
 
 const WATERFALL_Y = 14387;
@@ -169,6 +169,8 @@ if (this.player.body) {
 
         this.player.setBounce(0.2);
         this.player.setCollideWorldBounds(true);
+
+
 
 
     // =========================
@@ -460,25 +462,29 @@ this.interactionText
         )
 
 
-        // =========================
-        // OVERLAPS
-        // =========================
+// =========================
+// OVERLAPS
+// =========================
 
-        this.physics.add.overlap(
-            this.player,
-            this.discs,
-            this.collectDisc,
-            undefined,
-            this
-        );
+this.physics.add.overlap(
+    this.player,
+    this.discs,
+    (object1, object2) => {
+        this.collectDisc(object1, object2);
+    },
+    undefined,
+    this
+);
 
-        this.physics.add.overlap(
-            this.player,
-            this.viruses,
-            this.hitVirus,
-            undefined,
-            this
-        ); 
+this.physics.add.overlap(
+    this.player,
+    this.viruses,
+    (object1, object2) => {
+        this.hitVirus(object1, object2);
+    },
+    undefined,
+    this
+);
     }
  
 
@@ -608,16 +614,6 @@ if (this.registry.get("shopkeeperTalking")) {
 
 
 
-if (
-    shopkeeperDistance < 100 &&
-    Phaser.Input.Keyboard.JustDown(this.interactionKey) &&
-    !this.registry.get("shopkeeperTalking")
-) {
-
-    startShopkeeperDialogue(this);
-}
-
-
 
 
 // =========================
@@ -658,7 +654,7 @@ this.onLadder = updateLadders(
                     this.restartKey
                 )
             ) {
-
+                this.music.stop();
                 this.scene.restart();
             }
 
@@ -711,13 +707,14 @@ if (!this.onLadder) {
     // =========================
     // JUMP
     // =========================
+    const body = this.player.body as Phaser.Physics.Arcade.Body;
 
     if (
         this.cursors.up.isDown &&
-        this.player.body.touching.down
+        body.touching.down
     ) {
 
-        this.player.setVelocityY(-475);
+        this.player.setVelocityY(-575);
 
     }
 
@@ -760,7 +757,9 @@ if (!this.onLadder) {
 
             const virus = child as Phaser.Physics.Arcade.Sprite;
 
-            if (virus.body.velocity.x < 0) {
+            const body = virus.body as Phaser.Physics.Arcade.Body;
+
+            if (body.velocity.x < 0) {
 
                 virus.anims.play(
                     "virus-walk-left",
@@ -768,7 +767,7 @@ if (!this.onLadder) {
                 );
 
             }
-            else if (virus.body.velocity.x > 0) {
+            else if (body.velocity.x > 0) {
 
                 virus.anims.play(
                     "virus-walk-right",
@@ -792,6 +791,8 @@ if (!this.onLadder) {
 // =========================
 
 enterJungleHeights() {
+
+    stopMusic();
 
     this.player.setVelocity(
         0,
@@ -836,48 +837,46 @@ enterJungleHeights() {
     // =========================
     // COLLECT DISC
     // =========================
+collectDisc(
+    playerObject: unknown,
+    discObject: unknown
+) {
+    const disc =
+        discObject as Phaser.Physics.Arcade.Sprite;
 
-    collectDisc(
-        player: Phaser.Physics.Arcade.Sprite,
-        disc: Phaser.Physics.Arcade.Sprite
-    ) {
+    disc.disableBody(true, true);
 
-        disc.disableBody(true, true);
+    this.score += 10;
 
-        this.score += 10;
+    this.registry.set(
+        "score",
+        this.score
+    );
 
-this.registry.set(
-    "score",
-    this.score
-);
-
-        this.scoreText.setText(
-            "Drive Score: " + this.score
-        ).setDepth(30);
-    }
-    
+    this.scoreText.setText(
+        "Drive Score: " + this.score
+    ).setDepth(30);
+}
 
 
     // =========================
     // HIT VIRUS
     // =========================
+hitVirus(
+    playerObject: unknown,
+    virusObject: unknown
+) {
+    const player =
+        playerObject as Phaser.Physics.Arcade.Sprite;
 
-    hitVirus(
-        player: Phaser.Physics.Arcade.Sprite,
-        virus: Phaser.Physics.Arcade.Sprite
-    ) {
+    this.physics.pause();
 
-        this.physics.pause();
+    player.setTint(0xff0000);
 
-        player.setTint(0xff0000);
+    player.anims.play("turn");
 
-        player.anims.play("turn");
+    this.gameResetText.setVisible(true);
 
-        this.gameResetText.setVisible(true);
-
-        this.gameOver = true;
-    }
-
-    
+    this.gameOver = true;
 }
-
+}

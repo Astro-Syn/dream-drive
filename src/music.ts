@@ -1,13 +1,33 @@
 import Phaser from "phaser";
 
-export function playMusic(scene: Phaser.Scene, key: string) {
+let currentMusic: Phaser.Sound.BaseSound | null = null;
 
-    const music = scene.sound.add(key, {
+export function playMusic(
+    scene: Phaser.Scene,
+    key: string
+) {
+    
+    if (currentMusic) {
+        currentMusic.stop();
+        currentMusic.destroy();
+        currentMusic = null;
+    }
+
+    
+    currentMusic = scene.sound.add(key, {
         loop: true,
         volume: 0.5
     });
 
-    music.play();
+    currentMusic.play();
 
-    return music;
+    return currentMusic;
+}
+
+export function stopMusic() {
+    if (currentMusic) {
+        currentMusic.stop();
+        currentMusic.destroy();
+        currentMusic = null;
+    }
 }

@@ -68,7 +68,9 @@ export function createViruses(
 
 
         // Start the appropriate animation
-        if (virus.body.velocity.x < 0) {
+        const body = virus.body as Phaser.Physics.Arcade.Body;
+
+        if (body.velocity.x < 0) {
 
             virus.anims.play("virus-walk-left", true);
 

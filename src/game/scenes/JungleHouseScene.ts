@@ -16,7 +16,8 @@ export default class JungleHouseScene extends Phaser.Scene {
     exitDoor!: Phaser.GameObjects.Zone;
     scoreText!: Phaser.GameObjects.Text;
     jhNpc!: Phaser.Physics.Arcade.Sprite;
-   
+    chestInteractionText!: Phaser.GameObjects.Text;
+
 
 
     // =========================
@@ -52,7 +53,6 @@ export default class JungleHouseScene extends Phaser.Scene {
 
         this.isTransitioning = false;
         this.canExit = false;
-
 
         // =========================
         // WORLD BOUNDS
@@ -143,6 +143,31 @@ const chestBody = this.chest.body as Phaser.Physics.Arcade.Body;
 chestBody.setAllowGravity(false);
 
 this.chest.setImmovable(true);
+
+
+
+this.chestInteractionText = this.add.text(
+    0,
+    0,
+    "Press E to interact",
+    {
+        fontSize: "16px",
+        fontFamily: "monospace",
+        color: "#ffffff",
+        backgroundColor: "#000000",
+        padding: {
+            left: 8,
+            right: 8,
+            top: 5,
+            bottom: 5
+        }
+    }
+);
+
+this.chestInteractionText
+    .setOrigin(0.5)
+    .setVisible(false)
+    .setDepth(2000);
 
 
         // =========================
@@ -655,38 +680,39 @@ if (this.player.body) {
         // =========================
 // CHEST INTERACTION
 // =========================
-
 const chestDistance =
-
     Phaser.Math.Distance.Between(
-
         this.player.x,
-
         this.player.y,
-
         this.chest.x,
-
         this.chest.y
-
     );
 
-
+// Show interaction popup when close to chest
 if (
-
     chestDistance < 70 &&
-
-    Phaser.Input.Keyboard.JustDown(
-
-        this.interactionKey
-
-    ) &&
-
     !this.chestOpened
-
 ) {
+    this.chestInteractionText.setPosition(
+        this.chest.x,
+        this.chest.y - 60
+    );
 
+    this.chestInteractionText.setVisible(true);
+}
+else {
+    this.chestInteractionText.setVisible(false);
+}
+
+// Open chest when E is pressed
+if (
+    chestDistance < 70 &&
+    Phaser.Input.Keyboard.JustDown(
+        this.interactionKey
+    ) &&
+    !this.chestOpened
+) {
     this.openChest();
-
 }
 
         //npc movement
@@ -757,10 +783,11 @@ if (
         // =========================
         // JUMP
         // =========================
+        const body = this.player.body as Phaser.Physics.Arcade.Body;
 
         if (
             this.cursors.up.isDown &&
-            this.player.body.touching.down
+            body.touching.down
         ) {
 
             this.player.setVelocityY(
